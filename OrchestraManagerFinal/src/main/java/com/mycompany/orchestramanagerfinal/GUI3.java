@@ -45,11 +45,13 @@ public class GUI3 extends javax.swing.JFrame {
 	private TimerTask task;
 	
 	private boolean running;
+        private boolean pausePlay;
     /**
      * Creates new form GUI3
      */
     public GUI3() throws IOException {
         initComponents();
+        pausePlay = true;
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
         Image img1 = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
@@ -346,7 +348,14 @@ public class GUI3 extends javax.swing.JFrame {
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
     private void pausePlay_button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausePlay_button2ActionPerformed
-        //        MediaPlayer.play(songNumber);
+        if (pausePlay){
+            pausePlay = false;
+            pausePlay_button2.setIcon(new ImageIcon("buttons\\play_1.png"));
+        }
+        else{
+            pausePlay = true;
+            pausePlay_button2.setIcon(new ImageIcon("buttons\\pause.png"));
+        }
     }//GEN-LAST:event_pausePlay_button2ActionPerformed
 
     /**
