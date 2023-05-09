@@ -11,11 +11,13 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.Media;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -26,52 +28,56 @@ import javax.swing.table.DefaultTableModel;
 public class GUI3 extends javax.swing.JFrame {
     private BufferedImage pause = ImageIO.read(new File("buttons\\pause.png"));
     private BufferedImage play = ImageIO.read(new File("buttons\\play.png"));
-        private Media media;
-	private MediaPlayer mediaPlayer;
-	
-	private File directory;
-	private File[] files;
+
+
+
+    private File directory;
+    private File[] files;
         
-	private File directory2;
-	private File[] files2;
+    private File directory2;
+    private File[] files2;
         
-	private ArrayList<File> songs;
-	private ArrayList<File> covers;
+    private ArrayList<File> songs;
+    private ArrayList<File> covers;
         
-	private int songNumber;
-	private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
+    private int songNumber;
+    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
 	
-	private Timer timer;
-	private TimerTask task;
+    private Timer timer;
+    private TimerTask task;
 	
-	private boolean running;
-        private boolean pausePlay;
+    private boolean running;
+    private boolean pausePlay;
     /**
      * Creates new form GUI3
      */
-    public GUI3() throws IOException {
+    public GUI3() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         initComponents();
-        pausePlay = true;
+        setResizable(false);
+        MediaPlayer mediaPlayer = new MediaPlayer("music\\Butter.wav");
+        BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
+        BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
+        Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+        Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
+        play_button.setIcon(new ImageIcon(play));
+        pause_button.setIcon(new ImageIcon(pause));
+
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
         Image img1 = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img1));
-        songs = new ArrayList<File>();
+        songs = new ArrayList<>();
 	directory = new File("music");
 	files = directory.listFiles();
 	if(files != null) {
-		for(File file : files) {
-			songs.add(file);
-		}
+            songs.addAll(Arrays.asList(files));
 	}
 	covers = new ArrayList<File>();
 	directory2 = new File("music");
 	files2 = directory.listFiles();
 	if(files2 != null) {
-		for(File file : files2) {
-			covers.add(file);
-		}
+            covers.addAll(Arrays.asList(files2));
 	}
         
         coverShow_label.setIcon(new ImageIcon(img1));
@@ -108,11 +114,12 @@ public class GUI3 extends javax.swing.JFrame {
         skipFor_button = new javax.swing.JButton();
         coverShow_label = new javax.swing.JLabel();
         skipBack_button = new javax.swing.JButton();
-        pausePlay_button2 = new javax.swing.JButton();
+        play_button = new javax.swing.JButton();
         volume_slider = new javax.swing.JSlider();
         albumName_label = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         artist_label = new javax.swing.JLabel();
+        pause_button = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -214,9 +221,9 @@ public class GUI3 extends javax.swing.JFrame {
             }
         });
 
-        pausePlay_button2.addActionListener(new java.awt.event.ActionListener() {
+        play_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pausePlay_button2ActionPerformed(evt);
+                play_buttonActionPerformed(evt);
             }
         });
 
@@ -233,6 +240,12 @@ public class GUI3 extends javax.swing.JFrame {
         artist_label.setForeground(new java.awt.Color(255, 255, 255));
         artist_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        pause_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pause_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout player_panelLayout = new javax.swing.GroupLayout(player_panel);
         player_panel.setLayout(player_panelLayout);
         player_panelLayout.setHorizontalGroup(
@@ -242,11 +255,13 @@ public class GUI3 extends javax.swing.JFrame {
                 .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
                         .addComponent(skipBack_button, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pausePlay_button2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
+                        .addComponent(play_button, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(pause_button, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
                         .addComponent(skipFor_button, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(382, 382, 382))
+                        .addGap(323, 323, 323))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
                         .addComponent(volume_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
@@ -278,10 +293,12 @@ public class GUI3 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(skipBack_button, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(skipFor_button, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pausePlay_button2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pause_button, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(skipBack_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                        .addComponent(skipFor_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                        .addComponent(play_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,7 +332,17 @@ public class GUI3 extends javax.swing.JFrame {
         if (songNumber != (int)(Math.random() * directory.listFiles().length)){
             songNumber = (int)(Math.random() * directory.listFiles().length);
         }
-        System.out.println(songNumber);
+        MediaPlayer mediaPlayer = null;
+        try {
+            mediaPlayer = new MediaPlayer("music\\Solo.wav");
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mediaPlayer.play();
         //        MediaPlayer.play(songNumber);
 
     }//GEN-LAST:event_Shuffle_buttonActionPerformed
@@ -347,16 +374,49 @@ public class GUI3 extends javax.swing.JFrame {
         //        MediaPlayer.next();
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
-    private void pausePlay_button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausePlay_button2ActionPerformed
-        if (pausePlay){
-            pausePlay = false;
-            pausePlay_button2.setIcon(new ImageIcon("buttons\\play_1.png"));
+    private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
+        MediaPlayer mediaPlayer = null;
+        try {
+            mediaPlayer = new MediaPlayer("music\\Butter.wav");
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else{
-            pausePlay = true;
-            pausePlay_button2.setIcon(new ImageIcon("buttons\\pause.png"));
+        BufferedImage icons = null;
+        try {
+            icons = ImageIO.read(new File("buttons\\play.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_pausePlay_button2ActionPerformed
+        Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
+        play_button.setIcon(new ImageIcon(play));
+        mediaPlayer.play();
+    }//GEN-LAST:event_play_buttonActionPerformed
+
+    private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
+        MediaPlayer mediaPlayer = null;
+        try {
+            mediaPlayer = new MediaPlayer("music\\Butter.wav");
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedImage icons = null;
+        try {
+            icons = ImageIO.read(new File("buttons\\pause.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+        pause_button.setIcon(new ImageIcon(pause));
+        mediaPlayer.pause();
+    }//GEN-LAST:event_pause_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,6 +452,10 @@ public class GUI3 extends javax.swing.JFrame {
                     new GUI3().setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -407,8 +471,9 @@ public class GUI3 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JButton pausePlay_button2;
+    private javax.swing.JButton pause_button;
     private javax.swing.JButton play2_button;
+    private javax.swing.JButton play_button;
     private javax.swing.JPanel player_panel;
     private javax.swing.JSlider progressBar_slider;
     private javax.swing.JPanel shuffle_panel;

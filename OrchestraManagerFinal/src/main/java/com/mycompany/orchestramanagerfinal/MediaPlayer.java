@@ -38,7 +38,7 @@ public class MediaPlayer {
     public void play(){
         clip.start();
     }
-    public void stop(){
+    public void pause(){
         clip.stop();
     }
     public long getCurrentFrames(){
