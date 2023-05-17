@@ -10,7 +10,22 @@ package com.mycompany.orchestramanagerfinal;
  */
 public class NoteList {
 
+    //initialize class variables
     NoteNode head, tail = null;
+    int tempo;
+
+    //constructor and getters and setters for the tempo class variable
+    public NoteList(int tempo) {
+        this.tempo = tempo;
+    }
+
+    public int getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
+    }
 
     //addNode() will add a node to the list  
     public void addNode(Note data) {
@@ -37,18 +52,28 @@ public class NoteList {
     }
 
     //display() will print out the nodes of the list  
-    public void display() {
+    public String display() {
+        String out = "";
+        
         //Node current will point to head  
         NoteNode current = head;
         if (head == null) {
             System.out.println("List is empty");
-            return;
+            return "";
         }
         System.out.println("Nodes of doubly linked list: ");
         while (current != null) {
             //Prints each node by incrementing the pointer.  
-            System.out.print(current.beep + " ");
+            out += current.beep + " ";
             current = current.next;
         }
+        
+        return out;
+    }
+    
+    public String toString()
+    {
+        String out = display().trim();
+        return "T" + "" + tempo + " " + out;
     }
 }
