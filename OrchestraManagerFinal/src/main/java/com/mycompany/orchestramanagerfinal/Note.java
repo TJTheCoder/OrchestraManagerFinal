@@ -10,9 +10,9 @@ package com.mycompany.orchestramanagerfinal;
  */
 public class Note {
     //define all class variables for the Note
-    String clip;
-    int degree;
-    int index;
+    private String clip;
+    private int degree;
+    private int index;
 
     //constructors and getters and setters for the variables
     public Note(String clip, int degree, int index) {
@@ -63,5 +63,4 @@ public class Note {
     {
         return clip + toDegree();
     }
-  
 }
