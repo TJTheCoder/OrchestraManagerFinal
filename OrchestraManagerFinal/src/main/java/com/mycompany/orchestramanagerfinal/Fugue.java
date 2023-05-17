@@ -43,7 +43,7 @@ public class Fugue {
     }
     
     //plays the audio for the letter notes in a string
-    private void sing() {
+    public void sing() {
         Player player = new Player();
         delineate();
         player.play(output);
