@@ -27,7 +27,7 @@ public class NoteList {
         this.tempo = tempo;
     }
 
-    //addNode() will add a node to the list  
+    //addNode() will add a node to the end of the list  
     public void addNode(Note data) {
         //Create a new node  
         NoteNode newNode = new NoteNode(data);
@@ -54,27 +54,114 @@ public class NoteList {
     //display() will print out the nodes of the list  
     public String display() {
         String out = "";
-        
+
         //Node current will point to head  
         NoteNode current = head;
         if (head == null) {
-            System.out.println("List is empty");
+            //System.out.println("List is empty");
             return "";
         }
-        System.out.println("Nodes of doubly linked list: ");
+        //System.out.println("Nodes of doubly linked list: ");
         while (current != null) {
             //Prints each node by incrementing the pointer.  
             out += current.beep + " ";
             current = current.next;
         }
-        
+
         return out;
     }
-    
+
+    //inserts a node at a specific index
+    public void insert(int index, Note data) {
+        NoteNode newNode = new NoteNode(data);
+
+        if (head == null) {
+            // If the list is empty and index is 0, make the new node the head
+            if (index == 0) {
+                head = tail = newNode;
+                head.previous = null;
+                tail.next = null;
+            } else {
+                // If the list is empty and index is not 0, throw an exception or handle it accordingly
+                throw new IndexOutOfBoundsException("Invalid index");
+            }
+        } else if (index == 0) {
+            // If the index is 0, insert at the beginning
+            newNode.next = head;
+            head.previous = newNode;
+            head = newNode;
+            head.previous = null;
+        } else {
+            NoteNode current = head;
+            int currentIndex = 0;
+
+            // Traverse the list to find the desired index or the end of the list
+            while (current.next != null && currentIndex < index - 1) {
+                current = current.next;
+                currentIndex++;
+            }
+
+            if (currentIndex == index - 1) {
+                // Insert the new node at the desired index
+                newNode.next = current.next;
+                newNode.previous = current;
+                if (current.next != null) {
+                    current.next.previous = newNode;
+                }
+                current.next = newNode;
+            } else {
+                // If the desired index is out of bounds, throw an exception or handle it accordingly
+                throw new IndexOutOfBoundsException("Invalid index");
+            }
+        }
+    }
+
+    //deletes a node at a specific index
+    public void delete(int index) {
+        if (head == null) {
+            // If the list is empty, throw an exception or handle it accordingly
+            throw new IndexOutOfBoundsException("Invalid index");
+        } else if (index == 0) {
+            // If the index is 0, delete the head node
+            if (head == tail) {
+                // If there is only one node in the list
+                head = tail = null;
+            } else {
+                head = head.next;
+                head.previous = null;
+            }
+        } else {
+            NoteNode current = head;
+            int currentIndex = 0;
+
+            // Traverse the list to find the desired index or the end of the list
+            while (current != null && currentIndex < index) {
+                current = current.next;
+                currentIndex++;
+            }
+
+            if (currentIndex == index && current != null) {
+                // Delete the node at the desired index
+                if (current == tail) {
+                    // If the node to be deleted is the tail node
+                    tail = tail.previous;
+                    tail.next = null;
+                } else {
+                    current.previous.next = current.next;
+                    if (current.next != null) {
+                        current.next.previous = current.previous;
+                    }
+                }
+            } else {
+                // If the desired index is out of bounds, throw an exception or handle it accordingly
+                throw new IndexOutOfBoundsException("Invalid index");
+            }
+        }
+    }
+
     //returns the String such that it can be run with a Fugue object
     @Override
-    public String toString()
-    {
+    public String toString() {
         String out = display().trim();
         return "T" + "" + tempo + " " + out;
     }
