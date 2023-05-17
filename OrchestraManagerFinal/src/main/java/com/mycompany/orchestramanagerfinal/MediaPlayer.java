@@ -19,7 +19,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class MediaPlayer {
     private String filePath;
     private Clip clip;
-    private boolean status;
+    private boolean status = true;
+    
     AudioInputStream audioInputStream;
     
     public MediaPlayer(String filePath) throws UnsupportedAudioFileException, LineUnavailableException, IOException{
@@ -37,9 +38,18 @@ public class MediaPlayer {
     }
     public void play(){
         clip.start();
+//        if (status != true){
+//            clip.start();
+//        }
+//        else
+//            clip.stop();
     }
-    public void pause(){
+    public void pause() {
+        //status = true;
+        //play();
         clip.stop();
+        //clip.close
+        //???????????????????????????????????????????????????
     }
     public long getCurrentFrames(){
         return clip.getMicrosecondPosition();

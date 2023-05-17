@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.orchestramanagerfinal;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -20,17 +19,17 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author atxbr
  */
 public class GUI3 extends javax.swing.JFrame {
-    private BufferedImage pause = ImageIO.read(new File("buttons\\pause.png"));
-    private BufferedImage play = ImageIO.read(new File("buttons\\play.png"));
+    private final BufferedImage pause = ImageIO.read(new File("buttons\\pause.png"));
+    private final BufferedImage play = ImageIO.read(new File("buttons\\play.png"));
 
-
-
+    
     private File directory;
     private File[] files;
         
@@ -41,38 +40,42 @@ public class GUI3 extends javax.swing.JFrame {
     private ArrayList<File> covers;
         
     private int songNumber;
-    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
-	
-    private Timer timer;
-    private TimerTask task;
-	
-    private boolean running;
-    private boolean pausePlay;
+    private ArrayList<String> filePath;
+    private String songs1;
+    private String songs2;
     /**
      * Creates new form GUI3
      */
     public GUI3() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         initComponents();
         setResizable(false);
-        MediaPlayer mediaPlayer = new MediaPlayer("music\\Butter.wav");
+        
+        songs = new ArrayList<>();
+	directory = new File("music");
+	files = directory.listFiles();
+	if(files != null) {
+            songs.addAll(Arrays.asList(files));
+            songs1 = "music\\Butter.wav";
+            songs2 = "music\\Solo.wav";
+	}
+        System.out.println(songs);
+        
         BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
         BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
+        
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
+        
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
 
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
         Image img1 = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
+        
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img1));
-        songs = new ArrayList<>();
-	directory = new File("music");
-	files = directory.listFiles();
-	if(files != null) {
-            songs.addAll(Arrays.asList(files));
-	}
+        
 	covers = new ArrayList<File>();
 	directory2 = new File("music");
 	files2 = directory.listFiles();
@@ -84,9 +87,9 @@ public class GUI3 extends javax.swing.JFrame {
         coverShow2_label.setIcon(new ImageIcon(img2));
 	//media = new Media(songs.get(songNumber).toURI().toString());
 	//mediaPlayer = new MediaPlayer(media);
-		
-	albumName2_label.setText(songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
-	albumName_label.setText(songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
+
+	albumName2_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
+        albumName_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
         
         artist_label.setText(getArtist());
         buildSongsTable();
@@ -127,6 +130,11 @@ public class GUI3 extends javax.swing.JFrame {
         shuffle_panel.setBackground(new java.awt.Color(0, 51, 102));
 
         play2_button.setText("Play");
+        play2_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                play2_buttonActionPerformed(evt);
+            }
+        });
 
         Shuffle_button.setText("Shuffle");
         Shuffle_button.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +145,7 @@ public class GUI3 extends javax.swing.JFrame {
 
         albumName2_label.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         albumName2_label.setForeground(new java.awt.Color(255, 255, 255));
-        albumName2_label.setText("Butter");
+        albumName2_label.setText("Proof");
 
         songsTable_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -196,11 +204,6 @@ public class GUI3 extends javax.swing.JFrame {
 
         player_panel.setBackground(new java.awt.Color(0, 51, 102));
 
-        progressBar_slider.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                progressBar_sliderMouseDragged(evt);
-            }
-        });
         progressBar_slider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 progressBar_sliderMousePressed(evt);
@@ -227,10 +230,16 @@ public class GUI3 extends javax.swing.JFrame {
             }
         });
 
+        volume_slider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                volume_sliderMousePressed(evt);
+            }
+        });
+
         albumName_label.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         albumName_label.setForeground(new java.awt.Color(255, 255, 255));
         albumName_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        albumName_label.setText("Butter");
+        albumName_label.setText("Proof");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -295,10 +304,9 @@ public class GUI3 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pause_button, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addGroup(player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(skipBack_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                        .addComponent(skipFor_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                        .addComponent(play_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(skipBack_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(skipFor_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(play_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -332,9 +340,16 @@ public class GUI3 extends javax.swing.JFrame {
         if (songNumber != (int)(Math.random() * directory.listFiles().length)){
             songNumber = (int)(Math.random() * directory.listFiles().length);
         }
+        songs = new ArrayList<>();
+	directory = new File("music");
+	files = directory.listFiles();
+	if(files != null) {
+            songs.addAll(Arrays.asList(files));
+	}
+        System.out.println(songs);
         MediaPlayer mediaPlayer = null;
         try {
-            mediaPlayer = new MediaPlayer("music\\Solo.wav");
+            mediaPlayer = new MediaPlayer(songs2);
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
@@ -344,40 +359,117 @@ public class GUI3 extends javax.swing.JFrame {
         }
         mediaPlayer.play();
         //        MediaPlayer.play(songNumber);
+        System.out.println(songNumber);
 
     }//GEN-LAST:event_Shuffle_buttonActionPerformed
-
-    private void progressBar_sliderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMouseDragged
-        //        MediaPlayer.seek(Duration.seconds(progressBar.getValue()));
-
-    }//GEN-LAST:event_progressBar_sliderMouseDragged
 
     private void progressBar_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMousePressed
         //        MediaPlayer.seek(Duration.seconds(progressBar.getValue()));
     }//GEN-LAST:event_progressBar_sliderMousePressed
 
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
-
-        Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        if (skipFor_button.getIcon().equals(img2)){
-            skipFor_button.setIcon(new ImageIcon(img3));
-            //            MediaPlayer.pause();
+        MediaPlayer mediaPlayer = null;
+        //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        
+        try {
+            mediaPlayer = new MediaPlayer(songs2);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else{
-            //            MediaPlayer.play();
-            skipFor_button.setIcon(new ImageIcon(img2));
+        if(songNumber < songs.size() - 1) {
+            songNumber++;
+            mediaPlayer.pause();
+            String media = songs.get(songNumber).getName();
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mediaPlayer.play();
+	}
+        
+        
+	else {
+            songNumber = 0;
+            mediaPlayer.pause();
+            String media = null;
+            try {			
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
+        }
+        System.out.println(songNumber);
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
     private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
-        //        MediaPlayer.next();
+        MediaPlayer mediaPlayer = null;
+        Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        
+        try {
+            mediaPlayer = new MediaPlayer(songs1);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(songNumber > 0) {
+            songNumber--;
+            mediaPlayer.pause();
+            String media = songs.get(songNumber).getName();
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mediaPlayer.play();
+	}
+        
+        
+	else {
+            songNumber = 0;
+            mediaPlayer.pause();
+            String media = null;
+            try {			
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
+        } 
+        System.out.println(songNumber);
+
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
         try {
-            mediaPlayer = new MediaPlayer("music\\Butter.wav");
+            mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
@@ -394,12 +486,14 @@ public class GUI3 extends javax.swing.JFrame {
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
         mediaPlayer.play();
+        int one = 1;
+        System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
         try {
-            mediaPlayer = new MediaPlayer("music\\Butter.wav");
+            mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
@@ -416,7 +510,44 @@ public class GUI3 extends javax.swing.JFrame {
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         pause_button.setIcon(new ImageIcon(pause));
         mediaPlayer.pause();
+        System.out.println(songNumber);
+
     }//GEN-LAST:event_pause_buttonActionPerformed
+
+    private void play2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play2_buttonActionPerformed
+        MediaPlayer mediaPlayer = null;
+        try {
+            mediaPlayer = new MediaPlayer(songs1);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedImage icons = null;
+        try {
+            icons = ImageIO.read(new File("buttons\\play.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
+        play_button.setIcon(new ImageIcon(play));
+        mediaPlayer.play();
+        System.out.println(songNumber);
+
+    }//GEN-LAST:event_play2_buttonActionPerformed
+
+    private void volume_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volume_sliderMousePressed
+//        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+//				
+//				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);			
+//			}
+//		});
+    }//GEN-LAST:event_volume_sliderMousePressed
 
     /**
      * @param args the command line arguments
@@ -490,23 +621,23 @@ public class GUI3 extends javax.swing.JFrame {
         for (File i : files) {
 //            Schedule schedule = schedules.get(key);
             data[row][0] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
-            if(data[row][0].equals("Butter")){
+            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
                 data[row][1] = "BTS";
             }
             else{
-                data[row][1] = "ME";
+                data[row][1] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
             }
-            if(data[row][0].equals("Butter")){
+            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
                 data[row][2] = "K-Pop";
             }
             else{
-                data[row][2] = "Trumpet";
+                data[row][2] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 2));
             }
-            if(data[row][0].equals("Butter")){
-                data[row][3] = "1:59";
+            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
+                data[row][3] = ((songs.get(songNumber).getName().length()) * 30) + " seconds";
             }
             else{
-                data[row][3] = "2:32";
+                data[row][3] = (30 * (songs.get(songNumber).getName().length())) + " seconds";
             }
             row++;
             songNumber++;
@@ -521,4 +652,5 @@ public class GUI3 extends javax.swing.JFrame {
         }
         return "NONE";
     }
+
 }

@@ -115,6 +115,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Play"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="play2_buttonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Shuffle_button">
               <Properties>
@@ -134,7 +137,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Butter"/>
+                <Property name="text" type="java.lang.String" value="Proof"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -232,11 +235,9 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="pause_button" pref="36" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="skipBack_button" alignment="1" pref="36" max="32767" attributes="0"/>
-                              <Component id="skipFor_button" alignment="1" pref="36" max="32767" attributes="0"/>
-                              <Component id="play_button" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="skipBack_button" alignment="1" pref="36" max="32767" attributes="0"/>
+                          <Component id="skipFor_button" alignment="1" pref="36" max="32767" attributes="0"/>
+                          <Component id="play_button" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -250,7 +251,6 @@
           <SubComponents>
             <Component class="javax.swing.JSlider" name="progressBar_slider">
               <Events>
-                <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="progressBar_sliderMouseDragged"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="progressBar_sliderMousePressed"/>
               </Events>
             </Component>
@@ -278,6 +278,9 @@
               </Events>
             </Component>
             <Component class="javax.swing.JSlider" name="volume_slider">
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="volume_sliderMousePressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="albumName_label">
               <Properties>
@@ -288,7 +291,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Butter"/>
+                <Property name="text" type="java.lang.String" value="Proof"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
