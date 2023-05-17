@@ -71,6 +71,8 @@ public class NoteList {
         return out;
     }
     
+    //returns the String such that it can be run with a Fugue object
+    @Override
     public String toString()
     {
         String out = display().trim();
