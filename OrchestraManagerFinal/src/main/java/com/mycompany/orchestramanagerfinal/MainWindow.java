@@ -450,6 +450,18 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        Quarter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuarterActionPerformed(evt);
+            }
+        });
+
+        Half.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HalfActionPerformed(evt);
+            }
+        });
+
         PlayStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PlayStopActionPerformed(evt);
@@ -723,8 +735,10 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(songNumber);
     }//GEN-LAST:event_play2_buttonActionPerformed
 
+    //turns the current note to a whole note or whole rest depending on the current state
     private void WholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WholeActionPerformed
-        // TODO add your handling code here:
+        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(2);
+        else ((GraphicPanel) composerPanel).changeCurrentSet(5);
     }//GEN-LAST:event_WholeActionPerformed
 
     private void NoteRestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoteRestActionPerformed
@@ -747,6 +761,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         //toggles restMode for future access
         restMode = !restMode;
+        ((GraphicPanel) composerPanel).toggleRest();
     }//GEN-LAST:event_NoteRestActionPerformed
 
     private void PlayStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayStopActionPerformed
@@ -759,6 +774,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         //toggles the variables storing the current state
         playMode = !playMode;
+        ((GraphicPanel) composerPanel).togglePlay();
     }//GEN-LAST:event_PlayStopActionPerformed
 
     //updatesMouseCoordinates if the mouse is moved at all
@@ -783,6 +799,17 @@ public class MainWindow extends javax.swing.JFrame {
     private void ForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMousePressed
         ((GraphicPanel) composerPanel).frameShift(10);
     }//GEN-LAST:event_ForwardMousePressed
+
+    //change the note/rest to be placed--factors in the rest/note toggle (half and quarter notes only)
+    private void QuarterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuarterActionPerformed
+        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(0);
+        else ((GraphicPanel) composerPanel).changeCurrentSet(3);
+    }//GEN-LAST:event_QuarterActionPerformed
+
+    private void HalfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HalfActionPerformed
+        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(1);
+        else ((GraphicPanel) composerPanel).changeCurrentSet(4);
+    }//GEN-LAST:event_HalfActionPerformed
 
     /**
      * @param args the command line arguments

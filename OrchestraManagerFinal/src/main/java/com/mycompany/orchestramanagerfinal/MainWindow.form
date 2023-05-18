@@ -439,8 +439,14 @@
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Quarter">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="QuarterActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Half">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HalfActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="PlayStop">
               <Events>

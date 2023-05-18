@@ -28,12 +28,29 @@ public class GraphicPanel extends JPanel {
     int xMarginBuffer = 50;
     int yMarginStart = 175;
     int yMarginEnd = 450;
+    
+    //changes what is currently displayed
+    //0 - quarter note
+    //1 - half note
+    //2 - whole note
+    //3 - quarter rest
+    //4 - half rest
+    //5 - whole rest
+    int currentSet = 0;
+
+    //boolean copies of the restMode and playMode values in the MainWindow
+    private boolean restMode = false;
+    private boolean playMode = false;
 
     //sets the maximum length of the staff
     //int far = 960;
     int far = 10000;
-    
+
+    //the index of the last placed note
     int runningCount = 5;
+
+    //how much shift has been applied so far
+    int shiftTotal = 0;
 
     //integers to store the coordinates of the user's mouse
     int mouseX;
@@ -44,6 +61,11 @@ public class GraphicPanel extends JPanel {
         repaint();
     }
 
+    public void changeCurrentSet(int newSet)
+    {
+        currentSet = newSet;
+    }
+    
     //shifts all horizontal elements over by modifying the xMarginBuffer and far
     public void frameShift(int shift) {
         xMarginBuffer -= shift;
@@ -52,6 +74,7 @@ public class GraphicPanel extends JPanel {
             repaint();
             return;
         }
+        shiftTotal += shift;
         repaint();
     }
 
@@ -65,6 +88,15 @@ public class GraphicPanel extends JPanel {
     //takes a fraction for an integer
     public int fraction(int value, int num, int denom) {
         return (value * num) / denom;
+    }
+
+    //toggles for the restMode and playMode class variables
+    public void toggleRest() {
+        restMode = !restMode;
+    }
+
+    public void togglePlay() {
+        playMode = !playMode;
     }
 
     //determines the location of the closest x-snap point
@@ -85,11 +117,15 @@ public class GraphicPanel extends JPanel {
         } else {
             return (buffer + 1) * 50;
         }
-        */
-        return runningCount * 50;
+         */
+        return (runningCount * 50) - shiftTotal;
     }
 
     public int closestYSnap(int y) {
+        if (restMode) {
+            return yMarginStart + fraction(yMarginEnd - yMarginStart, 1, 2);
+        }
+
         if (y < yMarginStart) {
             return yMarginStart;
         } else if (y > yMarginEnd) {
@@ -108,6 +144,18 @@ public class GraphicPanel extends JPanel {
         }
     }
 
+    //returns an image--encapsulates the process of creating a bufferedImage
+    public Image summon(String filePath, int width, int height) {
+        BufferedImage icon = null;
+        try {
+            icon = ImageIO.read(new File(filePath));
+        } catch (IOException ex) {
+            Logger.getLogger(GraphicPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Image img = icon.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return img;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         // Clear all of the panel content before drawing
@@ -122,6 +170,7 @@ public class GraphicPanel extends JPanel {
         }
         Image treble = clefIcon.getScaledInstance(150, yMarginEnd - yMarginStart, Image.SCALE_SMOOTH);
         g.drawImage(treble, xMarginBuffer, yMarginStart, this);
+        
 
         //draws the vertical staff lines to start with and returns the color to black
         g.setColor(Color.black);
