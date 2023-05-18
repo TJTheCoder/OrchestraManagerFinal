@@ -39,8 +39,8 @@ public class MainWindow extends javax.swing.JFrame {
     private File directory2;
     private File[] files2;
 
-    private ArrayList<File> songs;
-    private ArrayList<File> covers;
+    private ArrayList<String> songs;
+    private ArrayList<String> covers;
 
     private int songNumber;
     private ArrayList<String> filePath;
@@ -61,6 +61,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private Image play2;
     private Image pause2;
+    private MediaPlayer mediaPlayer;
+    private String[] headers;
 
     /**
      * Creates new form GUI3
@@ -87,9 +89,10 @@ public class MainWindow extends javax.swing.JFrame {
         directory = new File("music");
         files = directory.listFiles();
         if (files != null) {
-            songs.addAll(Arrays.asList(files));
-            songs1 = "music\\Butter.wav";
-            songs2 = "music\\Solo.wav";
+            for (int i = 0; i < files.length; i++){
+                songs.add(files[i].getAbsolutePath());
+            }
+            
         }
         System.out.println(songs);
 
@@ -140,27 +143,32 @@ public class MainWindow extends javax.swing.JFrame {
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
 
         coverShow_label.setIcon(new ImageIcon(img1));
-        coverShow2_label.setIcon(new ImageIcon(img1));
+        coverShow2_label.setIcon(new ImageIcon(img));
 
         ((GraphicPanel) composerPanel).paint();
 
-        covers = new ArrayList<File>();
-        directory2 = new File("music");
+        covers = new ArrayList<>();
+        directory2 = new File("images");
         files2 = directory.listFiles();
         if (files2 != null) {
-            covers.addAll(Arrays.asList(files2));
+            for (int j = 0; j < files2.length; j++){
+                covers.add(files2[j].getAbsolutePath());
+            }
         }
 
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img2));
         //media = new Media(songs.get(songNumber).toURI().toString());
         //mediaPlayer = new MediaPlayer(media);
+        headers = songs.get(songNumber).split("\\.");
 
-        albumName2_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
-        albumName_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
+        albumName2_label.setText((headers[0].substring(91)));
+        albumName_label.setText((headers[0].substring(91)));
 
-        artist_label.setText(getArtist());
+        
+        
         buildSongsTable();
+        mediaPlayer = new MediaPlayer(songs.get(0));
     }
 
     /**
@@ -275,7 +283,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(coverShow2_label, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -357,9 +365,6 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(progressBar_slider, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(148, 148, 148))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
-                        .addComponent(coverShow_label, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(337, 337, 337))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
                         .addComponent(albumName_label, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(360, 360, 360))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
@@ -367,7 +372,10 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGap(88, 88, 88))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
                         .addComponent(artist_label, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(447, 447, 447))))
+                        .addGap(447, 447, 447))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player_panelLayout.createSequentialGroup()
+                        .addComponent(coverShow_label, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(337, 337, 337))))
         );
         player_panelLayout.setVerticalGroup(
             player_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +385,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(albumName_label, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(artist_label, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addComponent(artist_label, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -498,16 +506,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
-        try {
-            mediaPlayer = new MediaPlayer(songs1);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\pause.png"));
@@ -532,16 +531,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_volume_sliderMousePressed
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
-        try {
-            mediaPlayer = new MediaPlayer(songs1);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        mediaPlayer.pause();
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\play.png"));
@@ -551,28 +541,24 @@ public class MainWindow extends javax.swing.JFrame {
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
         mediaPlayer.play();
+        
+        headers = songs.get(songNumber).split("\\.");
+        albumName2_label.setText((headers[0].substring(91)));
+        albumName_label.setText((headers[0].substring(91)));
+        artist_label.setText(headers[1]);
+        
         int one = 1;
         System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
 
     private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
         Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
 
-        try {
-            mediaPlayer = new MediaPlayer(songs1);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if (songNumber > 0) {
             songNumber--;
-            mediaPlayer.pause();
-            String media = songs.get(songNumber).getName();
+            mediaPlayer.stop();
+            String media = songs.get(songNumber);
             try {
                 mediaPlayer = new MediaPlayer(media);
             } catch (UnsupportedAudioFileException ex) {
@@ -585,7 +571,7 @@ public class MainWindow extends javax.swing.JFrame {
             mediaPlayer.play();
         } else {
             songNumber = 0;
-            mediaPlayer.pause();
+            mediaPlayer.stop();
             String media = null;
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -598,6 +584,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
             mediaPlayer.play();
         }
+        headers = songs.get(songNumber).split("\\.");
+        albumName2_label.setText((headers[0].substring(91)));
+        albumName_label.setText((headers[0].substring(91)));
+        artist_label.setText(headers[1]);
+        
         System.out.println(songNumber);
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
@@ -609,23 +600,14 @@ public class MainWindow extends javax.swing.JFrame {
      */
 
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
         //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-
-        try {
-            mediaPlayer = new MediaPlayer(songs2);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        
         if (songNumber < songs.size() - 1) {
             songNumber++;
-            mediaPlayer.pause();
-            String media = songs.get(songNumber).getName();
+            mediaPlayer.stop();
+            String media = songs.get(songNumber);
             try {
                 mediaPlayer = new MediaPlayer(media);
             } catch (UnsupportedAudioFileException ex) {
@@ -638,7 +620,7 @@ public class MainWindow extends javax.swing.JFrame {
             mediaPlayer.play();
         } else {
             songNumber = 0;
-            mediaPlayer.pause();
+            mediaPlayer.stop();
             String media = null;
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -651,6 +633,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
             mediaPlayer.play();
         }
+        headers = songs.get(songNumber).split("\\.");
+        albumName2_label.setText((headers[0].substring(91)));
+        albumName_label.setText((headers[0].substring(91)));
+        artist_label.setText(headers[1]);
+        
         System.out.println(songNumber);
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
@@ -659,19 +646,17 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_progressBar_sliderMousePressed
 
     private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
-        if (songNumber != (int) (Math.random() * directory.listFiles().length)) {
-            songNumber = (int) (Math.random() * directory.listFiles().length);
+        mediaPlayer.pause();
+        
+        if ((Math.random() * directory.listFiles().length) < .5){
+            songNumber = 0;
         }
-        songs = new ArrayList<>();
-        directory = new File("music");
-        files = directory.listFiles();
-        if (files != null) {
-            songs.addAll(Arrays.asList(files));
+        else{
+            songNumber = (int) (Math.random() * files.length);
         }
-        System.out.println(songs);
-        MediaPlayer mediaPlayer = null;
+        
         try {
-            mediaPlayer = new MediaPlayer(songs2);
+            mediaPlayer = new MediaPlayer(songs.get(songNumber));
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
@@ -679,22 +664,19 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println(songs);
         mediaPlayer.play();
-        //        MediaPlayer.play(songNumber);
+        
+        headers = songs.get(songNumber).split("\\.");
+        albumName2_label.setText((headers[0].substring(91)));
+        albumName_label.setText((headers[0].substring(91)));
+        artist_label.setText(headers[1]);
+        
         System.out.println(songNumber);
     }//GEN-LAST:event_Shuffle_buttonActionPerformed
 
     private void play2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play2_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
-        try {
-            mediaPlayer = new MediaPlayer(songs1);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        mediaPlayer.pause();
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\play.png"));
@@ -825,41 +807,27 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JSlider volume_slider;
     // End of variables declaration//GEN-END:variables
-    private void buildSongsTable() {
+    private void buildSongsTable() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        
         Object[][] data = new Object[directory.listFiles().length][4];
         String[] columnHeaders = {"Title", "Artist", "Genre", "Time"};
         int row = 0;
-        for (File i : files) {
-//            Schedule schedule = schedules.get(key);
-            data[row][0] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
-            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
-                data[row][1] = "BTS";
-            } else {
-                data[row][1] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
-            }
-            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
-                data[row][2] = "K-Pop";
-            } else {
-                data[row][2] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 2));
-            }
-            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
-                data[row][3] = ((songs.get(songNumber).getName().length()) * 30) + " seconds";
-            } else {
-                data[row][3] = (30 * (songs.get(songNumber).getName().length())) + " seconds";
-            }
+        for (int i = 0; i < files.length; i++) {
+            headers = songs.get(i).split("\\.");
+            mediaPlayer = new MediaPlayer(songs.get(i));
+            data[row][0] = headers[0].substring(91);
+            data[row][1] = headers[1];
+            data[row][2] = headers[2];
+            data[row][3] = ((int)((mediaPlayer.getMicrosecondLength()) / 1000000)) + " seconds";
             row++;
-            songNumber++;
 
         }
+        headers = songs.get(songNumber).split("\\.");
+        artist_label.setText(headers[1]);
         DefaultTableModel dfm = new DefaultTableModel(data, columnHeaders);
         songsTable_table.setModel(dfm);
     }
 
-    private String getArtist() {
-        if (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4).equals("Butter")) {
-            return "BTS";
-        }
-        return "NONE";
-    }
+
 
 }
