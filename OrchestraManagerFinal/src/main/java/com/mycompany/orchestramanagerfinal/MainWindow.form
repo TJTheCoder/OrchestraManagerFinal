@@ -335,6 +335,12 @@
               <Color blue="c9" green="eb" red="34" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="composerPanelMouseMoved"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new GraphicPanel()"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Composer">
@@ -384,14 +390,14 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="CRUDButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="Whole" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
                               <Component id="Half" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
                               <Component id="NoteRest" alignment="3" min="-2" pref="69" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="CRUDButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                           <Component id="Quarter" min="-2" pref="71" max="-2" attributes="0"/>
                       </Group>

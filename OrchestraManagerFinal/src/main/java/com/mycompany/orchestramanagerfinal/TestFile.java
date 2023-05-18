@@ -12,9 +12,10 @@ public class TestFile {
     //test method to ensure that all methods are operational
     public static void main (String[] args)
     {
-        //Fugue fug = new Fugue("T120 Cq Bw Dq Rw Rw Rw Eq Fw Aq Cw Fh Gq");
-        //fug.sing();
+        Fugue fug = new Fugue("Cq Bw Dq Rw Rw Rw Eq Fw Aq Cw Fh Gq");
+        fug.sing();
         
+        /*
         NoteList list = new NoteList(150);
         
         Note n1 = new Note("C", 4, 9);
@@ -34,5 +35,6 @@ public class TestFile {
         
         list.delete(1);
         System.out.println(list);
+*/
     }
 }

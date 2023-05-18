@@ -5,6 +5,7 @@
 package com.mycompany.orchestramanagerfinal;
 
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -49,7 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
     //tracks whether or not to display rests in the composer tab and whether to play or not
     private boolean restMode;
     private boolean playMode;
-    
+
     //creates class variables for the Image objects such that methods can reference them
     private Image restQ;
     private Image restH;
@@ -57,15 +58,30 @@ public class MainWindow extends javax.swing.JFrame {
     private Image noteQ;
     private Image noteH;
     private Image noteW;
-    
-    private Image playC;
-    private Image pauseC;
+
+    private Image play2;
+    private Image pause2;
+
     /**
      * Creates new form GUI3
      */
     public MainWindow() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         initComponents();
         setResizable(false);
+
+        //adding mouseListeners to the panel so it can track the location of the mouse
+        composerPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                ((GraphicPanel) composerPanel).updateMouseCoords(getX(), getY());
+            }
+        });
+        composerPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                ((GraphicPanel) composerPanel).updateMouseCoords(getX(), getY());
+            }
+        });
 
         songs = new ArrayList<>();
         directory = new File("music");
@@ -91,6 +107,10 @@ public class MainWindow extends javax.swing.JFrame {
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
 
+        //clone Images to be used in the Composer method
+        pause2 = icons.getScaledInstance(71, 69, Image.SCALE_SMOOTH);
+        play2 = icons2.getScaledInstance(71, 69, Image.SCALE_SMOOTH);
+
         //creates images based on all the initialized icons
         restW = restWIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
         restH = restHIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
@@ -101,9 +121,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
-        
+
         //sets the composer play button to default, which is the play button
-        PlayStop.setIcon(new ImageIcon(play));
+        PlayStop.setIcon(new ImageIcon(play2));
         playMode = false;
 
         //sets starting icons for the three placement buttons in the composer
@@ -121,6 +141,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img1));
+
+        ((GraphicPanel) composerPanel).paint();
 
         covers = new ArrayList<File>();
         directory2 = new File("music");
@@ -170,7 +192,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         artist_label = new javax.swing.JLabel();
         pause_button = new javax.swing.JButton();
-        composerPanel = new javax.swing.JPanel();
+        composerPanel = new GraphicPanel();
         Forward = new javax.swing.JButton();
         Back = new javax.swing.JButton();
         Whole = new javax.swing.JButton();
@@ -374,6 +396,11 @@ public class MainWindow extends javax.swing.JFrame {
         tabs.addTab("Player", player_panel);
 
         composerPanel.setBackground(new java.awt.Color(52, 235, 201));
+        composerPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                composerPanelMouseMoved(evt);
+            }
+        });
 
         Whole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,13 +456,13 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(composerPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(composerPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Whole, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Half, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(composerPanelLayout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Quarter, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,6 +601,13 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(songNumber);
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
+    /*
+    //reader that checks if the mouse cursor moved
+    private void mouseMoved(MouseEvent e) {
+        ((GraphicPanel) composerPanel).updateMouseCoords(getX(), getY());
+    }
+     */
+
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
         //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
@@ -686,8 +720,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             //default starting state is in note mode, so the toggle should demonstrate the option to go to rest mode
             NoteRest.setText("To Rest");
-        }
-        else {
+        } else {
             //sets the alternate set of icons for the three placement buttons in the composer
             Quarter.setIcon(new ImageIcon(restQ));
             Half.setIcon(new ImageIcon(restH));
@@ -702,12 +735,20 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void PlayStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayStopActionPerformed
         //changes the icon depending on the current state
-        if (!playMode) PlayStop.setIcon(new ImageIcon(pause));
-        else PlayStop.setIcon(new ImageIcon(play));
-        
+        if (!playMode) {
+            PlayStop.setIcon(new ImageIcon(pause2));
+        } else {
+            PlayStop.setIcon(new ImageIcon(play2));
+        }
+
         //toggles the variables storing the current state
         playMode = !playMode;
     }//GEN-LAST:event_PlayStopActionPerformed
+
+    //updatesMouseCoordinates if the mouse is moved at all
+    private void composerPanelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMouseMoved
+        ((GraphicPanel) composerPanel).updateMouseCoords(evt.getX(), evt.getY());
+    }//GEN-LAST:event_composerPanelMouseMoved
 
     /**
      * @param args the command line arguments
