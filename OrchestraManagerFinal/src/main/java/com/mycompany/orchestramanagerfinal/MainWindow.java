@@ -98,6 +98,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
         BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
+        
+        //creates buffered images for the forward and backward arrow
+        BufferedImage iconsLeft = ImageIO.read(new File("buttons\\faceLeft.png"));
+        BufferedImage iconsRight = ImageIO.read(new File("buttons\\faceRight.png"));
 
         //initializes icons for all the notes/rests in the Composer panel
         BufferedImage restWIcon = ImageIO.read(new File("notes\\restW.png"));
@@ -109,6 +113,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
+        
+        //transfers the data from the buffered image into images
+        Image left = iconsLeft.getScaledInstance(46, 41, Image.SCALE_SMOOTH);
+        Image right = iconsRight.getScaledInstance(46, 41, Image.SCALE_SMOOTH);
 
         //clone Images to be used in the Composer method
         pause2 = icons.getScaledInstance(71, 69, Image.SCALE_SMOOTH);
@@ -124,6 +132,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
+        
+        //adds the images for the move left and move right arrows to the actual buttons
+        Back.setIcon(new ImageIcon(left));
+        Forward.setIcon(new ImageIcon(right));
 
         //sets the composer play button to default, which is the play button
         PlayStop.setIcon(new ImageIcon(play2));
@@ -407,6 +419,28 @@ public class MainWindow extends javax.swing.JFrame {
         composerPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 composerPanelMouseMoved(evt);
+            }
+        });
+
+        Forward.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ForwardMousePressed(evt);
+            }
+        });
+        Forward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ForwardActionPerformed(evt);
+            }
+        });
+
+        Back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackMouseClicked(evt);
+            }
+        });
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
             }
         });
 
@@ -731,6 +765,24 @@ public class MainWindow extends javax.swing.JFrame {
     private void composerPanelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMouseMoved
         ((GraphicPanel) composerPanel).updateMouseCoords(evt.getX(), evt.getY());
     }//GEN-LAST:event_composerPanelMouseMoved
+
+    //the next two methods make it so that the staff can be moved from side to side
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        //((GraphicPanel) composerPanel).frameShift(-10);
+    }//GEN-LAST:event_BackActionPerformed
+
+    private void ForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardActionPerformed
+        //((GraphicPanel) composerPanel).frameShift(10);
+    }//GEN-LAST:event_ForwardActionPerformed
+
+    //the next two methods make it so that the staff can be moved from side to side
+    private void BackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseClicked
+        ((GraphicPanel) composerPanel).frameShift(-10);
+    }//GEN-LAST:event_BackMouseClicked
+
+    private void ForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMousePressed
+        ((GraphicPanel) composerPanel).frameShift(10);
+    }//GEN-LAST:event_ForwardMousePressed
 
     /**
      * @param args the command line arguments

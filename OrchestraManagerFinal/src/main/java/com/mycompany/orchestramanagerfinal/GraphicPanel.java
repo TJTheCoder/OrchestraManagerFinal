@@ -6,7 +6,15 @@ package com.mycompany.orchestramanagerfinal;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -21,12 +29,29 @@ public class GraphicPanel extends JPanel {
     int yMarginStart = 175;
     int yMarginEnd = 450;
 
+    //sets the maximum length of the staff
+    //int far = 960;
+    int far = 10000;
+    
+    int runningCount = 5;
+
     //integers to store the coordinates of the user's mouse
     int mouseX;
     int mouseY;
 
     //calls the repaint() method
     public void paint() {
+        repaint();
+    }
+
+    //shifts all horizontal elements over by modifying the xMarginBuffer and far
+    public void frameShift(int shift) {
+        xMarginBuffer -= shift;
+        if (xMarginBuffer > 50) {
+            xMarginBuffer = 50;
+            repaint();
+            return;
+        }
         repaint();
     }
 
@@ -44,6 +69,14 @@ public class GraphicPanel extends JPanel {
 
     //determines the location of the closest x-snap point
     public int closestXSnap(int x) {
+        /*
+        if (x < xMarginBuffer) {
+            return xMarginBuffer;
+        }
+        if (x > far) {
+            return far;
+        }
+
         int filter = x % 50;
         int buffer = x / 50;
 
@@ -52,6 +85,8 @@ public class GraphicPanel extends JPanel {
         } else {
             return (buffer + 1) * 50;
         }
+        */
+        return runningCount * 50;
     }
 
     public int closestYSnap(int y) {
@@ -78,12 +113,20 @@ public class GraphicPanel extends JPanel {
         // Clear all of the panel content before drawing
         super.paintComponent(g);
 
-        //sets the maximum length of the staff
-        int far = 10000;
+        //creates and displays the treble clef icon on the composer
+        BufferedImage clefIcon = null;
+        try {
+            clefIcon = ImageIO.read(new File("images\\trebleClef.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(GraphicPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Image treble = clefIcon.getScaledInstance(150, yMarginEnd - yMarginStart, Image.SCALE_SMOOTH);
+        g.drawImage(treble, xMarginBuffer, yMarginStart, this);
 
-        //draws the vertical staff line to start with and returns the color to black
+        //draws the vertical staff lines to start with and returns the color to black
         g.setColor(Color.black);
         g.drawLine(xMarginBuffer, yMarginStart, xMarginBuffer, yMarginEnd);
+        g.drawLine(far, yMarginStart, far, yMarginEnd);
 
         //draws the five lines of the staff
         g.drawLine(xMarginBuffer, yMarginStart, far, yMarginStart);
