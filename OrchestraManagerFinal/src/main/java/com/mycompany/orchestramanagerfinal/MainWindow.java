@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.orchestramanagerfinal;
+
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -21,76 +22,121 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author atxbr
  */
-public class GUI3 extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame {
+
     private final BufferedImage pause = ImageIO.read(new File("buttons\\pause.png"));
     private final BufferedImage play = ImageIO.read(new File("buttons\\play.png"));
 
-    
     private File directory;
     private File[] files;
-        
+
     private File directory2;
     private File[] files2;
-        
+
     private ArrayList<File> songs;
     private ArrayList<File> covers;
-        
+
     private int songNumber;
     private ArrayList<String> filePath;
     private String songs1;
     private String songs2;
+
+    //tracks whether or not to display rests in the composer tab and whether to play or not
+    private boolean restMode;
+    private boolean playMode;
+    
+    //creates class variables for the Image objects such that methods can reference them
+    private Image restQ;
+    private Image restH;
+    private Image restW;
+    private Image noteQ;
+    private Image noteH;
+    private Image noteW;
+    
+    private Image playC;
+    private Image pauseC;
     /**
      * Creates new form GUI3
      */
-    public GUI3() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public MainWindow() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         initComponents();
         setResizable(false);
-        
+
         songs = new ArrayList<>();
-	directory = new File("music");
-	files = directory.listFiles();
-	if(files != null) {
+        directory = new File("music");
+        files = directory.listFiles();
+        if (files != null) {
             songs.addAll(Arrays.asList(files));
             songs1 = "music\\Butter.wav";
             songs2 = "music\\Solo.wav";
-	}
+        }
         System.out.println(songs);
-        
+
         BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
         BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
-        
+
+        //initializes icons for all the notes/rests in the Composer panel
+        BufferedImage restWIcon = ImageIO.read(new File("notes\\restW.png"));
+        BufferedImage restHIcon = ImageIO.read(new File("notes\\restH.png"));
+        BufferedImage restQIcon = ImageIO.read(new File("notes\\restQ.png"));
+        BufferedImage noteWIcon = ImageIO.read(new File("notes\\noteW.png"));
+        BufferedImage noteHIcon = ImageIO.read(new File("notes\\noteH.png"));
+        BufferedImage noteQIcon = ImageIO.read(new File("notes\\noteQ.png"));
+
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
-        
+
+        //creates images based on all the initialized icons
+        restW = restWIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+        restH = restHIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+        restQ = restQIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+        noteW = noteWIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+        noteH = noteHIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+        noteQ = noteQIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
+
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
+        
+        //sets the composer play button to default, which is the play button
+        PlayStop.setIcon(new ImageIcon(play));
+        playMode = false;
+
+        //sets starting icons for the three placement buttons in the composer
+        Quarter.setIcon(new ImageIcon(noteQ));
+        Half.setIcon(new ImageIcon(noteH));
+        Whole.setIcon(new ImageIcon(noteW));
+
+        //default starting state is in note mode, so the toggle should demonstrate the option to go to rest mode
+        NoteRest.setText("To Rest");
+        restMode = false;
 
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
         Image img1 = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
-        
+
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img1));
-        
-	covers = new ArrayList<File>();
-	directory2 = new File("music");
-	files2 = directory.listFiles();
-	if(files2 != null) {
+
+        covers = new ArrayList<File>();
+        directory2 = new File("music");
+        files2 = directory.listFiles();
+        if (files2 != null) {
             covers.addAll(Arrays.asList(files2));
-	}
-        
+        }
+
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img2));
-	//media = new Media(songs.get(songNumber).toURI().toString());
-	//mediaPlayer = new MediaPlayer(media);
+        //media = new Media(songs.get(songNumber).toURI().toString());
+        //mediaPlayer = new MediaPlayer(media);
 
-	albumName2_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
+        albumName2_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
         albumName_label.setText((songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4)));
-        
+
         artist_label.setText(getArtist());
         buildSongsTable();
     }
@@ -104,6 +150,7 @@ public class GUI3 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         tabs = new javax.swing.JTabbedPane();
         shuffle_panel = new javax.swing.JPanel();
         play2_button = new javax.swing.JButton();
@@ -123,7 +170,17 @@ public class GUI3 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         artist_label = new javax.swing.JLabel();
         pause_button = new javax.swing.JButton();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        composerPanel = new javax.swing.JPanel();
+        Forward = new javax.swing.JButton();
+        Back = new javax.swing.JButton();
+        Whole = new javax.swing.JButton();
+        Quarter = new javax.swing.JButton();
+        Half = new javax.swing.JButton();
+        PlayStop = new javax.swing.JToggleButton();
+        NoteRest = new javax.swing.JToggleButton();
+        CRUDButton = new javax.swing.JComboBox<>();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -315,173 +372,154 @@ public class GUI3 extends javax.swing.JFrame {
         );
 
         tabs.addTab("Player", player_panel);
-        tabs.addTab("Composer", jTabbedPane2);
+
+        composerPanel.setBackground(new java.awt.Color(52, 235, 201));
+
+        Whole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WholeActionPerformed(evt);
+            }
+        });
+
+        PlayStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayStopActionPerformed(evt);
+            }
+        });
+
+        NoteRest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NoteRestActionPerformed(evt);
+            }
+        });
+
+        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout composerPanelLayout = new javax.swing.GroupLayout(composerPanel);
+        composerPanel.setLayout(composerPanelLayout);
+        composerPanelLayout.setHorizontalGroup(
+            composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
+                .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(composerPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(PlayStop, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(composerPanelLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(Quarter)
+                        .addGap(39, 39, 39)
+                        .addComponent(Half)
+                        .addGap(39, 39, 39)
+                        .addComponent(Whole)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(composerPanelLayout.createSequentialGroup()
+                        .addGap(398, 398, 398)
+                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(composerPanelLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(Forward, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
+        );
+        composerPanelLayout.setVerticalGroup(
+            composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(composerPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Whole, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Half, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(composerPanelLayout.createSequentialGroup()
+                            .addGap(22, 22, 22)
+                            .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Quarter, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
+                .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
+                        .addComponent(PlayStop, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
+                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
+                        .addComponent(Forward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
+        );
+
+        tabs.addTab("Composer", composerPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1009, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabs)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(tabs)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
-        if (songNumber != (int)(Math.random() * directory.listFiles().length)){
-            songNumber = (int)(Math.random() * directory.listFiles().length);
-        }
-        songs = new ArrayList<>();
-	directory = new File("music");
-	files = directory.listFiles();
-	if(files != null) {
-            songs.addAll(Arrays.asList(files));
-	}
-        System.out.println(songs);
+    private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
-        try {
-            mediaPlayer = new MediaPlayer(songs2);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        mediaPlayer.play();
-        //        MediaPlayer.play(songNumber);
-        System.out.println(songNumber);
-
-    }//GEN-LAST:event_Shuffle_buttonActionPerformed
-
-    private void progressBar_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMousePressed
-        //        MediaPlayer.seek(Duration.seconds(progressBar.getValue()));
-    }//GEN-LAST:event_progressBar_sliderMousePressed
-
-    private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
-        //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        
-        try {
-            mediaPlayer = new MediaPlayer(songs2);
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(songNumber < songs.size() - 1) {
-            songNumber++;
-            mediaPlayer.pause();
-            String media = songs.get(songNumber).getName();
-            try {
-                mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        mediaPlayer.play();
-	}
-        
-        
-	else {
-            songNumber = 0;
-            mediaPlayer.pause();
-            String media = null;
-            try {			
-                mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            mediaPlayer.play();
-        }
-        System.out.println(songNumber);
-    }//GEN-LAST:event_skipFor_buttonActionPerformed
-
-    private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
-        MediaPlayer mediaPlayer = null;
-        Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        
         try {
             mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(songNumber > 0) {
-            songNumber--;
-            mediaPlayer.pause();
-            String media = songs.get(songNumber).getName();
-            try {
-                mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        BufferedImage icons = null;
+        try {
+            icons = ImageIO.read(new File("buttons\\pause.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        mediaPlayer.play();
-	}
-        
-        
-	else {
-            songNumber = 0;
-            mediaPlayer.pause();
-            String media = null;
-            try {			
-                mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            mediaPlayer.play();
-        } 
+        Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+        pause_button.setIcon(new ImageIcon(pause));
+        mediaPlayer.pause();
         System.out.println(songNumber);
+    }//GEN-LAST:event_pause_buttonActionPerformed
 
-    }//GEN-LAST:event_skipBack_buttonActionPerformed
+    private void volume_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volume_sliderMousePressed
+        //        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+        //
+        //			@Override
+        //			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+        //
+        //				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+        //			}
+        //		});
+    }//GEN-LAST:event_volume_sliderMousePressed
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
         try {
             mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\play.png"));
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
@@ -490,64 +528,186 @@ public class GUI3 extends javax.swing.JFrame {
         System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
 
-    private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
+    private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
+        Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+
         try {
             mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        BufferedImage icons = null;
-        try {
-            icons = ImageIO.read(new File("buttons\\pause.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+        if (songNumber > 0) {
+            songNumber--;
+            mediaPlayer.pause();
+            String media = songs.get(songNumber).getName();
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
+        } else {
+            songNumber = 0;
+            mediaPlayer.pause();
+            String media = null;
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
         }
-        Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
-        pause_button.setIcon(new ImageIcon(pause));
-        mediaPlayer.pause();
         System.out.println(songNumber);
+    }//GEN-LAST:event_skipBack_buttonActionPerformed
 
-    }//GEN-LAST:event_pause_buttonActionPerformed
+    private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
+        MediaPlayer mediaPlayer = null;
+        //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+        //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
+
+        try {
+            mediaPlayer = new MediaPlayer(songs2);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (songNumber < songs.size() - 1) {
+            songNumber++;
+            mediaPlayer.pause();
+            String media = songs.get(songNumber).getName();
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
+        } else {
+            songNumber = 0;
+            mediaPlayer.pause();
+            String media = null;
+            try {
+                mediaPlayer = new MediaPlayer(media);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            mediaPlayer.play();
+        }
+        System.out.println(songNumber);
+    }//GEN-LAST:event_skipFor_buttonActionPerformed
+
+    private void progressBar_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMousePressed
+        //        MediaPlayer.seek(Duration.seconds(progressBar.getValue()));
+    }//GEN-LAST:event_progressBar_sliderMousePressed
+
+    private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
+        if (songNumber != (int) (Math.random() * directory.listFiles().length)) {
+            songNumber = (int) (Math.random() * directory.listFiles().length);
+        }
+        songs = new ArrayList<>();
+        directory = new File("music");
+        files = directory.listFiles();
+        if (files != null) {
+            songs.addAll(Arrays.asList(files));
+        }
+        System.out.println(songs);
+        MediaPlayer mediaPlayer = null;
+        try {
+            mediaPlayer = new MediaPlayer(songs2);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mediaPlayer.play();
+        //        MediaPlayer.play(songNumber);
+        System.out.println(songNumber);
+    }//GEN-LAST:event_Shuffle_buttonActionPerformed
 
     private void play2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play2_buttonActionPerformed
         MediaPlayer mediaPlayer = null;
         try {
             mediaPlayer = new MediaPlayer(songs1);
         } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LineUnavailableException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\play.png"));
         } catch (IOException ex) {
-            Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
         mediaPlayer.play();
         System.out.println(songNumber);
-
     }//GEN-LAST:event_play2_buttonActionPerformed
 
-    private void volume_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volume_sliderMousePressed
-//        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-//				
-//				mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);			
-//			}
-//		});
-    }//GEN-LAST:event_volume_sliderMousePressed
+    private void WholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WholeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WholeActionPerformed
+
+    private void NoteRestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoteRestActionPerformed
+        if (restMode) {
+            //sets starting icons for the three placement buttons in the composer
+            Quarter.setIcon(new ImageIcon(noteQ));
+            Half.setIcon(new ImageIcon(noteH));
+            Whole.setIcon(new ImageIcon(noteW));
+
+            //default starting state is in note mode, so the toggle should demonstrate the option to go to rest mode
+            NoteRest.setText("To Rest");
+        }
+        else {
+            //sets the alternate set of icons for the three placement buttons in the composer
+            Quarter.setIcon(new ImageIcon(restQ));
+            Half.setIcon(new ImageIcon(restH));
+            Whole.setIcon(new ImageIcon(restW));
+
+            //turns it to rest mode, so now it asks whether to turn back to note mode
+            NoteRest.setText("To Note");
+        }
+        //toggles restMode for future access
+        restMode = !restMode;
+    }//GEN-LAST:event_NoteRestActionPerformed
+
+    private void PlayStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayStopActionPerformed
+        //changes the icon depending on the current state
+        if (!playMode) PlayStop.setIcon(new ImageIcon(pause));
+        else PlayStop.setIcon(new ImageIcon(play));
+        
+        //toggles the variables storing the current state
+        playMode = !playMode;
+    }//GEN-LAST:event_PlayStopActionPerformed
 
     /**
      * @param args the command line arguments
@@ -566,42 +726,52 @@ public class GUI3 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new GUI3().setVisible(true);
+                    new MainWindow().setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (UnsupportedAudioFileException ex) {
-                    Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (LineUnavailableException ex) {
-                    Logger.getLogger(GUI3.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
+    private javax.swing.JComboBox<String> CRUDButton;
+    private javax.swing.JButton Forward;
+    private javax.swing.JButton Half;
+    private javax.swing.JToggleButton NoteRest;
+    private javax.swing.JToggleButton PlayStop;
+    private javax.swing.JButton Quarter;
     private javax.swing.JButton Shuffle_button;
+    private javax.swing.JButton Whole;
     private javax.swing.JLabel albumName2_label;
     private javax.swing.JLabel albumName_label;
     private javax.swing.JLabel artist_label;
+    private javax.swing.JPanel composerPanel;
     private javax.swing.JLabel coverShow2_label;
     private javax.swing.JLabel coverShow_label;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JButton pause_button;
     private javax.swing.JButton play2_button;
     private javax.swing.JButton play_button;
@@ -614,40 +784,38 @@ public class GUI3 extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JSlider volume_slider;
     // End of variables declaration//GEN-END:variables
-    private void buildSongsTable(){
+    private void buildSongsTable() {
         Object[][] data = new Object[directory.listFiles().length][4];
-        String[] columnHeaders = {"Title" , "Artist", "Genre", "Time"};
+        String[] columnHeaders = {"Title", "Artist", "Genre", "Time"};
         int row = 0;
         for (File i : files) {
 //            Schedule schedule = schedules.get(key);
             data[row][0] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
-            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
+            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
                 data[row][1] = "BTS";
-            }
-            else{
+            } else {
                 data[row][1] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4));
             }
-            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
+            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
                 data[row][2] = "K-Pop";
-            }
-            else{
+            } else {
                 data[row][2] = (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 2));
             }
-            if(data[row][0].equals("Butter") || data[row][0].equals("Solo")){
+            if (data[row][0].equals("Butter") || data[row][0].equals("Solo")) {
                 data[row][3] = ((songs.get(songNumber).getName().length()) * 30) + " seconds";
-            }
-            else{
+            } else {
                 data[row][3] = (30 * (songs.get(songNumber).getName().length())) + " seconds";
             }
             row++;
             songNumber++;
-            
+
         }
         DefaultTableModel dfm = new DefaultTableModel(data, columnHeaders);
         songsTable_table.setModel(dfm);
     }
-    private String getArtist(){
-        if(songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4).equals("Butter")){
+
+    private String getArtist() {
+        if (songs.get(songNumber).getName().substring(0, songs.get(songNumber).getName().length() - 4).equals("Butter")) {
             return "BTS";
         }
         return "NONE";
