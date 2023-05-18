@@ -93,6 +93,18 @@ public class GraphicPanel extends JPanel {
     //toggles for the restMode and playMode class variables
     public void toggleRest() {
         restMode = !restMode;
+        
+        //allows toggling of the notes/rests
+        currentSet += 3;
+        if (currentSet > 5)
+        {
+            switch (currentSet)
+            {
+                case 6 -> currentSet = 0;
+                case 7 -> currentSet = 1;
+                case 8 -> currentSet = 2;
+            }
+        }
     }
 
     public void togglePlay() {
@@ -121,25 +133,34 @@ public class GraphicPanel extends JPanel {
         return (runningCount * 50) - shiftTotal;
     }
 
+    //determines the location of the closest y snap point
     public int closestYSnap(int y) {
         if (restMode) {
             return yMarginStart + fraction(yMarginEnd - yMarginStart, 1, 2);
         }
 
-        if (y < yMarginStart) {
+        if (y < yMarginStart)
+        {
             return yMarginStart;
-        } else if (y > yMarginEnd) {
-            return yMarginEnd;
+        }
+        else if (y > yMarginEnd)
+        {
+            //return yMarginEnd;
+            return (8 * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
         }
 
         y -= yMarginStart;
 
         int filter = y % fraction(yMarginEnd - yMarginStart, 1, 8);
         int buffer = y / fraction(yMarginEnd - yMarginStart, 1, 8);
+        
+        System.out.println(buffer);
 
         if (filter < fraction(yMarginEnd - yMarginStart, 1, 16)) {
             return (buffer * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
-        } else {
+        } 
+        else
+        {
             return ((buffer + 1) * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
         }
     }
@@ -184,8 +205,20 @@ public class GraphicPanel extends JPanel {
         g.drawLine(xMarginBuffer, yMarginStart + fraction(yMarginEnd - yMarginStart, 3, 4), far, yMarginStart + fraction(yMarginEnd - yMarginStart, 3, 4));
         g.drawLine(xMarginBuffer, yMarginStart + fraction(yMarginEnd - yMarginStart, 4, 4), far, yMarginStart + fraction(yMarginEnd - yMarginStart, 4, 4));
 
-        //draws an oval at the closest point--done at the end to be on the top
+        //draws a note/rest at the closest point--done at the end to be on the top
+        //uses a case-switch to determine what to draw
         g.setColor(Color.red);
-        g.fillOval(closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 5, 10, 10);
+        //g.fillOval(closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 5, 10, 10);
+        
+        
+        switch (currentSet)
+        {
+            case 0 -> g.drawImage(summon("notes\\noteQ.png",40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+            case 1 -> g.drawImage(summon("notes\\noteH.png",60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
+            case 2 -> g.drawImage(summon("notes\\noteW.png",50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+            case 3 -> g.drawImage(summon("notes\\restQ.png",40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
+            case 4 -> g.drawImage(summon("notes\\restH.png",50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
+            case 5 -> g.drawImage(summon("notes\\restW.png",50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+        }
     }
 }
