@@ -11,7 +11,7 @@ package com.mycompany.orchestramanagerfinal;
 public class NoteList {
 
     //initialize class variables
-    NoteNode head, tail = null;
+    public NoteNode head, tail = null;
     int tempo;
 
     //constructor and getters and setters for the tempo class variable
@@ -159,10 +159,12 @@ public class NoteList {
         }
     }
 
+    /*
     public void save()
     {
         
     }
+    */
     
     //returns the String such that it can be run with a Fugue object
     @Override

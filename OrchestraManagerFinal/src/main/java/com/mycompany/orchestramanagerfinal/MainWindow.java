@@ -421,6 +421,11 @@ public class MainWindow extends javax.swing.JFrame {
                 composerPanelMouseMoved(evt);
             }
         });
+        composerPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                composerPanelMousePressed(evt);
+            }
+        });
 
         Forward.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -810,6 +815,11 @@ public class MainWindow extends javax.swing.JFrame {
         if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(1);
         else ((GraphicPanel) composerPanel).changeCurrentSet(4);
     }//GEN-LAST:event_HalfActionPerformed
+
+    //allows the user to place down different notes in the composer
+    private void composerPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMousePressed
+        ((GraphicPanel) composerPanel).updateList();
+    }//GEN-LAST:event_composerPanelMousePressed
 
     /**
      * @param args the command line arguments
