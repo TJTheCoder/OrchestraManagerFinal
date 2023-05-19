@@ -12,7 +12,8 @@ public class TestFile {
     //test method to ensure that all methods are operational
     public static void main (String[] args)
     {
-        Fugue fug = new Fugue("I[Trumpet] C6q G5q C6q E5q E5q A5q A5q E5q E5q ");
+        //tests the Fugue maven changes
+        Fugue fug = new Fugue("I[Trumpet] C6q G5q C6q E5q E5q A5q A5q E5q E5q B6w");
         fug.sing();
         
         /*
