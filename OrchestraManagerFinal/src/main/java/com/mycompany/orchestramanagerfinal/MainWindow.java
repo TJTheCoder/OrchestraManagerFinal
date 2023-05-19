@@ -304,9 +304,9 @@ public class MainWindow extends javax.swing.JFrame {
         player_panel.setBackground(new java.awt.Color(0, 51, 102));
 
         progressBar_slider.setValue(1);
-        progressBar_slider.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                progressBar_sliderMousePressed(evt);
+        progressBar_slider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                progressBar_sliderStateChanged(evt);
             }
         });
 
@@ -693,10 +693,6 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(songNumber);
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
-    private void progressBar_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMousePressed
-        mediaPlayer.setFrames(mediaPlayer.getMicrosecondLength() * (progressBar_slider.getValue() / 100));
-    }//GEN-LAST:event_progressBar_sliderMousePressed
-
     private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
         mediaPlayer.pause();
         
@@ -828,6 +824,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void composerPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMousePressed
         ((GraphicPanel) composerPanel).updateList();
     }//GEN-LAST:event_composerPanelMousePressed
+
+    private void progressBar_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progressBar_sliderStateChanged
+        mediaPlayer.setFrames(mediaPlayer.getMicrosecondLength() * (progressBar_slider.getValue() / 100));
+    }//GEN-LAST:event_progressBar_sliderStateChanged
 
     /**
      * @param args the command line arguments
