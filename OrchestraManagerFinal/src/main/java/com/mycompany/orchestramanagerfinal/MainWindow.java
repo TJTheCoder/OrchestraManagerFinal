@@ -303,6 +303,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         player_panel.setBackground(new java.awt.Color(0, 51, 102));
 
+        progressBar_slider.setValue(1);
         progressBar_slider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 progressBar_sliderMousePressed(evt);
@@ -693,7 +694,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
     private void progressBar_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progressBar_sliderMousePressed
-        //        MediaPlayer.seek(Duration.seconds(progressBar.getValue()));
+        mediaPlayer.setFrames(mediaPlayer.getMicrosecondLength() * (progressBar_slider.getValue() / 100));
     }//GEN-LAST:event_progressBar_sliderMousePressed
 
     private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
