@@ -826,7 +826,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_composerPanelMousePressed
 
     private void progressBar_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progressBar_sliderStateChanged
-        mediaPlayer.setFrames(mediaPlayer.getMicrosecondLength() * (progressBar_slider.getValue() / 100));
+        mediaPlayer.setFrames((long) (mediaPlayer.getMicrosecondLength() * ((double)(progressBar_slider.getValue() / 100.0))));
     }//GEN-LAST:event_progressBar_sliderStateChanged
 
     /**
