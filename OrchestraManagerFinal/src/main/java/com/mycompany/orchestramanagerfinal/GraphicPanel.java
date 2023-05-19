@@ -83,6 +83,12 @@ public class GraphicPanel extends JPanel {
         instrument = newInstrument;
     }
     
+    //returns the entire list of the GraphicPanel
+    public String getList()
+    {
+        return "" + list;
+    }
+    
     //sets the listFauz based on a string input
     public void setList(String forcedList) {
         

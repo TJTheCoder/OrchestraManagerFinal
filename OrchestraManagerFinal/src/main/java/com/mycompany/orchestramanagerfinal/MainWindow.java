@@ -9,9 +9,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -887,6 +889,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void CRUDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CRUDButtonActionPerformed
         String chosen = (String) CRUDButton.getSelectedItem();
 
+        //import function using BufferedReader
         if (chosen.equals("Import")) {
             BufferedReader brTest = null;
             String text = "";
@@ -898,7 +901,8 @@ public class MainWindow extends javax.swing.JFrame {
                 File selectedFile = null;
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
-                }   brTest = new BufferedReader(new FileReader(selectedFile));
+                }
+                brTest = new BufferedReader(new FileReader(selectedFile));
                 text = brTest.readLine();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -912,7 +916,38 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
             ((GraphicPanel) composerPanel).setList(text);
+            CRUDButton.setSelectedIndex(0);
         }
+        
+        //export function using BufferedWriter
+        else if (chosen.equals("Export")) {
+            BufferedWriter bwTest = null;
+            String text = ((GraphicPanel) composerPanel).getList();
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
+                int result = fileChooser.showOpenDialog(CRUDButton);
+                File selectedFile = null;
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
+                }
+                bwTest = new BufferedWriter(new FileWriter(selectedFile));
+                bwTest.write(text);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    bwTest.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            CRUDButton.setSelectedIndex(0);
+        }
+        
     }//GEN-LAST:event_CRUDButtonActionPerformed
 
     private void InstrumentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InstrumentButtonActionPerformed
