@@ -372,7 +372,10 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Component id="Whole" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="133" max="32767" attributes="0"/>
-                              <Component id="CRUDButton" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="CRUDButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="InstrumentButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -397,6 +400,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="CRUDButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="InstrumentButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="Whole" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
@@ -405,7 +410,7 @@
                           </Group>
                           <Component id="Quarter" min="-2" pref="71" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="422" max="32767" attributes="0"/>
+                      <EmptySpace pref="421" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="PlayStop" min="-2" pref="69" max="-2" attributes="0"/>
@@ -472,6 +477,19 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CRUDButtonActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="InstrumentButton">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;PIANO&quot;, &quot;CLAVINET&quot;, &quot;CELESTA&quot;, &quot;GLOCKENSPIEL&quot;, &quot;VIBRAPHONE&quot;, &quot;MARIMBA&quot;, &quot;XYLOPHONE&quot;, &quot;DULCIMER&quot;, &quot;ACCORDION&quot;, &quot;HARMONICA&quot;, &quot;GUITAR&quot;, &quot;VIOLIN&quot;, &quot;VIOLA&quot;, &quot;CELLO&quot;, &quot;CONTRABASS&quot;, &quot;TIMPANI&quot;, &quot;TRUMPET&quot;, &quot;TROMBONE&quot;, &quot;TUBA&quot;, &quot;OBOE&quot;, &quot;BASSOON&quot;, &quot;CLARINET&quot;, &quot;PICCOLO&quot;, &quot;FLUTE&quot;, &quot;RECORDER&quot;, &quot;SHAKUHACHI&quot;, &quot;WHISTLE&quot;, &quot;OCARINA&quot;, &quot;SAWTOOTH&quot;, &quot;BASSLEAD&quot;, &quot;METALLIC&quot;, &quot;GOBLINS&quot;, &quot;SITAR&quot;, &quot;BANJO&quot;, &quot;SHAMISEN&quot;, &quot;KOTO&quot;, &quot;KALIMBA&quot;, &quot;BAGPIPE&quot;, &quot;FIDDLE&quot;, &quot;SHANAI&quot;, &quot;AGOGO&quot;, &quot;WOODBLOCK&quot;, &quot;SEASHORE&quot;, &quot;APPLAUSE&quot;, &quot;GUNSHOT&quot;})" type="code"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InstrumentButtonActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

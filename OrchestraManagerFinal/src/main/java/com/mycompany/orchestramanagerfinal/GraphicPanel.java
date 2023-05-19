@@ -69,12 +69,20 @@ public class GraphicPanel extends JPanel {
     //integers to store the coordinates of the user's mouse
     int mouseX;
     int mouseY;
+    
+    //sets the instrument to be played
+    String instrument = "PIANO";
 
     //calls the repaint() method
     public void paint() {
         repaint();
     }
 
+    public void setInstrument(String newInstrument)
+    {
+        instrument = newInstrument;
+    }
+    
     //sets the list based on a string input
     public void setList(String forcedList) {
         
@@ -361,7 +369,7 @@ public class GraphicPanel extends JPanel {
         //int i = 1 + offset;
         int i = 1 + offset;
         while (i < parts.length && shouldPlay) {
-            fug.setOutput(parts[i]);
+            fug.setOutput("I[" + instrument + "] " + parts[i]);
             fug.sing();
 
             //present here because of a bug in Fugue where it skips over independent rests

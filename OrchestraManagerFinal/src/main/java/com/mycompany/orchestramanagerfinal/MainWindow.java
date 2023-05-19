@@ -231,6 +231,7 @@ public class MainWindow extends javax.swing.JFrame {
         PlayStop = new javax.swing.JToggleButton();
         NoteRest = new javax.swing.JToggleButton();
         CRUDButton = new javax.swing.JComboBox<>();
+        InstrumentButton = new javax.swing.JComboBox<>();
 
         jButton1.setText("jButton1");
 
@@ -507,6 +508,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        InstrumentButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"PIANO", "CLAVINET", "CELESTA", "GLOCKENSPIEL", "VIBRAPHONE", "MARIMBA", "XYLOPHONE", "DULCIMER", "ACCORDION", "HARMONICA", "GUITAR", "VIOLIN", "VIOLA", "CELLO", "CONTRABASS", "TIMPANI", "TRUMPET", "TROMBONE", "TUBA", "OBOE", "BASSOON", "CLARINET", "PICCOLO", "FLUTE", "RECORDER", "SHAKUHACHI", "WHISTLE", "OCARINA", "SAWTOOTH", "BASSLEAD", "METALLIC", "GOBLINS", "SITAR", "BANJO", "SHAMISEN", "KOTO", "KALIMBA", "BAGPIPE", "FIDDLE", "SHANAI", "AGOGO", "WOODBLOCK", "SEASHORE", "APPLAUSE", "GUNSHOT"}));
+        InstrumentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InstrumentButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout composerPanelLayout = new javax.swing.GroupLayout(composerPanel);
         composerPanel.setLayout(composerPanelLayout);
         composerPanelLayout.setHorizontalGroup(
@@ -526,7 +534,9 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(Whole)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CRUDButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InstrumentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(398, 398, 398)
@@ -543,13 +553,15 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(InstrumentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Whole, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Half, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Quarter, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 421, Short.MAX_VALUE)
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
                         .addComponent(PlayStop, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -903,6 +915,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CRUDButtonActionPerformed
 
+    private void InstrumentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InstrumentButtonActionPerformed
+        ((GraphicPanel) composerPanel).setInstrument((String) InstrumentButton.getSelectedItem());
+    }//GEN-LAST:event_InstrumentButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -952,6 +968,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> CRUDButton;
     private javax.swing.JButton Forward;
     private javax.swing.JButton Half;
+    private javax.swing.JComboBox<String> InstrumentButton;
     private javax.swing.JToggleButton NoteRest;
     private javax.swing.JToggleButton PlayStop;
     private javax.swing.JButton Quarter;
