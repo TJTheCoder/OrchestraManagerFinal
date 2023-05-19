@@ -83,10 +83,10 @@ public class GraphicPanel extends JPanel {
         instrument = newInstrument;
     }
     
-    //sets the list based on a string input
+    //sets the listFauz based on a string input
     public void setList(String forcedList) {
         
-        NoteList list = new NoteList(120);
+        NoteList listFauz = new NoteList(120);
         String[] splitten = forcedList.split(" ");
 
         runningCount = 5;
@@ -96,13 +96,15 @@ public class GraphicPanel extends JPanel {
         for (String present : splitten) {
             if (!present.contains("T")) {
                 Note lego = new Note(getLetter(present), getDegree(present), runningCount);
-                list.addNode(lego);
+                listFauz.addNode(lego);
                 runningCount += 2;
                 frameShift(100);
             }
         }
         
-       System.out.println(list);
+       //System.out.println();
+       
+       list = listFauz;
 
         repaint();
     }
@@ -190,19 +192,20 @@ public class GraphicPanel extends JPanel {
         };
     }
 
-    //adds a noteNode to the list when the staff is clicked on
+    //adds a noteNode to the listFauz when the staff is clicked on
     public void updateList() {
         Note lego = new Note(determineLetter(), determineDegree(), runningCount);
         list.addNode(lego);
         runningCount += 2;
         frameShift(100);
 
-        Fugue fug = new Fugue("" + lego);
+        Fugue fug = new Fugue("I[" + instrument + "] " + lego);
         fug.sing();
 
         repaint();
     }
 
+    //modify the currentSet class variable
     public void changeCurrentSet(int newSet) {
         currentSet = newSet;
     }
@@ -522,8 +525,9 @@ public class GraphicPanel extends JPanel {
 
         //Node current will point to head  
         NoteNode current = list.head;
+        //System.out.println(current);
 
-        //loops through everything in the list to draw them on the staff
+        //loops through everything in the listFauz to draw them on the staff
         while (current != null) {
 
             if (current.beep.getDegree() == 4 && current.beep.getClip().contains("R")) {
@@ -559,6 +563,6 @@ public class GraphicPanel extends JPanel {
                 g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
         }
 
-        //System.out.println(list);
+        //System.out.println(listFauz);
     }
 }
