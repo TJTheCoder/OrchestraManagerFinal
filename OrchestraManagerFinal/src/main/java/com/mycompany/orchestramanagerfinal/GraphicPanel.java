@@ -6,9 +6,11 @@ package com.mycompany.orchestramanagerfinal;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -117,10 +119,10 @@ public class GraphicPanel extends JPanel {
         list.addNode(lego);
         runningCount += 2;
         frameShift(100);
-        
+
         Fugue fug = new Fugue("" + lego);
         fug.sing();
-        
+
         repaint();
     }
 
@@ -138,6 +140,38 @@ public class GraphicPanel extends JPanel {
         }
         shiftTotal += shift;
         repaint();
+    }
+
+    /*
+    //returns a colored version of an image
+    private static BufferedImage colorImage(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        WritableRaster raster = image.getRaster();
+
+        for (int xx = 0; xx < width; xx++) {
+            for (int yy = 0; yy < height; yy++) {
+                int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+                pixels[0] = 0;
+                pixels[1] = 255;
+                pixels[2] = 255;
+                raster.setPixel(xx, yy, pixels);
+            }
+        }
+        return image;
+    }
+    */
+
+    //new version of the colorImage method
+    public BufferedImage colorImage(BufferedImage loadImg, int red, int green, int blue) {
+        BufferedImage img = new BufferedImage(loadImg.getWidth(), loadImg.getHeight(),
+                BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = img.createGraphics();
+        Color newColor = new Color(red, green, blue, 0 /* alpha needs to be zero */);
+        graphics.setXORMode(newColor);
+        graphics.drawImage(loadImg, null, 0, 0);
+        graphics.dispose();
+        return img;
     }
 
     //setter for mouseX and mouseY
@@ -257,7 +291,7 @@ public class GraphicPanel extends JPanel {
 
             i++;
             frameShift(100);
-            
+
             super.paintImmediately(0, 0, 1009, 599);
         }
     }
@@ -360,6 +394,7 @@ public class GraphicPanel extends JPanel {
         BufferedImage clefIcon = null;
         try {
             clefIcon = ImageIO.read(new File("images\\trebleClef.png"));
+            clefIcon = colorImage(clefIcon, 0, 0, 255);
         } catch (IOException ex) {
             Logger.getLogger(GraphicPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
