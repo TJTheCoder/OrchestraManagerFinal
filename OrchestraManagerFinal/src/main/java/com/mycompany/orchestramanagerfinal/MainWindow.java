@@ -40,10 +40,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private final BufferedImage pause = ImageIO.read(new File("buttons\\pause.png"));
     private final BufferedImage play = ImageIO.read(new File("buttons\\play.png"));
-
+    //just creates te pause and save images because they wont change and can be called from different events
     private File directory;
     private File[] files;
-
+    //these two are for each group of files in the msuic and images folder respectively
     private File directory2;
     private File[] files2;
 
@@ -54,7 +54,8 @@ public class MainWindow extends javax.swing.JFrame {
     private ArrayList<String> filePath;
     private String songs1;
     private String songs2;
-
+    //file pathing and the song number within that arraylist
+    
     //tracks whether or not to display rests in the composer tab and whether to play or not
     private boolean restMode;
     private boolean playMode;
@@ -106,8 +107,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
 
         }
+        //saves all the files in the music folder by their pathing so it can be used for later
+        //mainly used when choosing a new song so we can grab the song numberr in this list and play that song using the path saved
         System.out.println(songs);
-
+        //sizes the images to the specific button sizes
         BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
         BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
 
@@ -141,7 +144,7 @@ public class MainWindow extends javax.swing.JFrame {
         noteW = noteWIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
         noteH = noteHIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
         noteQ = noteQIcon.getScaledInstance(72, 71, Image.SCALE_SMOOTH);
-
+        //sets the play and pause buttons to icons that have been fitted to the respective buttons
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
 
@@ -170,7 +173,8 @@ public class MainWindow extends javax.swing.JFrame {
         coverShow2_label.setIcon(new ImageIcon(img));
 
         ((GraphicPanel) composerPanel).paint();
-
+        //adds all the cover images to an array where the path of the files are saved
+        //can be used to change the album cover when different songs are played
         covers = new ArrayList<>();
         directory2 = new File("images");
         files2 = directory.listFiles();
@@ -597,7 +601,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
-        
+        //sets the buffered image to nothing so if the ffile doesnt exist it doesnt crash
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\pause.png"));
@@ -649,10 +653,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
         Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        //if the current song is the first in the list it will
+        //if the media being played is not the first in the list it will
         if (songNumber > 0) {
             songNumber--;
             mediaPlayer.stop();
+            //stops all current media playing
             String media = songs.get(songNumber);
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -664,9 +669,12 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             mediaPlayer.play();
+            //plays the song before the current song in the list
         } else {
+            // if the current song is the first in the list it will just restart the song
             songNumber = 0;
             mediaPlayer.stop();
+            //stops all media being played
             String media = null;
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -678,11 +686,13 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             mediaPlayer.play();
+            //plays the first song in the list from the beginning
         }
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
+        //resets all the song name and artist names on the GUi to that of the current song being played
 
         System.out.println(songNumber);
     }//GEN-LAST:event_skipBack_buttonActionPerformed
@@ -1060,20 +1070,26 @@ public class MainWindow extends javax.swing.JFrame {
         Object[][] data = new Object[directory.listFiles().length][4];
         String[] columnHeaders = {"Title", "Artist", "Genre", "Time"};
         int row = 0;
+        //creates a table with 4 columns and loops through to add files for the length of the music folder
         for (int i = 0; i < files.length; i++) {
             headers = songs.get(i).split("\\.");
+            //splits the file name into parts to get info from each music file
             mediaPlayer = new MediaPlayer(songs.get(i));
             data[row][0] = headers[0].substring(91);
+            //beilds the first column of the table to include the song name and substrings out all the unnescessary info
             data[row][1] = headers[1];
+            //builds the secong column to include the split artist name
             data[row][2] = headers[2];
+            //builds the third column to include the split genre of the music being played
             data[row][3] = ((int) ((mediaPlayer.getMicrosecondLength()) / 1000000)) + " seconds";
+            //builds the fourth column in the table to include the length of the song in seconds
             row++;
-
         }
         headers = songs.get(songNumber).split("\\.");
         artist_label.setText(headers[1]);
         DefaultTableModel dfm = new DefaultTableModel(data, columnHeaders);
         songsTable_table.setModel(dfm);
+        //builds the table and sets the artist label to that of the split headers above
     }
 
 }
