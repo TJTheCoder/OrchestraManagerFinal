@@ -11,6 +11,8 @@ This class is part of the "com.mycompany.orchestramanagerfinal" package and defi
 It extends the "FugueEvent" interface and provides a method called "getDuration()" that returns the duration of a temporal event as a double value.
 */
 
+//@author Tanuj Tekkale
+
 public interface Duration extends FugueEvent {
 	public double getDuration();
 }

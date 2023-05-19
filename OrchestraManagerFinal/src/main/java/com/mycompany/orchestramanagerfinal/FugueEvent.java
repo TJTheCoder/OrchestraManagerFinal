@@ -9,6 +9,8 @@ By implementing this interface, classes can define their own specific musical ev
 allowing them to be executed by a Parser object in a standardized way.
 */
 
+//author - Tanuj Tekkale
+
 //executes a Parser method from the parser import (is an interface)
 public interface FugueEvent {
     public void execute(Parser parser);

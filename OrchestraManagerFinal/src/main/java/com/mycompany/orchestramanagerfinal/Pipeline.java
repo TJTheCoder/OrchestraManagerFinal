@@ -14,6 +14,7 @@ The Pipeline class extends the Parser class and implements the ParserListener in
 It acts as a pipeline for parsing and processing musical events using the JFugue library.
 */
 
+//@author - Tanuj Tekkale
 //mantains the EventManager object
 
 public class Pipeline extends Parser implements ParserListener {

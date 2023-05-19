@@ -20,6 +20,8 @@ The Temporal class contains a method called testTemporalTiming() that demonstrat
 the temporal timing of notes played using JFugue and MIDI.
 */
 
+//@author - Tanuj Tekkale
+
 public class Temporal {
 
     public void testTemporalTiming() {
