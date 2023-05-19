@@ -333,6 +333,7 @@ public class GraphicPanel extends JPanel {
         }
     }
 
+    //toggles the playMode variable
     public void togglePlay() {
         playMode = !playMode;
     }
