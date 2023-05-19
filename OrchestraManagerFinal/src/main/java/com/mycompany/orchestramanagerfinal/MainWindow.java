@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -85,20 +86,25 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        /*
+        String[] options = {"Add", "Delete"};
+        CRUDButton = new JComboBox(options);
+        */
+        
         songs = new ArrayList<>();
         directory = new File("music");
         files = directory.listFiles();
         if (files != null) {
-            for (int i = 0; i < files.length; i++){
+            for (int i = 0; i < files.length; i++) {
                 songs.add(files[i].getAbsolutePath());
             }
-            
+
         }
         System.out.println(songs);
 
         BufferedImage icons = ImageIO.read(new File("buttons\\pause.png"));
         BufferedImage icons2 = ImageIO.read(new File("buttons\\play.png"));
-        
+
         //creates buffered images for the forward and backward arrow
         BufferedImage iconsLeft = ImageIO.read(new File("buttons\\faceLeft.png"));
         BufferedImage iconsRight = ImageIO.read(new File("buttons\\faceRight.png"));
@@ -113,7 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
-        
+
         //transfers the data from the buffered image into images
         Image left = iconsLeft.getScaledInstance(46, 41, Image.SCALE_SMOOTH);
         Image right = iconsRight.getScaledInstance(46, 41, Image.SCALE_SMOOTH);
@@ -132,7 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         play_button.setIcon(new ImageIcon(play));
         pause_button.setIcon(new ImageIcon(pause));
-        
+
         //adds the images for the move left and move right arrows to the actual buttons
         Back.setIcon(new ImageIcon(left));
         Forward.setIcon(new ImageIcon(right));
@@ -163,7 +169,7 @@ public class MainWindow extends javax.swing.JFrame {
         directory2 = new File("images");
         files2 = directory.listFiles();
         if (files2 != null) {
-            for (int j = 0; j < files2.length; j++){
+            for (int j = 0; j < files2.length; j++) {
                 covers.add(files2[j].getAbsolutePath());
             }
         }
@@ -177,8 +183,6 @@ public class MainWindow extends javax.swing.JFrame {
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
 
-        
-        
         buildSongsTable();
         mediaPlayer = new MediaPlayer(songs.get(0));
     }
@@ -428,6 +432,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        Forward.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                ForwardMouseDragged(evt);
+            }
+        });
         Forward.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 ForwardMousePressed(evt);
@@ -439,6 +448,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        Back.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                BackMouseDragged(evt);
+            }
+        });
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackMouseClicked(evt);
@@ -480,7 +494,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Export", "Import"}));
 
         javax.swing.GroupLayout composerPanelLayout = new javax.swing.GroupLayout(composerPanel);
         composerPanel.setLayout(composerPanelLayout);
@@ -593,12 +607,12 @@ public class MainWindow extends javax.swing.JFrame {
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
         mediaPlayer.play();
-        
+
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-        
+
         int one = 1;
         System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
@@ -640,7 +654,7 @@ public class MainWindow extends javax.swing.JFrame {
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-        
+
         System.out.println(songNumber);
     }//GEN-LAST:event_skipBack_buttonActionPerformed
 
@@ -654,8 +668,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
         //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-        
-        
+
         if (songNumber < songs.size() - 1) {
             songNumber++;
             mediaPlayer.stop();
@@ -689,20 +702,19 @@ public class MainWindow extends javax.swing.JFrame {
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-        
+
         System.out.println(songNumber);
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
     private void Shuffle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Shuffle_buttonActionPerformed
         mediaPlayer.pause();
-        
-        if ((Math.random() * directory.listFiles().length) < .5){
+
+        if ((Math.random() * directory.listFiles().length) < .5) {
             songNumber = 0;
-        }
-        else{
+        } else {
             songNumber = (int) (Math.random() * files.length);
         }
-        
+
         try {
             mediaPlayer = new MediaPlayer(songs.get(songNumber));
         } catch (UnsupportedAudioFileException ex) {
@@ -714,12 +726,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
         System.out.println(songs);
         mediaPlayer.play();
-        
+
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-        
+
         System.out.println(songNumber);
     }//GEN-LAST:event_Shuffle_buttonActionPerformed
 
@@ -739,8 +751,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     //turns the current note to a whole note or whole rest depending on the current state
     private void WholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WholeActionPerformed
-        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(2);
-        else ((GraphicPanel) composerPanel).changeCurrentSet(5);
+        if (!restMode)
+            ((GraphicPanel) composerPanel).changeCurrentSet(2);
+        else
+            ((GraphicPanel) composerPanel).changeCurrentSet(5);
     }//GEN-LAST:event_WholeActionPerformed
 
     private void NoteRestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoteRestActionPerformed
@@ -770,7 +784,7 @@ public class MainWindow extends javax.swing.JFrame {
         //changes the icon depending on the current state
         if (!playMode) {
             PlayStop.setIcon(new ImageIcon(pause2));
-            ((GraphicPanel) composerPanel).setShouldPlay(true);
+            //((GraphicPanel) composerPanel).setShouldPlay(true);
             try {
                 ((GraphicPanel) composerPanel).startPlay();
             } catch (InterruptedException ex) {
@@ -778,7 +792,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } else {
             PlayStop.setIcon(new ImageIcon(play2));
-            ((GraphicPanel) composerPanel).setShouldPlay(false);
+            //((GraphicPanel) composerPanel).setShouldPlay(false);
         }
 
         //toggles the variables storing the current state
@@ -811,13 +825,17 @@ public class MainWindow extends javax.swing.JFrame {
 
     //change the note/rest to be placed--factors in the rest/note toggle (half and quarter notes only)
     private void QuarterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuarterActionPerformed
-        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(0);
-        else ((GraphicPanel) composerPanel).changeCurrentSet(3);
+        if (!restMode)
+            ((GraphicPanel) composerPanel).changeCurrentSet(0);
+        else
+            ((GraphicPanel) composerPanel).changeCurrentSet(3);
     }//GEN-LAST:event_QuarterActionPerformed
 
     private void HalfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HalfActionPerformed
-        if (!restMode) ((GraphicPanel) composerPanel).changeCurrentSet(1);
-        else ((GraphicPanel) composerPanel).changeCurrentSet(4);
+        if (!restMode)
+            ((GraphicPanel) composerPanel).changeCurrentSet(1);
+        else
+            ((GraphicPanel) composerPanel).changeCurrentSet(4);
     }//GEN-LAST:event_HalfActionPerformed
 
     //allows the user to place down different notes in the composer
@@ -826,8 +844,18 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_composerPanelMousePressed
 
     private void progressBar_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progressBar_sliderStateChanged
-        mediaPlayer.setFrames(mediaPlayer.getMicrosecondLength() * (progressBar_slider.getValue() / 100));
+        mediaPlayer.setFrames((long) (mediaPlayer.getMicrosecondLength() * ((double) (progressBar_slider.getValue() / 100.0))));
     }//GEN-LAST:event_progressBar_sliderStateChanged
+
+    //calls the fast backward method when the mouse is dragged on the button
+    private void BackMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseDragged
+        ((GraphicPanel) composerPanel).fastBackward();
+    }//GEN-LAST:event_BackMouseDragged
+
+    //calls the fast forward method when the mouse is dragged on the button
+    private void ForwardMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMouseDragged
+        //((GraphicPanel) composerPanel).fastForward();
+    }//GEN-LAST:event_ForwardMouseDragged
 
     /**
      * @param args the command line arguments
@@ -905,7 +933,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JSlider volume_slider;
     // End of variables declaration//GEN-END:variables
     private void buildSongsTable() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        
+
         Object[][] data = new Object[directory.listFiles().length][4];
         String[] columnHeaders = {"Title", "Artist", "Genre", "Time"};
         int row = 0;
@@ -915,7 +943,7 @@ public class MainWindow extends javax.swing.JFrame {
             data[row][0] = headers[0].substring(91);
             data[row][1] = headers[1];
             data[row][2] = headers[2];
-            data[row][3] = ((int)((mediaPlayer.getMicrosecondLength()) / 1000000)) + " seconds";
+            data[row][3] = ((int) ((mediaPlayer.getMicrosecondLength()) / 1000000)) + " seconds";
             row++;
 
         }
@@ -924,7 +952,5 @@ public class MainWindow extends javax.swing.JFrame {
         DefaultTableModel dfm = new DefaultTableModel(data, columnHeaders);
         songsTable_table.setModel(dfm);
     }
-
-
 
 }

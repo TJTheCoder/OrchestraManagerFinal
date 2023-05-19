@@ -74,6 +74,19 @@ public class GraphicPanel extends JPanel {
     public void paint() {
         repaint();
     }
+    
+    public void fastForward()
+    {
+        int calculate = runningCount - 5;
+        calculate /= 2;
+        frameShift(calculate * 100);
+    }
+    
+    //takes you all the way to the beginning
+    public void fastBackward()
+    {
+        frameShift(-1 * shiftTotal);
+    }
 
     //turns the tier variable into a letter
     public String determineLetter() {
@@ -141,6 +154,14 @@ public class GraphicPanel extends JPanel {
             repaint();
             return;
         }
+        /*
+        else if (xMarginBuffer > 50 + (runningCount - 5) * 100)
+        {
+            xMarginBuffer = 50 + (runningCount - 5) * 100;
+            repaint();
+            return;
+        }
+        */
         shiftTotal += shift;
         repaint();
     }
