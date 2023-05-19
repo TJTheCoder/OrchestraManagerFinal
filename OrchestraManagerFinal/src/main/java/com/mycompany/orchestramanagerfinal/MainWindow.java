@@ -159,7 +159,7 @@ public class MainWindow extends javax.swing.JFrame {
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
         Image img1 = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         Image img2 = img.getScaledInstance(250, 241, Image.SCALE_SMOOTH);
-
+        //creating a buffered image that can be shaped to a specific size for the cover of the album
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img));
 
@@ -173,18 +173,20 @@ public class MainWindow extends javax.swing.JFrame {
                 covers.add(files2[j].getAbsolutePath());
             }
         }
-
+        
         coverShow_label.setIcon(new ImageIcon(img1));
         coverShow2_label.setIcon(new ImageIcon(img2));
         //media = new Media(songs.get(songNumber).toURI().toString());
         //mediaPlayer = new MediaPlayer(media);
         headers = songs.get(songNumber).split("\\.");
-
+        //splits the file into components to seperate the artist that wrote the song from the rest
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
 
         buildSongsTable();
         mediaPlayer = new MediaPlayer(songs.get(0));
+        //builds the list of songs inside a table
+        //sets the current song to the first in the list
     }
 
     /**
@@ -572,16 +574,18 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
-
+        
         BufferedImage icons = null;
         try {
             icons = ImageIO.read(new File("buttons\\pause.png"));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //set the icon of the pause button to an image of the pause icon
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         pause_button.setIcon(new ImageIcon(pause));
         mediaPlayer.pause();
+        //pauses the clip playing
         System.out.println(songNumber);
     }//GEN-LAST:event_pause_buttonActionPerformed
 
@@ -606,13 +610,15 @@ public class MainWindow extends javax.swing.JFrame {
         }
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
+        //actually plays the clip
         mediaPlayer.play();
-
+        //sets  the icon of the play button to the play icon
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-
+        //spllits the authors name rom the rest of the info and sets the name to that
+        
         int one = 1;
         System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
