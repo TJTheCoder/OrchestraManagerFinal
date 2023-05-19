@@ -36,6 +36,7 @@ public class MediaPlayer {
     public String getFilePath(){
         return filePath;
     }
+    
     public void setFilePath(String filePath){
         this.filePath = filePath;
     }
@@ -43,20 +44,11 @@ public class MediaPlayer {
     //starts the song by triggering the play() method
     public void play(){
         clip.start();
-//        if (status != true){
-//            clip.start();
-//        }
-//        else
-//            clip.stop();
     }
     
     //ends the song by triggering the pause() method
     public void pause() {
-        //status = true;
-        //play();
         clip.stop();
-        //clip.close
-        //???????????????????????????????????????????????????
     }
     
     //ends the song completely

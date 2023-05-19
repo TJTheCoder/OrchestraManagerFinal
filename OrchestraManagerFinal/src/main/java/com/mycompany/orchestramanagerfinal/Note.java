@@ -51,9 +51,13 @@ public class Note {
         String out = "";
         switch (degree)
         {
+            
             case 1 -> out = "w";
+            
             case 2 -> out = "h";
+            
             case 4 -> out = "q";
+            
         }
         return out;
     }

@@ -26,6 +26,7 @@ public class Temporal {
 
     public void testTemporalTiming() {
         try {
+            
             long DELAY = 500;
             Pattern pattern = new Pattern(new Note(60), new Note(63), new Note(65));
 
@@ -44,31 +45,46 @@ public class Temporal {
             plp.addParserListener(new ParserListenerAdapter() {
                 @Override
                 public void onNoteParsed(Note note) {
+                    
                     TimeStruct time = null;
                     if ((time = noteTimeTracker.get(note.getValue())) == null) {
+                        
                         time = new TimeStruct();
                         noteTimeTracker.put(note.getValue(), time);
+                        
                     }
+                    
                     time.timeNotePlayedByTemporalPLP = System.currentTimeMillis();
+                    
                 }
+                
             });
 
             // B) Listen for the note as played through MIDI by the Player
             SequencerManager.getInstance().getSequencer().getTransmitter().setReceiver(new Receiver() {
                 @Override
                 public void send(MidiMessage message, long timeStamp) {
+                    
                     System.out.println("[TemporalPLPTest] In the Receiver.send() method");
                     System.out.println("[TemporalPLPTest] Message status = "+message.getStatus());
-                    if (message.getStatus() == 0x90) { // Note On event for a note in Channel 0
+                    if (message.getStatus() == 0x90) {
+                        
+                        // Note On event for a note in Channel 0
                         System.out.println("[TemporalPLPTest] Found 'Note On' event for a note in Channel 0");
                         TimeStruct time = null;
                         System.out.println(message.getMessage()[0]);
-                        if ((time = noteTimeTracker.get(message.getMessage()[0])) == null) {
+                        
+                        if ((time = noteTimeTracker.get(message.getMessage()[0])) == null)
+                        {
+                            
                             time = new TimeStruct();
                             noteTimeTracker.put(message.getMessage()[0], time);
+                            
                         }
                         time.timeNotePlayedByPlayer = System.currentTimeMillis();
+                        
                     }
+                    
                 }
 
                 @Override
@@ -83,21 +99,29 @@ public class Temporal {
 
             // Third step: Let's see how long it took for each note to play
             for (Byte noteValue : noteTimeTracker.keySet()) {
+                
                 System.out.println("[TemporalPLPTest] For note value "+noteValue
                         +", timePlayedByPlayer = "+noteTimeTracker.get(noteValue).timeNotePlayedByPlayer
                         +", timePlayedByTemporalPLP = "+noteTimeTracker.get(noteValue).timeNotePlayedByTemporalPLP
                         +", calculated delay = "+(noteTimeTracker.get(noteValue).timeNotePlayedByPlayer - noteTimeTracker.get(noteValue).timeNotePlayedByTemporalPLP)
                         +" (expected delay = "+DELAY);
+                
             }
-        } catch (final MidiUnavailableException e) {
+        }
+        catch (final MidiUnavailableException e)
+        {
+            
             e.printStackTrace();
+            
         }
     }
 
     //suclass that creates a long to be used as secondary class variables
     class TimeStruct {
+        
         public long timeNotePlayedByPlayer;
         public long timeNotePlayedByTemporalPLP;
         public TimeStruct() { }
+        
     }
 }

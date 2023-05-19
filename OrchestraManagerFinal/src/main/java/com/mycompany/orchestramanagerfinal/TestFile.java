@@ -36,6 +36,6 @@ public class TestFile {
         
         list.delete(1);
         System.out.println(list);
-*/
+        */
     }
 }

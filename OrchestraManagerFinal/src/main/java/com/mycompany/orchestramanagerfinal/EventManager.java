@@ -42,7 +42,9 @@ final class EventManager {
         this.tempoBeatsPerMinute = MidiDefaults.DEFAULT_TEMPO_BEATS_PER_MINUTE;
         this.currentTrack = 0;
         for (int i = 0; i < MidiDefaults.TRACKS; i++) {
+            
             this.currentLayer[i] = 0;
+            
         }
         this.timeToEventMap.clear();
     }
@@ -124,8 +126,10 @@ final class EventManager {
     public void addRealTimeEvent(FugueEvent event) {
         List<FugueEvent> eventList = timeToEventMap.get(convertBeatsToMillis(getTrackBeatTime()));
         if (eventList == null) {
+            
             eventList = new ArrayList<FugueEvent>();
             timeToEventMap.put(convertBeatsToMillis(getTrackBeatTime()), eventList);
+            
         }
         eventList.add(event);
     }

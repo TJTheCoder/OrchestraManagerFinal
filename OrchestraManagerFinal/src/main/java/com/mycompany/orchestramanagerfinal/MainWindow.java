@@ -181,9 +181,13 @@ public class MainWindow extends javax.swing.JFrame {
         directory2 = new File("images");
         files2 = directory.listFiles();
         if (files2 != null) {
+            
             for (int j = 0; j < files2.length; j++) {
+                
                 covers.add(files2[j].getAbsolutePath());
+                
             }
+            
         }
         
         coverShow_label.setIcon(new ImageIcon(img1));
@@ -606,9 +610,13 @@ public class MainWindow extends javax.swing.JFrame {
         //sets the buffered image to nothing so if the ffile doesnt exist it doesnt crash
         BufferedImage icons = null;
         try {
+            
             icons = ImageIO.read(new File("buttons\\pause.png"));
+            
         } catch (IOException ex) {
+            
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         //set the icon of the pause button to an image of the pause icon
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
@@ -635,9 +643,13 @@ public class MainWindow extends javax.swing.JFrame {
         mediaPlayer.pause();
         BufferedImage icons = null;
         try {
+            
             icons = ImageIO.read(new File("buttons\\play.png"));
+            
         } catch (IOException ex) {
+            
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         Image play = icons.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
         play_button.setIcon(new ImageIcon(play));
@@ -665,13 +677,21 @@ public class MainWindow extends javax.swing.JFrame {
             //stops all current media playing
             String media = songs.get(songNumber);
             try {
+                
                 mediaPlayer = new MediaPlayer(media);
+                
             } catch (UnsupportedAudioFileException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             } catch (LineUnavailableException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             } catch (IOException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             mediaPlayer.play();
             //plays the song before the current song in the list
@@ -682,13 +702,24 @@ public class MainWindow extends javax.swing.JFrame {
             //stops all media being played
             String media = null;
             try {
+                
                 mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
+                
+            } 
+            catch (UnsupportedAudioFileException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
+                
+            }
+            catch (LineUnavailableException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            }
+            catch (IOException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             mediaPlayer.play();
             //plays the first song in the list from the beginning
@@ -715,18 +746,32 @@ public class MainWindow extends javax.swing.JFrame {
         //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         //makes sure that if the current song is within the length of the list it can be chosen
         if (songNumber < songs.size() - 1) {
+            
             songNumber++;
             mediaPlayer.stop();
             //stops all current media
             String media = songs.get(songNumber);
             try {
+                
                 mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
+                
+            }
+            
+            catch (UnsupportedAudioFileException ex)
+            {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
+                
+            }
+            catch (LineUnavailableException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            }
+            catch (IOException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             mediaPlayer.play();
             //moves the song number up one and plays it
@@ -736,14 +781,28 @@ public class MainWindow extends javax.swing.JFrame {
             mediaPlayer.stop();
             //stops all current media
             String media = null;
-            try {
+            try
+            {
+                
                 mediaPlayer = new MediaPlayer(media);
-            } catch (UnsupportedAudioFileException ex) {
+                
+            }
+            catch (UnsupportedAudioFileException ex)
+            {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
+                
+            }
+            catch (LineUnavailableException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            }
+            catch (IOException ex)
+            {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             mediaPlayer.play();
             //plays the first song in the list
@@ -766,13 +825,25 @@ public class MainWindow extends javax.swing.JFrame {
         }
         //sets the song number to a random number less than the length of the songs in the list 
         try {
+            
             mediaPlayer = new MediaPlayer(songs.get(songNumber));
-        } catch (UnsupportedAudioFileException ex) {
+            
+        }
+        catch (UnsupportedAudioFileException ex)
+        {
+            
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
+            
+        }
+        catch (LineUnavailableException ex) {
+            
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+            
+        }
+        catch (IOException ex) {
+            
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         System.out.println(songs);
         mediaPlayer.play();
@@ -803,8 +874,11 @@ public class MainWindow extends javax.swing.JFrame {
     //turns the current note to a whole note or whole rest depending on the current state
     private void wholeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wholeButtonActionPerformed
         if (!restMode)
+            
             ((GraphicPanel) composerPanel).changeCurrentSet(2);
+        
         else
+            
             ((GraphicPanel) composerPanel).changeCurrentSet(5);
     }//GEN-LAST:event_wholeButtonActionPerformed
 
@@ -836,17 +910,25 @@ public class MainWindow extends javax.swing.JFrame {
         if (!playMode) {
             playStopToggle.setIcon(new ImageIcon(pause2));
             //((GraphicPanel) composerPanel).setShouldPlay(true);
-            try {
+            try
+            {
+                
                 ((GraphicPanel) composerPanel).startPlay();
-            } catch (InterruptedException ex) {
+                
+            }
+            catch (InterruptedException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             
             //changes it back to the play icon once all processes are executed
             //playStopToggle.setIcon(new ImageIcon(play2));
         } else {
+            
             playStopToggle.setIcon(new ImageIcon(play2));
             //((GraphicPanel) composerPanel).setShouldPlay(false);
+            
         }
 
         //toggles the variables storing the current state
@@ -887,9 +969,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void halfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfButtonActionPerformed
         if (!restMode)
+            
             ((GraphicPanel) composerPanel).changeCurrentSet(1);
+        
         else
+            
             ((GraphicPanel) composerPanel).changeCurrentSet(4);
+        
     }//GEN-LAST:event_halfButtonActionPerformed
 
     //allows the user to place down different notes in the composer
@@ -917,6 +1003,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         //import function using BufferedReader
         if (chosen.equals("Import")) {
+            
             BufferedReader brTest = null;
             String text = "";
             try {
@@ -930,15 +1017,28 @@ public class MainWindow extends javax.swing.JFrame {
                 }
                 brTest = new BufferedReader(new FileReader(selectedFile));
                 text = brTest.readLine();
-            } catch (FileNotFoundException ex) {
+            }
+            catch (FileNotFoundException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            }
+            catch (IOException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
+                
+            }
+            finally {
+                
                 try {
+                    
                     brTest.close();
-                } catch (IOException ex) {
+                    
+                }
+                catch (IOException ex) {
+                    
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             }
             ((GraphicPanel) composerPanel).setList(text);
@@ -960,15 +1060,29 @@ public class MainWindow extends javax.swing.JFrame {
                 }
                 bwTest = new BufferedWriter(new FileWriter(selectedFile));
                 bwTest.write(text);
-            } catch (FileNotFoundException ex) {
+            }
+            catch (FileNotFoundException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                
+            }
+            catch (IOException ex) {
+                
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
+                
+            }
+            finally {
+                
                 try {
+                    
                     bwTest.close();
-                } catch (IOException ex) {
+                    
+                }
+                catch (IOException ex)
+                {
+                    
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             }
             crudButton.setSelectedIndex(0);
@@ -977,25 +1091,33 @@ public class MainWindow extends javax.swing.JFrame {
         //activates delete mode
         else if (chosen.equals("Delete"))
         {
+            
             ((GraphicPanel) composerPanel).typeChange(1);
+            
         }
         
         //reverts to add mode
          else if (chosen.equals("Add"))
         {
-            ((GraphicPanel) composerPanel).typeChange(0);   
+            
+            ((GraphicPanel) composerPanel).typeChange(0); 
+            
         }
         
         //experimental edit program
         else if (chosen.equals("Edit"))
         {
+            
            ((GraphicPanel) composerPanel).typeChange(2);
+           
         }
         
          //clears all the notes
          else if (chosen.equals("Clear"))
          {
-            ((GraphicPanel) composerPanel).purgeList(); 
+             
+            ((GraphicPanel) composerPanel).purgeList();
+            
          }
         
         //rudButton.setSelectedIndex(0);
@@ -1036,14 +1158,26 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
+                try
+                {
+                    
                     new MainWindow().setVisible(true);
-                } catch (IOException ex) {
+                    
+                }
+                catch (IOException ex) {
+                    
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnsupportedAudioFileException ex) {
+                    
+                }
+                catch (UnsupportedAudioFileException ex) {
+                    
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (LineUnavailableException ex) {
+                    
+                } 
+                catch (LineUnavailableException ex) {
+                    
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             }
         });
@@ -1088,6 +1222,7 @@ public class MainWindow extends javax.swing.JFrame {
         int row = 0;
         //creates a table with 4 columns and loops through to add files for the length of the music folder
         for (int i = 0; i < files.length; i++) {
+            
             headers = songs.get(i).split("\\.");
             //splits the file name into parts to get info from each music file
             mediaPlayer = new MediaPlayer(songs.get(i));
@@ -1100,6 +1235,7 @@ public class MainWindow extends javax.swing.JFrame {
             data[row][3] = ((int) ((mediaPlayer.getMicrosecondLength()) / 1000000)) + " seconds";
             //builds the fourth column in the table to include the length of the song in seconds
             row++;
+            
         }
         headers = songs.get(songNumber).split("\\.");
         artist_label.setText(headers[1]);

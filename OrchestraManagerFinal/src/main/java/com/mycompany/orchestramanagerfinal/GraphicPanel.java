@@ -89,27 +89,35 @@ public class GraphicPanel extends JPanel {
     }
 
     public void setInstrument(String newInstrument) {
+        
         instrument = newInstrument;
+        
     }
 
     //determines the add/delete/edit behavior of the GUI
     public void typeChange(int type) {
+        
         changeType = type;
+        
     }
 
     //empties out the entire list
     public void purgeList() {
+        
         NoteList listFauz = new NoteList(120);
         list = listFauz;
 
         runningCount = 5;
         xMarginBuffer = 50;
         shiftTotal = 0;
+        
     }
 
     //returns the entire list of the GraphicPanel
     public String getList() {
+        
         return "" + list;
+        
     }
 
     //sets the listFauz based on a string input
@@ -140,10 +148,17 @@ public class GraphicPanel extends JPanel {
     //gets the letter from String information
     public String getLetter(String splitten) {
         splitten = splitten.strip();
-        if (splitten.contains("R")) {
+        if (splitten.contains("R"))
+        {
             return "R";
-        } else {
+            
+        }
+        
+        else
+        {
+            
             return splitten.substring(0, 2);
+            
         }
     }
 
@@ -151,21 +166,32 @@ public class GraphicPanel extends JPanel {
     public int getDegree(String splitten) {
         splitten = splitten.strip();
         String used = "";
-        if (splitten.contains("R")) {
+        if (splitten.contains("R"))
+        {
+            
             used = splitten.substring(1, 2);
-        } else {
+            
+        }
+        else
+        {
+            
             used = splitten.substring(2, 3);
+            
         }
 
         int out = 4;
 
         switch (used) {
+            
             case "w" ->
                 out = 1;
+                
             case "h" ->
                 out = 2;
+                
             case "q" ->
                 out = 4;
+                
         }
         return out;
     }
@@ -188,24 +214,34 @@ public class GraphicPanel extends JPanel {
             return "R";
         }
         switch (tier) {
+            
             case 0 ->
                 out = "F6";
+                
             case 1 ->
                 out = "E6";
+                
             case 2 ->
                 out = "D6";
+                
             case 3 ->
                 out = "C6";
+                
             case 4 ->
                 out = "B5";
+                
             case 5 ->
                 out = "A5";
+                
             case 6 ->
                 out = "G5";
+                
             case 7 ->
                 out = "F5";
+                
             case 8 ->
                 out = "E5";
+                
         }
         return out;
     }
@@ -213,12 +249,16 @@ public class GraphicPanel extends JPanel {
     //switch expression to determine the degree for creating a node
     public int determineDegree() {
         return switch (currentSet) {
+            
             case 0, 3 ->
                 4;
+                
             case 1, 4 ->
                 2;
+                
             default ->
                 1;
+                
         };
     }
 
@@ -226,6 +266,7 @@ public class GraphicPanel extends JPanel {
     public void updateList() {
         //the updateList() call for when the add mode is activated
         if (changeType == 0) {
+            
             Note lego = new Note(determineLetter(), determineDegree(), runningCount);
             list.addNode(lego);
             runningCount += 2;
@@ -235,8 +276,11 @@ public class GraphicPanel extends JPanel {
             fug.sing();
 
             repaint();
-        } //alternate pathway for when the delete function is turned on
+            
+        }
+        //alternate pathway for when the delete function is turned on
         else if (changeType == 2) {
+            
             //method variable used to store the runningCount for reversion
             temp = runningCount;
             
@@ -248,11 +292,13 @@ public class GraphicPanel extends JPanel {
             //makes the note completely new
             list.getNodeAtIndex(trueIndex).beep.setClip("X");
             changeType = 3;
+            
         }
         
         //what happens when the edit mode enters the second state--never called
         else if (changeType == 3)
         {
+            
             int trueIndex = closestDeleteIndex - 5;
             trueIndex /= 2;
            
@@ -265,11 +311,13 @@ public class GraphicPanel extends JPanel {
             fug.sing();
 
             repaint();
+            
         }
         
         //if any other function is called--should only apply to delete()
         else {
             if (list.getNodeCount() > 1) {
+                
                 int used = closestDeleteIndex - 5;
                 used /= 2;
                 list.delete(used);
@@ -278,8 +326,12 @@ public class GraphicPanel extends JPanel {
                 frameShift(-100);
 
                 repaint();
-            } else {
+                
+            }
+            else {
+                
                 purgeList();
+                
             }
         }
 
@@ -296,9 +348,11 @@ public class GraphicPanel extends JPanel {
     public void frameShift(int shift) {
         xMarginBuffer -= shift;
         if (xMarginBuffer > 50) {
+            
             xMarginBuffer = 50;
             repaint();
             return;
+            
         }
         /*
         else if (xMarginBuffer > 50 + (runningCount - 5) * 100)
@@ -363,12 +417,16 @@ public class GraphicPanel extends JPanel {
         currentSet += 3;
         if (currentSet > 5) {
             switch (currentSet) {
+                
                 case 6 ->
                     currentSet = 0;
+                    
                 case 7 ->
                     currentSet = 1;
+                    
                 case 8 ->
                     currentSet = 2;
+                    
             }
         }
     }
@@ -409,24 +467,34 @@ public class GraphicPanel extends JPanel {
     public int getTierFromLetter(Note data) {
         int tierFake = 0;
         switch (data.getClip()) {
+            
             case "F6" ->
                 tierFake = 0;
+                
             case "E6" ->
                 tierFake = 1;
+                
             case "D6" ->
                 tierFake = 2;
+                
             case "C6" ->
                 tierFake = 3;
+                
             case "B5" ->
                 tierFake = 4;
+                
             case "A5" ->
                 tierFake = 5;
+                
             case "G5" ->
                 tierFake = 6;
+                
             case "F5" ->
                 tierFake = 7;
+                
             case "E5" ->
                 tierFake = 8;
+                
         }
         return tierFake;
     }
@@ -460,6 +528,7 @@ public class GraphicPanel extends JPanel {
         //int i = 1 + offset;
         int i = 1 + offset;
         while (i < parts.length && shouldPlay) {
+            
             fug.setOutput("I[" + instrument + "] " + parts[i]);
             fug.sing();
 
@@ -472,10 +541,13 @@ public class GraphicPanel extends JPanel {
                  */
                 case "Rq" ->
                     Thread.sleep(500);
+                    
                 case "Rh" ->
                     Thread.sleep(1000);
+                    
                 case "Rw" ->
                     Thread.sleep(2000);
+                    
             }
 
             i++;
@@ -541,12 +613,16 @@ public class GraphicPanel extends JPanel {
             }
 
             if (y < yMarginStart) {
+                
                 tier = 0;
                 return yMarginStart;
+                
             } else if (y > yMarginEnd) {
+                
                 tier = 8;
                 //return yMarginEnd;
                 return (8 * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+                
             }
 
             y -= yMarginStart;
@@ -555,11 +631,15 @@ public class GraphicPanel extends JPanel {
             int buffer = y / fraction(yMarginEnd - yMarginStart, 1, 8);
 
             if (filter < fraction(yMarginEnd - yMarginStart, 1, 16)) {
+                
                 tier = buffer;
                 return (buffer * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+                
             } else {
+                
                 tier = buffer + 1;
                 return ((buffer + 1) * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+                
             }
         } else {
             return closestNote();
@@ -570,9 +650,13 @@ public class GraphicPanel extends JPanel {
     public Image summon(String filePath, int width, int height) {
         BufferedImage icon = null;
         try {
+            
             icon = ImageIO.read(new File(filePath));
+            
         } catch (IOException ex) {
+            
             Logger.getLogger(GraphicPanel.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         Image img = icon.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return img;
@@ -581,8 +665,10 @@ public class GraphicPanel extends JPanel {
     //returns the location of the closest index (or value of the node) when the delete function is activated
     public int closestIndex(int x) {
         if (list.getNodeCount() == 0) {
+            
             closestDeleteIndex = -1;
             return -1;
+            
         }
 
         int adjusted = x + shiftTotal;
@@ -590,11 +676,17 @@ public class GraphicPanel extends JPanel {
 
         //adjusts the runningTotal based on the closestIndex
         if (adjusted < 5) {
+            
             adjusted = 5;
+            
         } else if (adjusted > runningCount - 2) {
+            
             adjusted = runningCount - 2;
+            
         } else if (adjusted % 2 == 0) {
+            
             adjusted += 1;
+            
         }
 
         closestDeleteIndex = adjusted;
@@ -655,17 +747,29 @@ public class GraphicPanel extends JPanel {
         while (current != null) {
 
             if (current.beep.getDegree() == 4 && current.beep.getClip().contains("R")) {
+                
                 g.drawImage(summon("notes\\restQ.png", 40, 60), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 20, this);
+                
             } else if (current.beep.getDegree() == 2 && current.beep.getClip().contains("R")) {
+                
                 g.drawImage(summon("notes\\restH.png", 50, 50), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 32, this);
+                
             } else if (current.beep.getDegree() == 1 && current.beep.getClip().contains("R")) {
+                
                 g.drawImage(summon("notes\\restW.png", 50, 50), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 15, this);
+                
             } else if (current.beep.getDegree() == 4) {
+                
                 g.drawImage(summon("notes\\noteQ.png", 40, 50), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 40, this);
+                
             } else if (current.beep.getDegree() == 2) {
+                
                 g.drawImage(summon("notes\\noteH.png", 60, 60), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 45, this);
+                
             } else if (current.beep.getDegree() == 1) {
+                
                 g.drawImage(summon("notes\\noteW.png", 50, 50), ((current.beep.getIndex() * 50) - shiftTotal) - 5, getYFromLetter(current.beep) - 25, this);
+                
             }
 
             current = current.next;
@@ -675,18 +779,25 @@ public class GraphicPanel extends JPanel {
         if (changeType == 0) {
             //draws where the cursor currently snaps to
             switch (currentSet) {
+                
                 case 0 ->
                     g.drawImage(summon("notes\\noteQ.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+                    
                 case 1 ->
                     g.drawImage(summon("notes\\noteH.png", 60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
+                    
                 case 2 ->
                     g.drawImage(summon("notes\\noteW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                    
                 case 3 ->
                     g.drawImage(summon("notes\\restQ.png", 40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
+                    
                 case 4 ->
                     g.drawImage(summon("notes\\restH.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
+                    
                 case 5 ->
                     g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+                    
             }
         }
         
@@ -694,32 +805,43 @@ public class GraphicPanel extends JPanel {
         if (changeType == 3) {
             //draws where the cursor currently snaps to
             switch (currentSet) {
+                
                 case 0 ->
                     g.drawImage(summon("notes\\noteQ.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+                    
                 case 1 ->
                     g.drawImage(summon("notes\\noteH.png", 60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
+                    
                 case 2 ->
                     g.drawImage(summon("notes\\noteW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                    
                 case 3 ->
                     g.drawImage(summon("notes\\restQ.png", 40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
+                    
                 case 4 ->
                     g.drawImage(summon("notes\\restH.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
+                    
                 case 5 ->
                     g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+                    
             }
         }
 
         //the alternate pathway if the delte function is activated
         if (changeType == 1) {
             if (list.getNodeCount() > 0) {
+                
                 g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                
             }
         }
 
         //alternate pathway for the first phase of the edit function, which is selection
         if (changeType == 2) {
             if (list.getNodeCount() > 0) {
+                
                 g.drawImage(summon("flavors\\modify.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                
             }
         }
 

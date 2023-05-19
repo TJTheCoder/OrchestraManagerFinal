@@ -33,13 +33,16 @@ public class NoteList {
         NoteNode newNode = new NoteNode(data);
         //If list is empty  
         if (head == null) {
+            
             //Both head and tail will point to newNode  
             head = tail = newNode;
             //head's previous will point to null  
             head.previous = null;
             //tail's next will point to null, as it is the last node of the list  
             tail.next = null;
+            
         } else {
+            
             //newNode will be added after tail such that tail's next will point to newNode  
             tail.next = newNode;
             //newNode's previous will point to tail  
@@ -48,6 +51,7 @@ public class NoteList {
             tail = newNode;
             //As it is last node, tail's next will point to null  
             tail.next = null;
+            
         }
     }
 
@@ -58,14 +62,18 @@ public class NoteList {
         //Node current will point to head  
         NoteNode current = head;
         if (head == null) {
+            
             //System.out.println("List is empty");
             return "";
+            
         }
         //System.out.println("Nodes of doubly linked list: ");
         while (current != null) {
+            
             //Prints each node by incrementing the pointer.  
             out += current.beep + " ";
             current = current.next;
+            
         }
 
         return out;
@@ -76,92 +84,142 @@ public class NoteList {
         NoteNode newNode = new NoteNode(data);
 
         if (head == null) {
+            
             // If the list is empty and index is 0, make the new node the head
             if (index == 0) {
+                
                 head = tail = newNode;
                 head.previous = null;
                 tail.next = null;
-            } else {
+                
+            }
+            
+            else {
+                
                 // If the list is empty and index is not 0, throw an exception or handle it accordingly
                 throw new IndexOutOfBoundsException("Invalid index");
+                
             }
-        } else if (index == 0) {
+            
+        }
+        else if (index == 0) {
+            
             // If the index is 0, insert at the beginning
             newNode.next = head;
             head.previous = newNode;
             head = newNode;
             head.previous = null;
-        } else {
+            
+        }
+        else {
+            
             NoteNode current = head;
             int currentIndex = 0;
 
             // Traverse the list to find the desired index or the end of the list
             while (current.next != null && currentIndex < index - 1) {
+                
                 current = current.next;
                 currentIndex++;
+                
             }
 
             if (currentIndex == index - 1) {
+                
                 // Insert the new node at the desired index
                 newNode.next = current.next;
                 newNode.previous = current;
                 if (current.next != null) {
                     current.next.previous = newNode;
+                    
                 }
                 current.next = newNode;
-            } else {
+            }
+            else
+            {
+                
                 // If the desired index is out of bounds, throw an exception or handle it accordingly
                 throw new IndexOutOfBoundsException("Invalid index");
+                
             }
         }
     }
 
     // deletes a node at a specific index
     public void delete(int index) {
-        if (head == null) {
+        if (head == null)
+        {
             // If the list is empty, throw an exception or handle it accordingly
             throw new IndexOutOfBoundsException("Invalid index");
-        } else if (index == 0) {
+        }
+        else if (index == 0)
+        {
             // If the index is 0, delete the head node
-            if (head == tail) {
+            if (head == tail)
+            {
+                
                 // If there is only one node in the list
                 head = tail = null;
-            } else {
+                
+            }
+            else
+            {
+                
                 head = head.next;
                 head.previous = null;
+                
             }
-        } else {
+        }
+        else
+        {
+            
             NoteNode current = head;
             int currentIndex = 0;
 
             // Traverse the list to find the desired index or the end of the list
-            while (current != null && currentIndex < index) {
+            while (current != null && currentIndex < index)
+            {
                 current = current.next;
                 currentIndex++;
             }
 
-            if (currentIndex == index && current != null) {
+            if (currentIndex == index && current != null)
+            {
                 // Delete the node at the desired index
                 if (current == tail) {
+                    
                     // If the node to be deleted is the tail node
                     tail = tail.previous;
                     tail.next = null;
-                } else {
+                    
+                }
+                else
+                {
+                    
                     current.previous.next = current.next;
-                    if (current.next != null) {
+                    if (current.next != null)
+                    {
+                        
                         current.next.previous = current.previous;
+                        
                     }
+                    
                 }
 
                 // Adjust the indices of the Note objects after deletion
                 current = current.next;
                 while (current != null) {
+                    
                     current.beep.setIndex(current.beep.getIndex() - 2);
                     current = current.next;
+                    
                 }
+                
             } else {
+                
                 // If the desired index is out of bounds, throw an exception or handle it accordingly
                 throw new IndexOutOfBoundsException("Invalid index");
+                
             }
         }
     }
@@ -175,9 +233,11 @@ public class NoteList {
         int i = 5;
         while (current != null)
         {
+            
             current.beep.setIndex(i);
             current = current.next;
             i += 2;
+            
         }
     }
 
@@ -200,16 +260,22 @@ public class NoteList {
 
         // Traverse the list to find the desired index or the end of the list
         while (current != null && currentIndex < index) {
+            
             current = current.next;
             currentIndex++;
+            
         }
 
         if (currentIndex == index && current != null) {
+            
             // Return the node at the desired index
             return current;
+            
         } else {
+            
             // If the desired index is out of bounds, throw an exception or handle it accordingly
             throw new IndexOutOfBoundsException("Invalid index");
+            
         }
     }
 
@@ -219,8 +285,10 @@ public class NoteList {
         NoteNode current = head;
 
         while (current != null) {
+            
             count++;
             current = current.next;
+            
         }
 
         return count;
@@ -229,7 +297,9 @@ public class NoteList {
     //returns the String such that it can be run with a Fugue object
     @Override
     public String toString() {
+        
         String out = display().trim();
         return "T" + "" + tempo + " " + out;
+        
     }
 }
