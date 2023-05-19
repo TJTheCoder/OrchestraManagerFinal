@@ -26,6 +26,9 @@ public class GraphicPanel extends JPanel {
     //initializes a noteList
     NoteList list = new NoteList(120);
 
+    //controller for the tempo--right now it is constant
+    int tempo = 120;
+
     //margin buffers for how seperated the staff needs to be from
     //the border and the range of the staff lines
     int xMarginBuffer = 50;
@@ -214,6 +217,71 @@ public class GraphicPanel extends JPanel {
         return tierFake;
     }
 
+    //starts when the play button is triggered
+    public void startPlay() throws InterruptedException {
+        String total = "" + list;
+        String[] parts = total.split(" ");
+        Fugue fug = new Fugue(parts[0]);
+
+        String test = "";
+        for (String comp : parts) {
+            test += comp + " ";
+        }
+
+        System.out.println(test);
+
+        int i = 1;
+        while (i < parts.length) {
+            fug.setOutput(parts[i]);
+            fug.sing();
+
+            //present here because of a bug in Fugue where it skips over independent rests
+            switch (parts[i].trim()) {
+                /*
+                case "Rq" -> Thread.sleep(fraction(6000 / tempo, 1, 1));
+                case "Rh" -> Thread.sleep(fraction(6000 / tempo, 2, 1));
+                case "Rw" -> Thread.sleep(fraction(6000 / tempo, 4, 1));
+                 */
+                case "Rq" ->
+                    Thread.sleep(500);
+                case "Rh" ->
+                    Thread.sleep(1000);
+                case "Rw" ->
+                    Thread.sleep(2000);
+            }
+
+            i++;
+            frameShift(100);
+            
+            super.paintImmediately(0, 0, 1009, 599);
+        }
+    }
+
+    /*
+    //actually runs the playing of the song
+    public void runPlay(String remainder) throws InterruptedException {
+        String run = remainder.split(" ")[1];
+
+        Fugue fug = new Fugue(run);
+        fug.sing();
+
+        switch (run) {
+            case "Rq" ->
+                Thread.sleep(fraction(6000 / tempo, 1, 1));
+            case "Rh" ->
+                Thread.sleep(fraction(6000 / tempo, 2, 1));
+            case "Rw" ->
+                Thread.sleep(fraction(6000 / tempo, 4, 1));
+        }
+        
+        frameShift(100);
+        
+        if (remainder.split(" ").length > 1)
+        {
+            runPlay(remainder.substring(run.length() + 1));
+        }
+    }
+     */
     //returns the y-value associated with each tier in the panel
     public int getYFromTier() {
         return (tier * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
@@ -226,7 +294,9 @@ public class GraphicPanel extends JPanel {
 
     //combines methods to read the letter into the y-position
     public int getYFromLetter(Note data) {
-        if (data.getClip().contains("R")) return getYFromTierFake(4);
+        if (data.getClip().contains("R")) {
+            return getYFromTierFake(4);
+        }
         return getYFromTierFake(getTierFromLetter(data));
     }
 
@@ -276,7 +346,7 @@ public class GraphicPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         // Clear all of the panel content before drawing
         super.paintComponent(g);
-        
+
         //draws the rectangle that shows the playing bar
         g.setColor(Color.pink);
         g.fillRect((5 * 50) - 10, yMarginStart - 10, 50 + 5, yMarginEnd - yMarginStart + 20);
@@ -310,7 +380,7 @@ public class GraphicPanel extends JPanel {
 
         //Node current will point to head  
         NoteNode current = list.head;
-        
+
         //loops through everything in the list to draw them on the staff
         while (current != null) {
 

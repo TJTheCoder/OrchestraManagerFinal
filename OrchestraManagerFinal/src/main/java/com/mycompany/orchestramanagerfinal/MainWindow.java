@@ -773,6 +773,11 @@ public class MainWindow extends javax.swing.JFrame {
         //changes the icon depending on the current state
         if (!playMode) {
             PlayStop.setIcon(new ImageIcon(pause2));
+            try {
+                ((GraphicPanel) composerPanel).startPlay();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             PlayStop.setIcon(new ImageIcon(play2));
         }
@@ -798,11 +803,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     //the next two methods make it so that the staff can be moved from side to side
     private void BackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseClicked
-        ((GraphicPanel) composerPanel).frameShift(-10);
+        ((GraphicPanel) composerPanel).frameShift(-100);
     }//GEN-LAST:event_BackMouseClicked
 
     private void ForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMousePressed
-        ((GraphicPanel) composerPanel).frameShift(10);
+        ((GraphicPanel) composerPanel).frameShift(100);
     }//GEN-LAST:event_ForwardMousePressed
 
     //change the note/rest to be placed--factors in the rest/note toggle (half and quarter notes only)

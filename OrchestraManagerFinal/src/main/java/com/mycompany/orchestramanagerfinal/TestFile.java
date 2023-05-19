@@ -12,7 +12,7 @@ public class TestFile {
     //test method to ensure that all methods are operational
     public static void main (String[] args)
     {
-        Fugue fug = new Fugue("Cq+Bw Dq Eq Fw Aq Cw Fh Gq");
+        Fugue fug = new Fugue("Rh");
         fug.sing();
         
         /*
