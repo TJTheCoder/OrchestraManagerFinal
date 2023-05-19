@@ -5,6 +5,10 @@ import org.jfugue.temporal.DurationTemporalEvent;
 import org.jfugue.theory.Chord;
 import org.jfugue.theory.Note;
 
+/*
+This class, named "Events," defines a collection of event classes that represent various musical events. 
+These events implement the "FugueEvent" interface and provide methods for executing the events using a parser.
+*/
 public class Events {
 
     public class TrackEvent implements FugueEvent {

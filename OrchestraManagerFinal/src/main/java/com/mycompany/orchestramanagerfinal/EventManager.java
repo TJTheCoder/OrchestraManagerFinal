@@ -11,8 +11,16 @@ import org.jfugue.midi.MidiDefaults;
 /**
  * Places musical data into the MIDI sequence. Package scope, final class.
  *
- * @author David Koelle
+ * @author Tanuj Tekkale
  */
+
+/*
+
+This class is a final class called "EventManager" in the "com.mycompany.orchestramanagerfinal" package. 
+It is responsible for placing musical data into a MIDI sequence. 
+It contains various methods and fields for managing the musical events and timing within the sequence.
+*/
+
 final class EventManager {
 
     private Map<Long, List<FugueEvent>> timeToEventMap = new TreeMap<Long, List<FugueEvent>>();
