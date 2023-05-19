@@ -256,6 +256,9 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JSlider" name="progressBar_slider">
+              <Properties>
+                <Property name="value" type="int" value="1"/>
+              </Properties>
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="progressBar_sliderMousePressed"/>
               </Events>
