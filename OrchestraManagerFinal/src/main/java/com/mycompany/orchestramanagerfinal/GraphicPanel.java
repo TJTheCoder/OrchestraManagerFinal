@@ -59,6 +59,9 @@ public class GraphicPanel extends JPanel {
 
     //the index of the last placed note
     int runningCount = 5;
+    
+    //determines whether or not the playing should continue
+    boolean shouldPlay = true;
 
     //how much shift has been applied so far
     int shiftTotal = 0;
@@ -256,6 +259,11 @@ public class GraphicPanel extends JPanel {
         return tierFake;
     }
 
+    //setter for the shouldPlay boolean
+    public void setShouldPlay(boolean shouldPlay) {
+        this.shouldPlay = shouldPlay;
+    }
+    
     //starts when the play button is triggered
     public void startPlay() throws InterruptedException {
         //temporary hides the note by changing the currentSet
@@ -279,7 +287,7 @@ public class GraphicPanel extends JPanel {
         
         //int i = 1 + offset;
         int i = 1 + offset;
-        while (i < parts.length) {
+        while (i < parts.length && shouldPlay) {
             fug.setOutput(parts[i]);
             fug.sing();
 
