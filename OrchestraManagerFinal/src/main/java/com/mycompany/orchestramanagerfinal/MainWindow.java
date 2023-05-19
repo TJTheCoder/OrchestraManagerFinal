@@ -1092,7 +1092,7 @@ public class MainWindow extends javax.swing.JFrame {
             //splits the file name into parts to get info from each music file
             mediaPlayer = new MediaPlayer(songs.get(i));
             data[row][0] = headers[0].substring(91);
-            //beilds the first column of the table to include the song name and substrings out all the unnescessary info
+            //bulds the first column of the table to include the song name and substrings out all the unnescessary info
             data[row][1] = headers[1];
             //builds the secong column to include the split artist name
             data[row][2] = headers[2];
