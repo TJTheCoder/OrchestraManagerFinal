@@ -342,6 +342,7 @@ public class GraphicPanel extends JPanel {
             return (buffer + 1) * 50;
         }
          */
+        
         return (runningCount * 50) - shiftTotal;
     }
 
