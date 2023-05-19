@@ -74,6 +74,9 @@ public class GraphicPanel extends JPanel {
     //1 - Delete
     int changeType = 0;
 
+    //closest index in the delete function usage space
+    int closestDeleteIndex = 0;
+
     //sets the instrument to be played
     String instrument = "PIANO";
 
@@ -87,22 +90,20 @@ public class GraphicPanel extends JPanel {
     }
 
     //determines the add/delete/edit behavior of the GUI
-    public void typeChange(int type)
-    {
+    public void typeChange(int type) {
         changeType = type;
     }
-    
+
     //empties out the entire list
-    public void purgeList()
-    {
+    public void purgeList() {
         NoteList listFauz = new NoteList(120);
         list = listFauz;
-        
+
         runningCount = 5;
         xMarginBuffer = 50;
         shiftTotal = 0;
     }
-    
+
     //returns the entire list of the GraphicPanel
     public String getList() {
         return "" + list;
@@ -230,6 +231,19 @@ public class GraphicPanel extends JPanel {
             fug.sing();
 
             repaint();
+        } //alternate pathway for when the delete function is turned on
+        else {
+            if (list.getNodeCount() > 1) {
+                int used = closestDeleteIndex - 5;
+                used /= 2;
+                list.delete(used);
+
+                runningCount -= 2;
+                frameShift(-100);
+
+                repaint();
+            }
+            else purgeList();
         }
     }
 
@@ -342,9 +356,12 @@ public class GraphicPanel extends JPanel {
             return (buffer + 1) * 50;
         }
          */
-        
-        if (changeType == 0) return (runningCount * 50) - shiftTotal;
-        else return closestIndex(x);
+
+        if (changeType == 0) {
+            return (runningCount * 50) - shiftTotal;
+        } else {
+            return closestIndex(x);
+        }
     }
 
     //returns the tier associated with each letter in the notes
@@ -476,31 +493,35 @@ public class GraphicPanel extends JPanel {
 
     //determines the location of the closest y snap point
     public int closestYSnap(int y) {
-        if (restMode) {
-            tier = 4;
-            return yMarginStart + fraction(yMarginEnd - yMarginStart, 1, 2);
-        }
+        if (changeType == 0) {
+            if (restMode) {
+                tier = 4;
+                return yMarginStart + fraction(yMarginEnd - yMarginStart, 1, 2);
+            }
 
-        if (y < yMarginStart) {
-            tier = 0;
-            return yMarginStart;
-        } else if (y > yMarginEnd) {
-            tier = 8;
-            //return yMarginEnd;
-            return (8 * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
-        }
+            if (y < yMarginStart) {
+                tier = 0;
+                return yMarginStart;
+            } else if (y > yMarginEnd) {
+                tier = 8;
+                //return yMarginEnd;
+                return (8 * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+            }
 
-        y -= yMarginStart;
+            y -= yMarginStart;
 
-        int filter = y % fraction(yMarginEnd - yMarginStart, 1, 8);
-        int buffer = y / fraction(yMarginEnd - yMarginStart, 1, 8);
+            int filter = y % fraction(yMarginEnd - yMarginStart, 1, 8);
+            int buffer = y / fraction(yMarginEnd - yMarginStart, 1, 8);
 
-        if (filter < fraction(yMarginEnd - yMarginStart, 1, 16)) {
-            tier = buffer;
-            return (buffer * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+            if (filter < fraction(yMarginEnd - yMarginStart, 1, 16)) {
+                tier = buffer;
+                return (buffer * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+            } else {
+                tier = buffer + 1;
+                return ((buffer + 1) * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+            }
         } else {
-            tier = buffer + 1;
-            return ((buffer + 1) * fraction(yMarginEnd - yMarginStart, 1, 8)) + yMarginStart;
+            return closestNote();
         }
     }
 
@@ -516,20 +537,31 @@ public class GraphicPanel extends JPanel {
         return img;
     }
 
-    public int closestIndex(int x)
-    {
+    public int closestIndex(int x) {
         int adjusted = x + shiftTotal;
         adjusted /= 50;
-        
-        if (adjusted < 5) adjusted = 5;
-        else if (adjusted > runningCount - 2) adjusted = runningCount - 2;
-        else if (adjusted % 2 == 0) adjusted += 1;
-        
+
+        if (adjusted < 5) {
+            adjusted = 5;
+        } else if (adjusted > runningCount - 2) {
+            adjusted = runningCount - 2;
+        } else if (adjusted % 2 == 0) {
+            adjusted += 1;
+        }
+
+        closestDeleteIndex = adjusted;
+
         return ((adjusted * 50) - shiftTotal);
     }
-    
-    //public int closestNote(int )
-    
+
+    //gets the closest note object based on the closest index
+    public int closestNote() {
+        int used = closestDeleteIndex - 5;
+        used /= 2;
+
+        return getYFromLetter(list.getNodeAtIndex(used).beep);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         // Clear all of the panel content before drawing
@@ -609,10 +641,9 @@ public class GraphicPanel extends JPanel {
                     g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
             }
         }
-        
-        if (changeType == 1)
-        {
-            g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+
+        if (changeType == 1) {
+            g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
         }
 
         //System.out.println(listFauz);

@@ -116,7 +116,7 @@ public class NoteList {
         }
     }
 
-    //deletes a node at a specific index
+    // deletes a node at a specific index
     public void delete(int index) {
         if (head == null) {
             // If the list is empty, throw an exception or handle it accordingly
@@ -152,6 +152,13 @@ public class NoteList {
                         current.next.previous = current.previous;
                     }
                 }
+
+                // Adjust the indices of the Note objects after deletion
+                current = current.next;
+                while (current != null) {
+                    current.beep.setIndex(current.beep.getIndex() - 2);
+                    current = current.next;
+                }
             } else {
                 // If the desired index is out of bounds, throw an exception or handle it accordingly
                 throw new IndexOutOfBoundsException("Invalid index");
@@ -159,13 +166,13 @@ public class NoteList {
         }
     }
 
+
     /*
     public void save()
     {
         
     }
      */
-    
     //returns the node at a specific index assuming it is within bounds
     public NoteNode getNodeAtIndex(int index) {
         if (head == null || index < 0) {
@@ -189,6 +196,19 @@ public class NoteList {
             // If the desired index is out of bounds, throw an exception or handle it accordingly
             throw new IndexOutOfBoundsException("Invalid index");
         }
+    }
+
+    //returns the size of the NoteList
+    public int getNodeCount() {
+        int count = 0;
+        NoteNode current = head;
+
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+
+        return count;
     }
 
     //returns the String such that it can be run with a Fugue object
