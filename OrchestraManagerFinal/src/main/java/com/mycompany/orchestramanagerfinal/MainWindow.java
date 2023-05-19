@@ -649,7 +649,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
         Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-
+        //if the current song is the first in the list it will
         if (songNumber > 0) {
             songNumber--;
             mediaPlayer.stop();
@@ -697,10 +697,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
         //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
-
+        //makes sure that if the current song is within the length of the list it can be chosen
         if (songNumber < songs.size() - 1) {
             songNumber++;
             mediaPlayer.stop();
+            //stops all current media
             String media = songs.get(songNumber);
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -712,9 +713,12 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             mediaPlayer.play();
+            //moves the song number up one and plays it
         } else {
+            //if the current song is at the last spot on the list it will restart the album
             songNumber = 0;
             mediaPlayer.stop();
+            //stops all current media
             String media = null;
             try {
                 mediaPlayer = new MediaPlayer(media);
@@ -726,12 +730,13 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
             mediaPlayer.play();
+            //plays the first song in the list
         }
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-
+        //resets all the song name and artist names on the GUi to that of the current song being played
         System.out.println(songNumber);
     }//GEN-LAST:event_skipFor_buttonActionPerformed
 
@@ -743,7 +748,7 @@ public class MainWindow extends javax.swing.JFrame {
         } else {
             songNumber = (int) (Math.random() * files.length);
         }
-
+        //sets the song number to a random number less than the length of the songs in the list 
         try {
             mediaPlayer = new MediaPlayer(songs.get(songNumber));
         } catch (UnsupportedAudioFileException ex) {
@@ -755,12 +760,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
         System.out.println(songs);
         mediaPlayer.play();
-
+        //plays the randomized song list
         headers = songs.get(songNumber).split("\\.");
         albumName2_label.setText((headers[0].substring(91)));
         albumName_label.setText((headers[0].substring(91)));
         artist_label.setText(headers[1]);
-
+        //resets the name of the song and the artist shown to the current song being played
         System.out.println(songNumber);
     }//GEN-LAST:event_Shuffle_buttonActionPerformed
 
@@ -776,6 +781,7 @@ public class MainWindow extends javax.swing.JFrame {
         play_button.setIcon(new ImageIcon(play));
         mediaPlayer.play();
         System.out.println(songNumber);
+        //does the same thing and the other play button its just in a differen t location
     }//GEN-LAST:event_play2_buttonActionPerformed
 
     //turns the current note to a whole note or whole rest depending on the current state
@@ -874,6 +880,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void progressBar_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progressBar_sliderStateChanged
         mediaPlayer.setFrames((long) (mediaPlayer.getMicrosecondLength() * ((double) (progressBar_slider.getValue() / 100.0))));
+        //finds a percentage of the bar the point is on and sets the current frames to that percentage of the songs length
     }//GEN-LAST:event_progressBar_sliderStateChanged
 
     //calls the fast backward method when the mouse is dragged on the button
