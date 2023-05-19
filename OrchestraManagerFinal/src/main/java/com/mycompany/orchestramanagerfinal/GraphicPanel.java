@@ -116,6 +116,11 @@ public class GraphicPanel extends JPanel {
         Note lego = new Note(determineLetter(), determineDegree(), runningCount);
         list.addNode(lego);
         runningCount += 2;
+        frameShift(100);
+        
+        Fugue fug = new Fugue("" + lego);
+        fug.sing();
+        
         repaint();
     }
 
