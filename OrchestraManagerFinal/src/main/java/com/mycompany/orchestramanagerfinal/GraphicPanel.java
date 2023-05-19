@@ -59,7 +59,7 @@ public class GraphicPanel extends JPanel {
 
     //the index of the last placed note
     int runningCount = 5;
-    
+
     //determines whether or not the playing should continue
     boolean shouldPlay = true;
 
@@ -74,17 +74,70 @@ public class GraphicPanel extends JPanel {
     public void paint() {
         repaint();
     }
-    
-    public void fastForward()
-    {
+
+    //sets the list based on a string input
+    public void setList(String forcedList) {
+        
+        NoteList list = new NoteList(120);
+        String[] splitten = forcedList.split(" ");
+
+        runningCount = 5;
+        xMarginBuffer = 50;
+        shiftTotal = 0;
+
+        for (String present : splitten) {
+            if (!present.contains("T")) {
+                Note lego = new Note(getLetter(present), getDegree(present), runningCount);
+                list.addNode(lego);
+                runningCount += 2;
+                frameShift(100);
+            }
+        }
+        
+       System.out.println(list);
+
+        repaint();
+    }
+
+    //gets the letter from String information
+    public String getLetter(String splitten) {
+        splitten = splitten.strip();
+        if (splitten.contains("R")) {
+            return "R";
+        } else {
+            return splitten.substring(0, 2);
+        }
+    }
+
+    //gets the degree from String information
+    public int getDegree(String splitten) {
+        splitten = splitten.strip();
+        String used = "";
+        if (splitten.contains("R")) {
+            used = splitten.substring(1, 2);
+        } else {
+            used = splitten.substring(2, 3);
+        }
+        
+        int out = 4;
+
+        switch (used)
+        {
+            case "w" -> out = 1;
+            case "h" -> out = 2;
+            case "q" -> out = 4;
+        }
+        return out;
+    }
+
+    public void fastForward() {
         int calculate = runningCount - 5;
         calculate /= 2;
         frameShift(calculate * 100);
     }
-    
+
     //takes you all the way to the beginning
-    public void fastBackward()
-    {
+    public void fastBackward() {
         frameShift(-1 * shiftTotal);
     }
 
@@ -161,7 +214,7 @@ public class GraphicPanel extends JPanel {
             repaint();
             return;
         }
-        */
+         */
         shiftTotal += shift;
         repaint();
     }
@@ -184,8 +237,7 @@ public class GraphicPanel extends JPanel {
         }
         return image;
     }
-    */
-
+     */
     //new version of the colorImage method
     public BufferedImage colorImage(BufferedImage loadImg, int red, int green, int blue) {
         BufferedImage img = new BufferedImage(loadImg.getWidth(), loadImg.getHeight(),
@@ -284,13 +336,13 @@ public class GraphicPanel extends JPanel {
     public void setShouldPlay(boolean shouldPlay) {
         this.shouldPlay = shouldPlay;
     }
-    
+
     //starts when the play button is triggered
     public void startPlay() throws InterruptedException {
         //temporary hides the note by changing the currentSet
         int store = currentSet;
         currentSet = 6;
-        
+
         String total = "" + list;
         String[] parts = total.split(" ");
         Fugue fug = new Fugue(parts[0]);
@@ -305,7 +357,7 @@ public class GraphicPanel extends JPanel {
 
         //tracks the current offset caused by the frameshift (how many notes from the beginning the play bar is)
         int offset = shiftTotal / 100;
-        
+
         //int i = 1 + offset;
         int i = 1 + offset;
         while (i < parts.length && shouldPlay) {
@@ -328,11 +380,11 @@ public class GraphicPanel extends JPanel {
             }
 
             i++;
-            
+
             //makes sure that the placable note does not show
             currentSet = 6;
             frameShift(100);
-            
+
             super.paintImmediately(0, 0, 1009, 599);
         }
         currentSet = store;

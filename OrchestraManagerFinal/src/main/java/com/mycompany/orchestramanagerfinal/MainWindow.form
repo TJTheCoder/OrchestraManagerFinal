@@ -470,6 +470,9 @@
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;Add&quot;, &quot;Delete&quot;, &quot;Export&quot;, &quot;Import&quot;})" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CRUDButtonActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
