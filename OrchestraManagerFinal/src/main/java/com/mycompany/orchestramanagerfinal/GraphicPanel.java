@@ -69,7 +69,11 @@ public class GraphicPanel extends JPanel {
     //integers to store the coordinates of the user's mouse
     int mouseX;
     int mouseY;
-    
+
+    //0 - Add
+    //1 - Delete
+    int changeType = 0;
+
     //sets the instrument to be played
     String instrument = "PIANO";
 
@@ -78,20 +82,24 @@ public class GraphicPanel extends JPanel {
         repaint();
     }
 
-    public void setInstrument(String newInstrument)
-    {
+    public void setInstrument(String newInstrument) {
         instrument = newInstrument;
+    }
+
+    //determines the add/delete/edit behavior of the GUI
+    public void typeChange(int type)
+    {
+        changeType = type;
     }
     
     //returns the entire list of the GraphicPanel
-    public String getList()
-    {
+    public String getList() {
         return "" + list;
     }
-    
+
     //sets the listFauz based on a string input
     public void setList(String forcedList) {
-        
+
         NoteList listFauz = new NoteList(120);
         String[] splitten = forcedList.split(" ");
 
@@ -107,10 +115,9 @@ public class GraphicPanel extends JPanel {
                 frameShift(100);
             }
         }
-        
-       //System.out.println();
-       
-       list = listFauz;
+
+        //System.out.println();
+        list = listFauz;
 
         repaint();
     }
@@ -134,14 +141,16 @@ public class GraphicPanel extends JPanel {
         } else {
             used = splitten.substring(2, 3);
         }
-        
+
         int out = 4;
 
-        switch (used)
-        {
-            case "w" -> out = 1;
-            case "h" -> out = 2;
-            case "q" -> out = 4;
+        switch (used) {
+            case "w" ->
+                out = 1;
+            case "h" ->
+                out = 2;
+            case "q" ->
+                out = 4;
         }
         return out;
     }
@@ -200,15 +209,17 @@ public class GraphicPanel extends JPanel {
 
     //adds a noteNode to the listFauz when the staff is clicked on
     public void updateList() {
-        Note lego = new Note(determineLetter(), determineDegree(), runningCount);
-        list.addNode(lego);
-        runningCount += 2;
-        frameShift(100);
+        if (changeType == 0) {
+            Note lego = new Note(determineLetter(), determineDegree(), runningCount);
+            list.addNode(lego);
+            runningCount += 2;
+            frameShift(100);
 
-        Fugue fug = new Fugue("I[" + instrument + "] " + lego);
-        fug.sing();
+            Fugue fug = new Fugue("I[" + instrument + "] " + lego);
+            fug.sing();
 
-        repaint();
+            repaint();
+        }
     }
 
     //modify the currentSet class variable
@@ -553,20 +564,28 @@ public class GraphicPanel extends JPanel {
             current = current.next;
         }
 
-        //draws where the cursor currently snaps to
-        switch (currentSet) {
-            case 0 ->
-                g.drawImage(summon("notes\\noteQ.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
-            case 1 ->
-                g.drawImage(summon("notes\\noteH.png", 60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
-            case 2 ->
-                g.drawImage(summon("notes\\noteW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
-            case 3 ->
-                g.drawImage(summon("notes\\restQ.png", 40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
-            case 4 ->
-                g.drawImage(summon("notes\\restH.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
-            case 5 ->
-                g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+        //only if add mode is currently active
+        if (changeType == 0) {
+            //draws where the cursor currently snaps to
+            switch (currentSet) {
+                case 0 ->
+                    g.drawImage(summon("notes\\noteQ.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+                case 1 ->
+                    g.drawImage(summon("notes\\noteH.png", 60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
+                case 2 ->
+                    g.drawImage(summon("notes\\noteW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                case 3 ->
+                    g.drawImage(summon("notes\\restQ.png", 40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
+                case 4 ->
+                    g.drawImage(summon("notes\\restH.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
+                case 5 ->
+                    g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+            }
+        }
+        
+        if (changeType == 1)
+        {
+            
         }
 
         //System.out.println(listFauz);
