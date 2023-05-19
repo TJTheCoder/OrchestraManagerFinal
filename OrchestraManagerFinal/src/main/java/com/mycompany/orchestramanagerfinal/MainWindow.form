@@ -472,7 +472,7 @@
             <Component class="javax.swing.JComboBox" name="CRUDButton">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;Add&quot;, &quot;Delete&quot;, &quot;Export&quot;, &quot;Import&quot;})" type="code"/>
+                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;Add&quot;, &quot;Delete&quot;, &quot;Clear&quot;, &quot;Export&quot;, &quot;Import&quot;})" type="code"/>
                 </Property>
               </Properties>
               <Events>

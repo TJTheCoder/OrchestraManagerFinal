@@ -503,7 +503,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Export", "Import"}));
+        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Clear", "Export", "Import"}));
         CRUDButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CRUDButtonActionPerformed(evt);
@@ -954,6 +954,24 @@ public class MainWindow extends javax.swing.JFrame {
             }
             CRUDButton.setSelectedIndex(0);
         }
+        
+        //activates delete mode
+        else if (chosen.equals("Delete"))
+        {
+            ((GraphicPanel) composerPanel).typeChange(1);
+        }
+        
+        //reverts to add mode
+         else if (chosen.equals("Add"))
+        {
+            ((GraphicPanel) composerPanel).typeChange(0);   
+        }
+        
+         //clears all the notes
+         else if (chosen.equals("Clear"))
+         {
+            ((GraphicPanel) composerPanel).purgeList(); 
+         }
         
     }//GEN-LAST:event_CRUDButtonActionPerformed
 

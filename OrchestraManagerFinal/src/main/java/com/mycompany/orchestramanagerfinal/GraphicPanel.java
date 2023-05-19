@@ -92,6 +92,17 @@ public class GraphicPanel extends JPanel {
         changeType = type;
     }
     
+    //empties out the entire list
+    public void purgeList()
+    {
+        NoteList listFauz = new NoteList(120);
+        list = listFauz;
+        
+        runningCount = 5;
+        xMarginBuffer = 50;
+        shiftTotal = 0;
+    }
+    
     //returns the entire list of the GraphicPanel
     public String getList() {
         return "" + list;
