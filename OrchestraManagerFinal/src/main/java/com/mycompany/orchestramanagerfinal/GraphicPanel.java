@@ -66,6 +66,9 @@ public class GraphicPanel extends JPanel {
     //how much shift has been applied so far
     int shiftTotal = 0;
 
+    //method variable used to store the runningCount for reversion
+    int temp = runningCount;
+
     //integers to store the coordinates of the user's mouse
     int mouseX;
     int mouseY;
@@ -221,6 +224,7 @@ public class GraphicPanel extends JPanel {
 
     //adds a noteNode to the listFauz when the staff is clicked on
     public void updateList() {
+        //the updateList() call for when the add mode is activated
         if (changeType == 0) {
             Note lego = new Note(determineLetter(), determineDegree(), runningCount);
             list.addNode(lego);
@@ -232,6 +236,38 @@ public class GraphicPanel extends JPanel {
 
             repaint();
         } //alternate pathway for when the delete function is turned on
+        else if (changeType == 2) {
+            //method variable used to store the runningCount for reversion
+            temp = runningCount;
+            
+            runningCount = closestDeleteIndex;
+            
+            int trueIndex = closestDeleteIndex - 5;
+            trueIndex /= 2;
+            
+            //makes the note completely new
+            list.getNodeAtIndex(trueIndex).beep.setClip("X");
+            changeType = 3;
+        }
+        
+        //what happens when the edit mode enters the second state--never called
+        else if (changeType == 3)
+        {
+            int trueIndex = closestDeleteIndex - 5;
+            trueIndex /= 2;
+           
+            Note lego = new Note(determineLetter(), determineDegree(), runningCount);
+            list.getNodeAtIndex(trueIndex).beep = lego;
+            runningCount = temp;
+            frameShift(100);
+
+            Fugue fug = new Fugue("I[" + instrument + "] " + lego);
+            fug.sing();
+
+            repaint();
+        }
+        
+        //if any other function is called--should only apply to delete()
         else {
             if (list.getNodeCount() > 1) {
                 int used = closestDeleteIndex - 5;
@@ -242,10 +278,11 @@ public class GraphicPanel extends JPanel {
                 frameShift(-100);
 
                 repaint();
+            } else {
+                purgeList();
             }
-            else purgeList();
         }
-        
+
         //makes sure everything is shifted over
         list.indexManage();
     }
@@ -543,15 +580,15 @@ public class GraphicPanel extends JPanel {
 
     //returns the location of the closest index (or value of the node) when the delete function is activated
     public int closestIndex(int x) {
-        if (list.getNodeCount() == 0) 
-        {
+        if (list.getNodeCount() == 0) {
             closestDeleteIndex = -1;
             return -1;
         }
-        
+
         int adjusted = x + shiftTotal;
         adjusted /= 50;
 
+        //adjusts the runningTotal based on the closestIndex
         if (adjusted < 5) {
             adjusted = 5;
         } else if (adjusted > runningCount - 2) {
@@ -652,10 +689,38 @@ public class GraphicPanel extends JPanel {
                     g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
             }
         }
+        
+        //only if add mode is currently active
+        if (changeType == 3) {
+            //draws where the cursor currently snaps to
+            switch (currentSet) {
+                case 0 ->
+                    g.drawImage(summon("notes\\noteQ.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
+                case 1 ->
+                    g.drawImage(summon("notes\\noteH.png", 60, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 45, this);
+                case 2 ->
+                    g.drawImage(summon("notes\\noteW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+                case 3 ->
+                    g.drawImage(summon("notes\\restQ.png", 40, 60), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 20, this);
+                case 4 ->
+                    g.drawImage(summon("notes\\restH.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 32, this);
+                case 5 ->
+                    g.drawImage(summon("notes\\restW.png", 50, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 15, this);
+            }
+        }
 
         //the alternate pathway if the delte function is activated
         if (changeType == 1) {
-            if (list.getNodeCount() > 0) g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+            if (list.getNodeCount() > 0) {
+                g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+            }
+        }
+
+        //alternate pathway for the first phase of the edit function, which is selection
+        if (changeType == 2) {
+            if (list.getNodeCount() > 0) {
+                g.drawImage(summon("flavors\\modify.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+            }
         }
 
         //System.out.println(listFauz);

@@ -127,6 +127,7 @@ public class MainWindow extends javax.swing.JFrame {
         BufferedImage noteHIcon = ImageIO.read(new File("notes\\noteH.png"));
         BufferedImage noteQIcon = ImageIO.read(new File("notes\\noteQ.png"));
 
+        //creates scaled instances for the play and pause icons
         Image pause = icons.getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image play = icons2.getScaledInstance(45, 36, Image.SCALE_SMOOTH);
 
@@ -617,6 +618,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(songNumber);
     }//GEN-LAST:event_pause_buttonActionPerformed
 
+    //a deprecated method--no longer used
     private void volume_sliderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_volume_sliderMousePressed
         //        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
         //
@@ -628,6 +630,7 @@ public class MainWindow extends javax.swing.JFrame {
         //		});
     }//GEN-LAST:event_volume_sliderMousePressed
 
+    //the reader that plays the .wav when clicked
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         mediaPlayer.pause();
         BufferedImage icons = null;
@@ -651,6 +654,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(one);
     }//GEN-LAST:event_play_buttonActionPerformed
 
+    //goes to the previous song in the table
     private void skipBack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipBack_buttonActionPerformed
         Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
@@ -705,6 +709,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
      */
 
+    //goes to the next song in the cycle
     private void skipFor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipFor_buttonActionPerformed
         //Image img2 = pause.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
         //Image img3 = play.getScaledInstance(48, 36, Image.SCALE_SMOOTH);
@@ -981,12 +986,19 @@ public class MainWindow extends javax.swing.JFrame {
             ((GraphicPanel) composerPanel).typeChange(0);   
         }
         
+        //experimental edit program
+        else if (chosen.equals("Edit"))
+        {
+           ((GraphicPanel) composerPanel).typeChange(2);
+        }
+        
          //clears all the notes
          else if (chosen.equals("Clear"))
          {
             ((GraphicPanel) composerPanel).purgeList(); 
          }
         
+        //rudButton.setSelectedIndex(0);
     }//GEN-LAST:event_crudButtonActionPerformed
 
     private void instrumentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instrumentButtonActionPerformed

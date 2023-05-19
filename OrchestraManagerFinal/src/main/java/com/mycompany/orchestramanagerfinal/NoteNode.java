@@ -15,10 +15,12 @@ public class NoteNode {
     public NoteNode previous;
 
     //constructors and getters and setters for the notes
+    //this constructor only uses a Note
     public NoteNode(Note beep) {
         this.beep = beep;
     }
     
+    //this constructor sets up the entire NoteNode
     public NoteNode(Note beep, NoteNode next, NoteNode previous) {
         this.beep = beep;
         this.next = next;

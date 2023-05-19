@@ -23,6 +23,7 @@ It contains various methods and fields for managing the musical events and timin
 
 final class EventManager {
 
+    //instantiates the class variables and each type, mainly the TreeMap<>()
     private Map<Long, List<FugueEvent>> timeToEventMap = new TreeMap<Long, List<FugueEvent>>();
     private int tempoBeatsPerMinute = MidiDefaults.DEFAULT_TEMPO_BEATS_PER_MINUTE;
     private int beatsPerWhole = MidiDefaults.DEFAULT_TEMPO_BEATS_PER_WHOLE;
@@ -31,9 +32,11 @@ final class EventManager {
     private double beatTime[][] = new double[MidiDefaults.TRACKS][MidiDefaults.LAYERS];
     private Map<String, Double> bookmarkedTrackTimeMap;
 
+    //empty constructor that doesn't do anything
     public EventManager() {
     }
 
+    //resets all the MIDI event threads to being empty
     public void reset() {
         this.bookmarkedTrackTimeMap = new HashMap<String, Double>();
         this.tempoBeatsPerMinute = MidiDefaults.DEFAULT_TEMPO_BEATS_PER_MINUTE;
@@ -44,6 +47,7 @@ final class EventManager {
         this.timeToEventMap.clear();
     }
 
+    //empty method--not used
     public void finish() {
     }
 
@@ -100,19 +104,23 @@ final class EventManager {
         return beatTime[currentTrack][currentLayer[currentTrack]];
     }
 
+    //adds a new map that creates a list of times at which events were tracked
     public void addTrackTickTimeBookmark(String timeBookmarkID) {
         bookmarkedTrackTimeMap.put(timeBookmarkID, getTrackBeatTime());
     }
 
+    //returns the value at a time of a bookmark
     public double getTrackBeatTimeBookmark(String timeBookmarkID) {
         return bookmarkedTrackTimeMap.get(timeBookmarkID);
     }
 
+    //creates a new FugueEvent for the parameter of a Duration
     public void addRealTimeEvent(Duration event) {
         addRealTimeEvent((FugueEvent) event);
         advanceTrackBeatTime(event.getDuration());
     }
 
+    //creates a new FugueEvent for the parameter of a FugueEvent
     public void addRealTimeEvent(FugueEvent event) {
         List<FugueEvent> eventList = timeToEventMap.get(convertBeatsToMillis(getTrackBeatTime()));
         if (eventList == null) {
@@ -122,10 +130,12 @@ final class EventManager {
         eventList.add(event);
     }
 
+    //returns the class variable of the the map
     public Map<Long, List<FugueEvent>> getTimeToEventMap() {
         return this.timeToEventMap;
     }
 
+    //converts from BPM to millis--used for the rests, represented by "R"
     private long convertBeatsToMillis(double beats) {
         return (long) ((beats * beatsPerWhole * 60000.0D) / tempoBeatsPerMinute);
     }

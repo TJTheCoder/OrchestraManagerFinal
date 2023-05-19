@@ -94,6 +94,7 @@ public class Temporal {
         }
     }
 
+    //suclass that creates a long to be used as secondary class variables
     class TimeStruct {
         public long timeNotePlayedByPlayer;
         public long timeNotePlayedByTemporalPLP;

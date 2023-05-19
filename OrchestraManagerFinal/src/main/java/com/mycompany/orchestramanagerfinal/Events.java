@@ -14,6 +14,8 @@ These events implement the "FugueEvent" interface and provide methods for execut
 
 public class Events {
 
+    //miniature class that creates an event tracker--used in all other
+    //event types
     public class TrackEvent implements FugueEvent {
 
         private byte track;

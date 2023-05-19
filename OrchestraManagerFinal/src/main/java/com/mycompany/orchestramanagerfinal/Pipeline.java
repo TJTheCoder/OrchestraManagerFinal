@@ -223,21 +223,25 @@ public class Pipeline extends Parser implements ParserListener {
         this.eventManager.addRealTimeEvent(events.new ControllerEvent(controller, value));
     }
 
+    //when a lyric instance is called, creates a new event
     @Override
     public void onLyricParsed(String lyric) {
         this.eventManager.addRealTimeEvent(events.new LyricEvent(lyric));
     }
 
+    //when a marker instance is called, creates a new event
     @Override
     public void onMarkerParsed(String marker) {
         this.eventManager.addRealTimeEvent(events.new MarkerEvent(marker));
     }
 
+    //when a an object instance is called, determines if the function associated with it was parsed
     @Override
     public void onFunctionParsed(String id, Object message) {
         this.eventManager.addRealTimeEvent(events.new UserEvent(id, message));
     }
 
+    //empty methods that remove functionality from onNotePressed() and onNoteReleased()
     @Override
     public void onNotePressed(Note note) {
     }
@@ -246,16 +250,19 @@ public class Pipeline extends Parser implements ParserListener {
     public void onNoteReleased(Note note) {
     }
 
+    //override that returns a new NotEvent from a note
     @Override
     public void onNoteParsed(Note note) {
         this.eventManager.addRealTimeEvent((Duration) events.new NoteEvent(note));
     }
 
+    //override that returns a new NotEvent from a chord
     @Override
     public void onChordParsed(Chord chord) {
         this.eventManager.addRealTimeEvent((Duration) events.new ChordEvent(chord));
     }
 
+    //sleep method clone that completely pauses the thread
     private void delay(long millis) {
         try {
             Thread.sleep(millis);
@@ -264,6 +271,7 @@ public class Pipeline extends Parser implements ParserListener {
         }
     }
 
+    //new parse() method that runs through a file and trakcs all the events while executing them
     public void parse() {
         fireBeforeParsingStarts();
 

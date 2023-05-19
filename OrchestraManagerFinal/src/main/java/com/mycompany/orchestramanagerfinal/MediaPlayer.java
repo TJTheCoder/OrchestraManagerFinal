@@ -17,6 +17,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author atxbr
  */
 public class MediaPlayer {
+    //initializes class variables
     private String filePath;
     private Clip clip;
     private boolean status = true;
@@ -30,12 +31,16 @@ public class MediaPlayer {
         clip.open(audioInputStream);
         clip.stop();
     }
+    
+    //getters and setters for the filePath() class variables
     public String getFilePath(){
         return filePath;
     }
     public void setFilePath(String filePath){
         this.filePath = filePath;
     }
+    
+    //starts the song by triggering the play() method
     public void play(){
         clip.start();
 //        if (status != true){
@@ -44,6 +49,8 @@ public class MediaPlayer {
 //        else
 //            clip.stop();
     }
+    
+    //ends the song by triggering the pause() method
     public void pause() {
         //status = true;
         //play();
@@ -51,15 +58,23 @@ public class MediaPlayer {
         //clip.close
         //???????????????????????????????????????????????????
     }
+    
+    //ends the song completely
     public void stop(){
         clip.close();
     }
+    
+    //returns the clip's microsecond length
     public long getMicrosecondLength(){
         return clip.getMicrosecondLength();
     }
+    
+    //returns the amount of current frames
     public long getCurrentFrames(){
         return clip.getMicrosecondPosition();
     }
+    
+    //setter for the clip's microsecondlength
     public void setFrames(long frames){
         clip.setMicrosecondPosition(frames);
     }
