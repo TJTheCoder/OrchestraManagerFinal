@@ -538,6 +538,7 @@ public class GraphicPanel extends JPanel {
         return img;
     }
 
+    //returns the location of the closest index (or value of the node) when the delete function is activated
     public int closestIndex(int x) {
         int adjusted = x + shiftTotal;
         adjusted /= 50;
@@ -643,6 +644,7 @@ public class GraphicPanel extends JPanel {
             }
         }
 
+        //the alternate pathway if the delte function is activated
         if (changeType == 1) {
             g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
         }
