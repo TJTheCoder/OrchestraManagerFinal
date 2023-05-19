@@ -258,6 +258,10 @@ public class GraphicPanel extends JPanel {
 
     //starts when the play button is triggered
     public void startPlay() throws InterruptedException {
+        //temporary hides the note by changing the currentSet
+        int store = currentSet;
+        currentSet = 6;
+        
         String total = "" + list;
         String[] parts = total.split(" ");
         Fugue fug = new Fugue(parts[0]);
@@ -268,8 +272,13 @@ public class GraphicPanel extends JPanel {
         }
 
         System.out.println(test);
+        //System.out.println(shiftTotal);
 
-        int i = 1;
+        //tracks the current offset caused by the frameshift (how many notes from the beginning the play bar is)
+        int offset = shiftTotal / 100;
+        
+        //int i = 1 + offset;
+        int i = 1 + offset;
         while (i < parts.length) {
             fug.setOutput(parts[i]);
             fug.sing();
@@ -290,10 +299,14 @@ public class GraphicPanel extends JPanel {
             }
 
             i++;
+            
+            //makes sure that the placable note does not show
+            currentSet = 6;
             frameShift(100);
-
+            
             super.paintImmediately(0, 0, 1009, 599);
         }
+        currentSet = store;
     }
 
     /*
@@ -394,7 +407,7 @@ public class GraphicPanel extends JPanel {
         BufferedImage clefIcon = null;
         try {
             clefIcon = ImageIO.read(new File("images\\trebleClef.png"));
-            clefIcon = colorImage(clefIcon, 0, 0, 255);
+            //clefIcon = colorImage(clefIcon, 30, 19, 255);
         } catch (IOException ex) {
             Logger.getLogger(GraphicPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
