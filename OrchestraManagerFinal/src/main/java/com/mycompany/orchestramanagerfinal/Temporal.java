@@ -15,6 +15,11 @@ import org.jfugue.player.SequencerManager;
 import org.jfugue.theory.Note;
 import org.staccato.StaccatoParser;
 
+/*
+The Temporal class contains a method called testTemporalTiming() that demonstrates
+the temporal timing of notes played using JFugue and MIDI.
+*/
+
 public class Temporal {
 
     public void testTemporalTiming() {

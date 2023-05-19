@@ -9,6 +9,13 @@ import org.jfugue.parser.ParserListener;
 import org.jfugue.theory.Chord;
 import org.jfugue.theory.Note;
 
+/*
+The Pipeline class extends the Parser class and implements the ParserListener interface.
+It acts as a pipeline for parsing and processing musical events using the JFugue library.
+*/
+
+//mantains the EventManager object
+
 public class Pipeline extends Parser implements ParserListener {
 
     private EventManager eventManager;
