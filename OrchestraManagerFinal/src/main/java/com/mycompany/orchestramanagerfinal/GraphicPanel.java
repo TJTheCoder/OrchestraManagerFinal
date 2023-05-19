@@ -343,7 +343,8 @@ public class GraphicPanel extends JPanel {
         }
          */
         
-        return (runningCount * 50) - shiftTotal;
+        if (changeType == 0) return (runningCount * 50) - shiftTotal;
+        else return closestIndex(x);
     }
 
     //returns the tier associated with each letter in the notes
@@ -515,6 +516,20 @@ public class GraphicPanel extends JPanel {
         return img;
     }
 
+    public int closestIndex(int x)
+    {
+        int adjusted = x + shiftTotal;
+        adjusted /= 50;
+        
+        if (adjusted < 5) adjusted = 5;
+        else if (adjusted > runningCount - 2) adjusted = runningCount - 2;
+        else if (adjusted % 2 == 0) adjusted += 1;
+        
+        return ((adjusted * 50) - shiftTotal);
+    }
+    
+    //public int closestNote(int )
+    
     @Override
     protected void paintComponent(Graphics g) {
         // Clear all of the panel content before drawing
@@ -597,7 +612,7 @@ public class GraphicPanel extends JPanel {
         
         if (changeType == 1)
         {
-            
+            g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 40, this);
         }
 
         //System.out.println(listFauz);

@@ -164,8 +164,33 @@ public class NoteList {
     {
         
     }
-    */
+     */
     
+    //returns the node at a specific index assuming it is within bounds
+    public NoteNode getNodeAtIndex(int index) {
+        if (head == null || index < 0) {
+            // If the list is empty or the index is negative, throw an exception or handle it accordingly
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+
+        NoteNode current = head;
+        int currentIndex = 0;
+
+        // Traverse the list to find the desired index or the end of the list
+        while (current != null && currentIndex < index) {
+            current = current.next;
+            currentIndex++;
+        }
+
+        if (currentIndex == index && current != null) {
+            // Return the node at the desired index
+            return current;
+        } else {
+            // If the desired index is out of bounds, throw an exception or handle it accordingly
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+    }
+
     //returns the String such that it can be run with a Fugue object
     @Override
     public String toString() {
