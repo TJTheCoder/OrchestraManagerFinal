@@ -245,6 +245,9 @@ public class GraphicPanel extends JPanel {
             }
             else purgeList();
         }
+        
+        //makes sure everything is shifted over
+        list.indexManage();
     }
 
     //modify the currentSet class variable
@@ -540,6 +543,12 @@ public class GraphicPanel extends JPanel {
 
     //returns the location of the closest index (or value of the node) when the delete function is activated
     public int closestIndex(int x) {
+        if (list.getNodeCount() == 0) 
+        {
+            closestDeleteIndex = -1;
+            return -1;
+        }
+        
         int adjusted = x + shiftTotal;
         adjusted /= 50;
 
@@ -646,7 +655,7 @@ public class GraphicPanel extends JPanel {
 
         //the alternate pathway if the delte function is activated
         if (changeType == 1) {
-            g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
+            if (list.getNodeCount() > 0) g.drawImage(summon("flavors\\despawn.png", 40, 50), closestXSnap(mouseX) - 5, closestYSnap(mouseY) - 25, this);
         }
 
         //System.out.println(listFauz);

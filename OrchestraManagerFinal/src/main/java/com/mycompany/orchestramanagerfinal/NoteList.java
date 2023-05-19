@@ -166,6 +166,20 @@ public class NoteList {
         }
     }
 
+    //makes it so that there is a guarantee that every note will shift over
+    public void indexManage()
+    {
+        NoteNode current = head;
+        
+        //for loop in the style of a while that runs until the end is reached and forcibly sets everything to the correct indices
+        int i = 5;
+        while (current != null)
+        {
+            current.beep.setIndex(i);
+            current = current.next;
+            i += 2;
+        }
+    }
 
     /*
     public void save()
@@ -177,7 +191,8 @@ public class NoteList {
     public NoteNode getNodeAtIndex(int index) {
         if (head == null || index < 0) {
             // If the list is empty or the index is negative, throw an exception or handle it accordingly
-            throw new IndexOutOfBoundsException("Invalid index");
+            //throw new IndexOutOfBoundsException("Invalid index");
+            return null;
         }
 
         NoteNode current = head;
