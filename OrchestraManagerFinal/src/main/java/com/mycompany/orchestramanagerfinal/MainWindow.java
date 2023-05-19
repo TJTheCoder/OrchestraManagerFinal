@@ -8,7 +8,10 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -21,8 +24,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -89,8 +94,7 @@ public class MainWindow extends javax.swing.JFrame {
         /*
         String[] options = {"Add", "Delete"};
         CRUDButton = new JComboBox(options);
-        */
-        
+         */
         songs = new ArrayList<>();
         directory = new File("music");
         files = directory.listFiles();
@@ -495,6 +499,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Export", "Import"}));
+        CRUDButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CRUDButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout composerPanelLayout = new javax.swing.GroupLayout(composerPanel);
         composerPanel.setLayout(composerPanelLayout);
@@ -856,6 +865,37 @@ public class MainWindow extends javax.swing.JFrame {
     private void ForwardMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMouseDragged
         //((GraphicPanel) composerPanel).fastForward();
     }//GEN-LAST:event_ForwardMouseDragged
+
+    private void CRUDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CRUDButtonActionPerformed
+        String chosen = (String) CRUDButton.getSelectedItem();
+
+        if (chosen.equals("Import")) {
+            BufferedReader brTest = null;
+            String text = "";
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
+                int result = fileChooser.showOpenDialog(CRUDButton);
+                File selectedFile = null;
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
+                }   brTest = new BufferedReader(new FileReader(selectedFile));
+                text = brTest.readLine();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    brTest.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            ((GraphicPanel) composerPanel).setList(text);
+        }
+    }//GEN-LAST:event_CRUDButtonActionPerformed
 
     /**
      * @param args the command line arguments
