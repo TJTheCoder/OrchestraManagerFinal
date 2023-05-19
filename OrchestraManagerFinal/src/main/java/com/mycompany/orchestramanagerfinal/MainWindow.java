@@ -150,20 +150,20 @@ public class MainWindow extends javax.swing.JFrame {
         pause_button.setIcon(new ImageIcon(pause));
 
         //adds the images for the move left and move right arrows to the actual buttons
-        Back.setIcon(new ImageIcon(left));
-        Forward.setIcon(new ImageIcon(right));
+        backButton.setIcon(new ImageIcon(left));
+        forwardButton.setIcon(new ImageIcon(right));
 
         //sets the composer play button to default, which is the play button
-        PlayStop.setIcon(new ImageIcon(play2));
+        playStopToggle.setIcon(new ImageIcon(play2));
         playMode = false;
 
         //sets starting icons for the three placement buttons in the composer
-        Quarter.setIcon(new ImageIcon(noteQ));
-        Half.setIcon(new ImageIcon(noteH));
-        Whole.setIcon(new ImageIcon(noteW));
+        quarterButton.setIcon(new ImageIcon(noteQ));
+        halfButton.setIcon(new ImageIcon(noteH));
+        wholeButton.setIcon(new ImageIcon(noteW));
 
         //default starting state is in note mode, so the toggle should demonstrate the option to go to rest mode
-        NoteRest.setText("To Rest");
+        noteRestToggle.setText("To Rest");
         restMode = false;
 
         BufferedImage img = ImageIO.read(new File("images\\cover.png"));
@@ -230,15 +230,15 @@ public class MainWindow extends javax.swing.JFrame {
         artist_label = new javax.swing.JLabel();
         pause_button = new javax.swing.JButton();
         composerPanel = new GraphicPanel();
-        Forward = new javax.swing.JButton();
-        Back = new javax.swing.JButton();
-        Whole = new javax.swing.JButton();
-        Quarter = new javax.swing.JButton();
-        Half = new javax.swing.JButton();
-        PlayStop = new javax.swing.JToggleButton();
-        NoteRest = new javax.swing.JToggleButton();
-        CRUDButton = new javax.swing.JComboBox<>();
-        InstrumentButton = new javax.swing.JComboBox<>();
+        forwardButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        wholeButton = new javax.swing.JButton();
+        quarterButton = new javax.swing.JButton();
+        halfButton = new javax.swing.JButton();
+        playStopToggle = new javax.swing.JToggleButton();
+        noteRestToggle = new javax.swing.JToggleButton();
+        crudButton = new javax.swing.JComboBox<>();
+        instrumentButton = new javax.swing.JComboBox<>();
 
         jButton1.setText("jButton1");
 
@@ -313,7 +313,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(coverShow2_label, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -416,7 +416,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(albumName_label, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(artist_label, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                .addComponent(artist_label, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar_slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -446,79 +446,79 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        Forward.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        forwardButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                ForwardMouseDragged(evt);
+                forwardButtonMouseDragged(evt);
             }
         });
-        Forward.addMouseListener(new java.awt.event.MouseAdapter() {
+        forwardButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ForwardMousePressed(evt);
+                forwardButtonMousePressed(evt);
             }
         });
-        Forward.addActionListener(new java.awt.event.ActionListener() {
+        forwardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ForwardActionPerformed(evt);
+                forwardButtonActionPerformed(evt);
             }
         });
 
-        Back.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        backButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                BackMouseDragged(evt);
+                backButtonMouseDragged(evt);
             }
         });
-        Back.addMouseListener(new java.awt.event.MouseAdapter() {
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BackMouseClicked(evt);
+                backButtonMouseClicked(evt);
             }
         });
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
-            }
-        });
-
-        Whole.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WholeActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
-        Quarter.addActionListener(new java.awt.event.ActionListener() {
+        wholeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QuarterActionPerformed(evt);
+                wholeButtonActionPerformed(evt);
             }
         });
 
-        Half.addActionListener(new java.awt.event.ActionListener() {
+        quarterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HalfActionPerformed(evt);
+                quarterButtonActionPerformed(evt);
             }
         });
 
-        PlayStop.addActionListener(new java.awt.event.ActionListener() {
+        halfButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PlayStopActionPerformed(evt);
+                halfButtonActionPerformed(evt);
             }
         });
 
-        NoteRest.addActionListener(new java.awt.event.ActionListener() {
+        playStopToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NoteRestActionPerformed(evt);
+                playStopToggleActionPerformed(evt);
             }
         });
 
-        CRUDButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Clear", "Export", "Import"}));
-        CRUDButton.addActionListener(new java.awt.event.ActionListener() {
+        noteRestToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CRUDButtonActionPerformed(evt);
+                noteRestToggleActionPerformed(evt);
             }
         });
 
-        InstrumentButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"PIANO", "CLAVINET", "CELESTA", "GLOCKENSPIEL", "VIBRAPHONE", "MARIMBA", "XYLOPHONE", "DULCIMER", "ACCORDION", "HARMONICA", "GUITAR", "VIOLIN", "VIOLA", "CELLO", "CONTRABASS", "TIMPANI", "TRUMPET", "TROMBONE", "TUBA", "OBOE", "BASSOON", "CLARINET", "PICCOLO", "FLUTE", "RECORDER", "SHAKUHACHI", "WHISTLE", "OCARINA", "SAWTOOTH", "BASSLEAD", "METALLIC", "GOBLINS", "SITAR", "BANJO", "SHAMISEN", "KOTO", "KALIMBA", "BAGPIPE", "FIDDLE", "SHANAI", "AGOGO", "WOODBLOCK", "SEASHORE", "APPLAUSE", "GUNSHOT"}));
-        InstrumentButton.addActionListener(new java.awt.event.ActionListener() {
+        crudButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Add", "Delete", "Clear", "Export", "Import"}));
+        crudButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InstrumentButtonActionPerformed(evt);
+                crudButtonActionPerformed(evt);
+            }
+        });
+
+        instrumentButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"PIANO", "CLAVINET", "CELESTA", "GLOCKENSPIEL", "VIBRAPHONE", "MARIMBA", "XYLOPHONE", "DULCIMER", "ACCORDION", "HARMONICA", "GUITAR", "VIOLIN", "VIOLA", "CELLO", "CONTRABASS", "TIMPANI", "TRUMPET", "TROMBONE", "TUBA", "OBOE", "BASSOON", "CLARINET", "PICCOLO", "FLUTE", "RECORDER", "SHAKUHACHI", "WHISTLE", "OCARINA", "SAWTOOTH", "BASSLEAD", "METALLIC", "GOBLINS", "SITAR", "BANJO", "SHAMISEN", "KOTO", "KALIMBA", "BAGPIPE", "FIDDLE", "SHANAI", "AGOGO", "WOODBLOCK", "SEASHORE", "APPLAUSE", "GUNSHOT"}));
+        instrumentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instrumentButtonActionPerformed(evt);
             }
         });
 
@@ -530,27 +530,27 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(PlayStop, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(playStopToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(Quarter)
+                        .addComponent(quarterButton)
                         .addGap(39, 39, 39)
-                        .addComponent(Half)
+                        .addComponent(halfButton)
                         .addGap(39, 39, 39)
-                        .addComponent(Whole)
+                        .addComponent(wholeButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                         .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CRUDButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(InstrumentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(crudButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(instrumentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(398, 398, 398)
-                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(noteRestToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(Forward, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(forwardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16))
         );
         composerPanelLayout.setVerticalGroup(
@@ -560,24 +560,24 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(composerPanelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(CRUDButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(crudButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(InstrumentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(instrumentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Whole, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Half, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(NoteRest, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Quarter, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 421, Short.MAX_VALUE)
+                        .addComponent(wholeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(halfButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(noteRestToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(quarterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 493, Short.MAX_VALUE)
                 .addGroup(composerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
-                        .addComponent(PlayStop, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(playStopToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
-                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, composerPanelLayout.createSequentialGroup()
-                        .addComponent(Forward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(forwardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
         );
 
@@ -796,40 +796,40 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_play2_buttonActionPerformed
 
     //turns the current note to a whole note or whole rest depending on the current state
-    private void WholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WholeActionPerformed
+    private void wholeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wholeButtonActionPerformed
         if (!restMode)
             ((GraphicPanel) composerPanel).changeCurrentSet(2);
         else
             ((GraphicPanel) composerPanel).changeCurrentSet(5);
-    }//GEN-LAST:event_WholeActionPerformed
+    }//GEN-LAST:event_wholeButtonActionPerformed
 
-    private void NoteRestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoteRestActionPerformed
+    private void noteRestToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noteRestToggleActionPerformed
         if (restMode) {
             //sets starting icons for the three placement buttons in the composer
-            Quarter.setIcon(new ImageIcon(noteQ));
-            Half.setIcon(new ImageIcon(noteH));
-            Whole.setIcon(new ImageIcon(noteW));
+            quarterButton.setIcon(new ImageIcon(noteQ));
+            halfButton.setIcon(new ImageIcon(noteH));
+            wholeButton.setIcon(new ImageIcon(noteW));
 
             //default starting state is in note mode, so the toggle should demonstrate the option to go to rest mode
-            NoteRest.setText("To Rest");
+            noteRestToggle.setText("To Rest");
         } else {
             //sets the alternate set of icons for the three placement buttons in the composer
-            Quarter.setIcon(new ImageIcon(restQ));
-            Half.setIcon(new ImageIcon(restH));
-            Whole.setIcon(new ImageIcon(restW));
+            quarterButton.setIcon(new ImageIcon(restQ));
+            halfButton.setIcon(new ImageIcon(restH));
+            wholeButton.setIcon(new ImageIcon(restW));
 
             //turns it to rest mode, so now it asks whether to turn back to note mode
-            NoteRest.setText("To Note");
+            noteRestToggle.setText("To Note");
         }
         //toggles restMode for future access
         restMode = !restMode;
         ((GraphicPanel) composerPanel).toggleRest();
-    }//GEN-LAST:event_NoteRestActionPerformed
+    }//GEN-LAST:event_noteRestToggleActionPerformed
 
-    private void PlayStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayStopActionPerformed
+    private void playStopToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playStopToggleActionPerformed
         //changes the icon depending on the current state
         if (!playMode) {
-            PlayStop.setIcon(new ImageIcon(pause2));
+            playStopToggle.setIcon(new ImageIcon(pause2));
             //((GraphicPanel) composerPanel).setShouldPlay(true);
             try {
                 ((GraphicPanel) composerPanel).startPlay();
@@ -837,14 +837,14 @@ public class MainWindow extends javax.swing.JFrame {
                 Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            PlayStop.setIcon(new ImageIcon(play2));
+            playStopToggle.setIcon(new ImageIcon(play2));
             //((GraphicPanel) composerPanel).setShouldPlay(false);
         }
 
         //toggles the variables storing the current state
         playMode = !playMode;
         ((GraphicPanel) composerPanel).togglePlay();
-    }//GEN-LAST:event_PlayStopActionPerformed
+    }//GEN-LAST:event_playStopToggleActionPerformed
 
     //updatesMouseCoordinates if the mouse is moved at all
     private void composerPanelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMouseMoved
@@ -852,37 +852,37 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_composerPanelMouseMoved
 
     //the next two methods make it so that the staff can be moved from side to side
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         //((GraphicPanel) composerPanel).frameShift(-10);
-    }//GEN-LAST:event_BackActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void ForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardActionPerformed
+    private void forwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardButtonActionPerformed
         //((GraphicPanel) composerPanel).frameShift(10);
-    }//GEN-LAST:event_ForwardActionPerformed
+    }//GEN-LAST:event_forwardButtonActionPerformed
 
     //the next two methods make it so that the staff can be moved from side to side
-    private void BackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseClicked
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         ((GraphicPanel) composerPanel).frameShift(-100);
-    }//GEN-LAST:event_BackMouseClicked
+    }//GEN-LAST:event_backButtonMouseClicked
 
-    private void ForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMousePressed
+    private void forwardButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forwardButtonMousePressed
         ((GraphicPanel) composerPanel).frameShift(100);
-    }//GEN-LAST:event_ForwardMousePressed
+    }//GEN-LAST:event_forwardButtonMousePressed
 
     //change the note/rest to be placed--factors in the rest/note toggle (half and quarter notes only)
-    private void QuarterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuarterActionPerformed
+    private void quarterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quarterButtonActionPerformed
         if (!restMode)
             ((GraphicPanel) composerPanel).changeCurrentSet(0);
         else
             ((GraphicPanel) composerPanel).changeCurrentSet(3);
-    }//GEN-LAST:event_QuarterActionPerformed
+    }//GEN-LAST:event_quarterButtonActionPerformed
 
-    private void HalfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HalfActionPerformed
+    private void halfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfButtonActionPerformed
         if (!restMode)
             ((GraphicPanel) composerPanel).changeCurrentSet(1);
         else
             ((GraphicPanel) composerPanel).changeCurrentSet(4);
-    }//GEN-LAST:event_HalfActionPerformed
+    }//GEN-LAST:event_halfButtonActionPerformed
 
     //allows the user to place down different notes in the composer
     private void composerPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_composerPanelMousePressed
@@ -895,17 +895,17 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_progressBar_sliderStateChanged
 
     //calls the fast backward method when the mouse is dragged on the button
-    private void BackMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseDragged
+    private void backButtonMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseDragged
         ((GraphicPanel) composerPanel).fastBackward();
-    }//GEN-LAST:event_BackMouseDragged
+    }//GEN-LAST:event_backButtonMouseDragged
 
     //calls the fast forward method when the mouse is dragged on the button
-    private void ForwardMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForwardMouseDragged
+    private void forwardButtonMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forwardButtonMouseDragged
         //((GraphicPanel) composerPanel).fastForward();
-    }//GEN-LAST:event_ForwardMouseDragged
+    }//GEN-LAST:event_forwardButtonMouseDragged
 
-    private void CRUDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CRUDButtonActionPerformed
-        String chosen = (String) CRUDButton.getSelectedItem();
+    private void crudButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crudButtonActionPerformed
+        String chosen = (String) crudButton.getSelectedItem();
 
         //import function using BufferedReader
         if (chosen.equals("Import")) {
@@ -915,7 +915,7 @@ public class MainWindow extends javax.swing.JFrame {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
-                int result = fileChooser.showOpenDialog(CRUDButton);
+                int result = fileChooser.showOpenDialog(crudButton);
                 File selectedFile = null;
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
@@ -934,7 +934,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
             ((GraphicPanel) composerPanel).setList(text);
-            CRUDButton.setSelectedIndex(0);
+            crudButton.setSelectedIndex(0);
         }
         
         //export function using BufferedWriter
@@ -945,7 +945,7 @@ public class MainWindow extends javax.swing.JFrame {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
-                int result = fileChooser.showOpenDialog(CRUDButton);
+                int result = fileChooser.showOpenDialog(crudButton);
                 File selectedFile = null;
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
@@ -963,7 +963,7 @@ public class MainWindow extends javax.swing.JFrame {
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            CRUDButton.setSelectedIndex(0);
+            crudButton.setSelectedIndex(0);
         }
         
         //activates delete mode
@@ -984,11 +984,11 @@ public class MainWindow extends javax.swing.JFrame {
             ((GraphicPanel) composerPanel).purgeList(); 
          }
         
-    }//GEN-LAST:event_CRUDButtonActionPerformed
+    }//GEN-LAST:event_crudButtonActionPerformed
 
-    private void InstrumentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InstrumentButtonActionPerformed
-        ((GraphicPanel) composerPanel).setInstrument((String) InstrumentButton.getSelectedItem());
-    }//GEN-LAST:event_InstrumentButtonActionPerformed
+    private void instrumentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instrumentButtonActionPerformed
+        ((GraphicPanel) composerPanel).setInstrument((String) instrumentButton.getSelectedItem());
+    }//GEN-LAST:event_instrumentButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1035,36 +1035,36 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JComboBox<String> CRUDButton;
-    private javax.swing.JButton Forward;
-    private javax.swing.JButton Half;
-    private javax.swing.JComboBox<String> InstrumentButton;
-    private javax.swing.JToggleButton NoteRest;
-    private javax.swing.JToggleButton PlayStop;
-    private javax.swing.JButton Quarter;
     private javax.swing.JButton Shuffle_button;
-    private javax.swing.JButton Whole;
     private javax.swing.JLabel albumName2_label;
     private javax.swing.JLabel albumName_label;
     private javax.swing.JLabel artist_label;
+    private javax.swing.JButton backButton;
     private javax.swing.JPanel composerPanel;
     private javax.swing.JLabel coverShow2_label;
     private javax.swing.JLabel coverShow_label;
+    private javax.swing.JComboBox<String> crudButton;
+    private javax.swing.JButton forwardButton;
+    private javax.swing.JButton halfButton;
+    private javax.swing.JComboBox<String> instrumentButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton noteRestToggle;
     private javax.swing.JButton pause_button;
     private javax.swing.JButton play2_button;
+    private javax.swing.JToggleButton playStopToggle;
     private javax.swing.JButton play_button;
     private javax.swing.JPanel player_panel;
     private javax.swing.JSlider progressBar_slider;
+    private javax.swing.JButton quarterButton;
     private javax.swing.JPanel shuffle_panel;
     private javax.swing.JButton skipBack_button;
     private javax.swing.JButton skipFor_button;
     private javax.swing.JTable songsTable_table;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JSlider volume_slider;
+    private javax.swing.JButton wholeButton;
     // End of variables declaration//GEN-END:variables
     private void buildSongsTable() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 

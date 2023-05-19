@@ -110,7 +110,7 @@
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="340" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="412" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -235,7 +235,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="albumName_label" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="artist_label" pref="20" max="32767" attributes="0"/>
+                      <Component id="artist_label" pref="92" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="progressBar_slider" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -360,32 +360,32 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Back" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="backButton" min="-2" pref="46" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                              <Component id="PlayStop" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="playStopToggle" min="-2" pref="71" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="Quarter" min="-2" max="-2" attributes="0"/>
+                              <Component id="quarterButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="Half" min="-2" max="-2" attributes="0"/>
+                              <Component id="halfButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="Whole" min="-2" max="-2" attributes="0"/>
+                              <Component id="wholeButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="133" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="CRUDButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="InstrumentButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="crudButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instrumentButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="398" max="-2" attributes="0"/>
-                              <Component id="NoteRest" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="noteRestToggle" min="-2" pref="71" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="Forward" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="forwardButton" min="-2" pref="46" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -399,29 +399,29 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="CRUDButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="crudButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="InstrumentButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="instrumentButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Whole" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
-                              <Component id="Half" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
-                              <Component id="NoteRest" alignment="3" min="-2" pref="69" max="-2" attributes="0"/>
+                              <Component id="wholeButton" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="halfButton" alignment="3" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="noteRestToggle" alignment="3" min="-2" pref="69" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="Quarter" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Component id="quarterButton" min="-2" pref="71" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="421" max="32767" attributes="0"/>
+                      <EmptySpace pref="493" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="PlayStop" min="-2" pref="69" max="-2" attributes="0"/>
+                              <Component id="playStopToggle" min="-2" pref="69" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="Back" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="backButton" min="-2" pref="41" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="Forward" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="forwardButton" min="-2" pref="41" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -430,66 +430,66 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="Forward">
+            <Component class="javax.swing.JButton" name="forwardButton">
               <Events>
-                <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="ForwardMouseDragged"/>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ForwardMousePressed"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ForwardActionPerformed"/>
+                <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="forwardButtonMouseDragged"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="forwardButtonMousePressed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="forwardButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="Back">
+            <Component class="javax.swing.JButton" name="backButton">
               <Events>
-                <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="BackMouseDragged"/>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BackMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackActionPerformed"/>
+                <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="backButtonMouseDragged"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="backButtonMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="Whole">
+            <Component class="javax.swing.JButton" name="wholeButton">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WholeActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="wholeButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="Quarter">
+            <Component class="javax.swing.JButton" name="quarterButton">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="QuarterActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quarterButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="Half">
+            <Component class="javax.swing.JButton" name="halfButton">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HalfActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="halfButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="PlayStop">
+            <Component class="javax.swing.JToggleButton" name="playStopToggle">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PlayStopActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playStopToggleActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="NoteRest">
+            <Component class="javax.swing.JToggleButton" name="noteRestToggle">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NoteRestActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noteRestToggleActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="CRUDButton">
+            <Component class="javax.swing.JComboBox" name="crudButton">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;Add&quot;, &quot;Delete&quot;, &quot;Clear&quot;, &quot;Export&quot;, &quot;Import&quot;})" type="code"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CRUDButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crudButtonActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="InstrumentButton">
+            <Component class="javax.swing.JComboBox" name="instrumentButton">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {&quot;PIANO&quot;, &quot;CLAVINET&quot;, &quot;CELESTA&quot;, &quot;GLOCKENSPIEL&quot;, &quot;VIBRAPHONE&quot;, &quot;MARIMBA&quot;, &quot;XYLOPHONE&quot;, &quot;DULCIMER&quot;, &quot;ACCORDION&quot;, &quot;HARMONICA&quot;, &quot;GUITAR&quot;, &quot;VIOLIN&quot;, &quot;VIOLA&quot;, &quot;CELLO&quot;, &quot;CONTRABASS&quot;, &quot;TIMPANI&quot;, &quot;TRUMPET&quot;, &quot;TROMBONE&quot;, &quot;TUBA&quot;, &quot;OBOE&quot;, &quot;BASSOON&quot;, &quot;CLARINET&quot;, &quot;PICCOLO&quot;, &quot;FLUTE&quot;, &quot;RECORDER&quot;, &quot;SHAKUHACHI&quot;, &quot;WHISTLE&quot;, &quot;OCARINA&quot;, &quot;SAWTOOTH&quot;, &quot;BASSLEAD&quot;, &quot;METALLIC&quot;, &quot;GOBLINS&quot;, &quot;SITAR&quot;, &quot;BANJO&quot;, &quot;SHAMISEN&quot;, &quot;KOTO&quot;, &quot;KALIMBA&quot;, &quot;BAGPIPE&quot;, &quot;FIDDLE&quot;, &quot;SHANAI&quot;, &quot;AGOGO&quot;, &quot;WOODBLOCK&quot;, &quot;SEASHORE&quot;, &quot;APPLAUSE&quot;, &quot;GUNSHOT&quot;})" type="code"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InstrumentButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="instrumentButtonActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
