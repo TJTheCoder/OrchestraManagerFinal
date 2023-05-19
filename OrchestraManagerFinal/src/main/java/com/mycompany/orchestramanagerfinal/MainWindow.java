@@ -774,6 +774,7 @@ public class MainWindow extends javax.swing.JFrame {
         //changes the icon depending on the current state
         if (!playMode) {
             PlayStop.setIcon(new ImageIcon(pause2));
+            ((GraphicPanel) composerPanel).setShouldPlay(true);
             try {
                 ((GraphicPanel) composerPanel).startPlay();
             } catch (InterruptedException ex) {
@@ -781,6 +782,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } else {
             PlayStop.setIcon(new ImageIcon(play2));
+            ((GraphicPanel) composerPanel).setShouldPlay(false);
         }
 
         //toggles the variables storing the current state
